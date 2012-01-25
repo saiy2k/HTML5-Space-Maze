@@ -1,0 +1,22 @@
+#gameArea {
+position:absolute;
+left:50%;
+top:50%;
+border:1px solid;
+}
+
+#gameCanvas {
+border:2px solid #ff0000;
+position:absolute;
+width:100%;
+height:100%;
+
+}
+#statsPanel {
+border:2px solid;
+position:absolute;
+width:100%;
+height:8%;
+bottom:0;
+opacity:0.8;
+}
