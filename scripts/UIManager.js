@@ -16,6 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/**
+ * Manages all the UI related features from dynamic scaling of game
+ * as per the window size, handlers for various UI controls,
+ * screen transitions, etc.,
+*/
 (function(undefined) {
     UIManager           =   function(g) {
         this.resize = function() {
@@ -44,6 +50,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             g.gameCanvas.width      =   newWidth;
             g.gameCanvas.height     =   newHeight;
+            g.menuCanvas.width      =   newWidth;
+            g.menuCanvas.height     =   newHeight;
+            g.scoreCanvas.width     =   newWidth;
+            g.scoreCanvas.height    =   newHeight;
+            g.gOverCanvas.width     =   newWidth;
+            g.gOverCanvas.height    =   newHeight;
         };
     };
 })();  

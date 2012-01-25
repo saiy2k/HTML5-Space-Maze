@@ -16,6 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/**
+ * This is just plan JS Object that holds all the game configuration data
+ * from the game play area to game timing settings, grid sizes, etc.,
+*/
 (function(undefined) {
     NumberMaze.GameConfig           =   {
         minCanvasWidth          :   320,
