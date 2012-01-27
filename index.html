@@ -22,10 +22,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <meta charset="utf-8">
         <title>Number Maze - GethuGames</title>
         <link rel='stylesheet' href='style.css' />
-        <script language='javascript' src='scripts/jquery-1.7.1.min.js'></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script type="text/javascript">
+            if (typeof jQuery == 'undefined')
+            {
+                document.write(unescape("%3Cscript src='../libs/jquery.js' type='text/javascript'%3E%3C/script%3E"));
+            }
+        </script>
         <script language='javascript' src='scripts/NumberMaze.js'></script>
         <script language='javascript' src='scripts/GameConfig.js'></script>
         <script language='javascript' src='scripts/UIManager.js'></script>
+        <script language='javascript' src='scripts/CoreEngine.js'></script>
         <script>
             $(document).ready(function() {
                 // init the main gameEngine

@@ -18,7 +18,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
- * This is the core Game Engine. The class is responsible for the following functions:
+ * This component is the entry point of control into the game and it manages
+ * other components of the game. The class is responsible for the following functions:
  *  1. connecting DOM with the rest of the engine
  *  2. initialzing all other game components
  *  3. updating and co-ordinating between all the game components
@@ -35,11 +36,25 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         //init the game components
         var self        =   this;
-        var uiManager   =   new UIManager(this);
-        
+        var uiManager   =   new NumberMaze.UIManager(this);
+        var engine      =   new NumberMaze.CoreEngine(this);
+        var context     =   this.gameCanvas.getContext('2d');
+        uiManager.delegate = self;
+
         //handles the window events
         window.addEventListener('resize', uiManager.resize, false);
         window.addEventListener('orientationchange', uiManager.resize, false);
+        self.mousedown  =   function(tx, ty) {
+            console.log('touch down at ' + tx + ', ' + ty);
+        };
+
+        self.mousemove  =   function(tx, ty) {
+            console.log('move at ' + tx + ', ' + ty);
+        };
+
+        self.mouseup    =   function(tx, ty) {
+            console.log('up at ' + tx + ', ' + ty);
+        };
 
         //sets up the initial UI and game loop
         uiManager.resize();
@@ -59,8 +74,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         })();
  
         (function gameLoop() {
+            engine.draw(context);
             window.requestAnimFrame(gameLoop);
-            console.log('in loop');
         })();
     };
 })(jQuery);

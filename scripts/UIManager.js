@@ -23,9 +23,56 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  * screen transitions, etc.,
 */
 (function(undefined) {
-    UIManager           =   function(g) {
+    NumberMaze.UIManager            =   function(g) {
+        /** just a self reference
+         *  @type NumberMaze.UIManager
+         *  @private */
+        var self                    =   this;
+
+        /** reference to the object which subscribes for the mouse/touch events
+         *  @type any object that implements mouseup(x, y), mousemove(x, y) and mousedown(x, y) functions
+         *  @public */
+        this.delegate               =   null;
+
+        /** y-position of the game area in the document
+         *  @type Number
+         *  @public */
+        this.top                    =   0;
+
+        /** x-position of the game area in the document
+         *  @type Number
+         *  @public */
+        this.left                   =   0;
+
+        /** mousedown event, filters inside the game area */
+        $(gameArea).mousedown(function(e) {
+            var x                   =   e.pageX - self.left;
+            var y                   =   e.pageY - self.top;
+            if(self.delegate)
+                self.delegate.mousedown(x, y);
+        });
+
+        /** mousemove event, filters inside the game area */
+        $(gameArea).mousemove(function(e) {
+            var x                   =   e.pageX - self.left;
+            var y                   =   e.pageY - self.top;
+            if(self.delegate)
+                self.delegate.mousemove(x, y);
+        });
+
+        /** mouseup event, filters inside the game area */
+        $(gameArea).mouseup(function(e) {
+            var x                   =   e.pageX - self.left;
+            var y                   =   e.pageY - self.top;
+            if(self.delegate)
+                self.delegate.mouseup(x, y);
+        });
+
+        /** handler for window resize / orientation change events
+         *  resizes the gamearea and all the canvases within the
+         *  allowed range, maintaining the aspect ratio.
+         *  Big thanks to tutorials in html5rocks.com for this logic */
         this.resize = function() {
-            console.log('resize');
             var gConfig             =   NumberMaze.GameConfig;
             var widthToHeight       =   4 / 3;
             var newWidth            =   window.innerWidth;
@@ -56,6 +103,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             g.scoreCanvas.height    =   newHeight;
             g.gOverCanvas.width     =   newWidth;
             g.gOverCanvas.height    =   newHeight;
+
+            self.left               =   $(gameArea).offset().left;
+            self.top                =   $(gameArea).offset().top;
         };
     };
 })();  
