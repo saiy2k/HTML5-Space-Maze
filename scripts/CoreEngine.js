@@ -24,12 +24,27 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function(undefined) {
     NumberMaze.CoreEngine           =   function(g) {
+        var self                    =   this; 
+        this.pointArray             =   new Array();
+
+        this.addPoint               =   function(tx, ty) {
+            var pt                  =   {x:tx, y:ty};
+            self.pointArray.push(pt);
+        };
 
         this.update                 =   function(dt) {
         };
 
         this.draw                   =   function(ctx) {
-            ctx.fillRect(10, 10, 100, 100);
+            ctx.clearRect(0, 0, 640, 480);
+            ctx.beginPath();
+            //ctx.moveTo(self.pointArray[0].x, self.pointArray[0].y);
+            for(var i = 0; i < self.pointArray.length; i++) {
+                ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);
+            }
+            ctx.closePath();
+
+            ctx.stroke();
         };
     };
 })();  

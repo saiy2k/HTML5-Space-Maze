@@ -40,6 +40,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var engine      =   new NumberMaze.CoreEngine(this);
         var context     =   this.gameCanvas.getContext('2d');
         uiManager.delegate = self;
+        context.fillStyle = 'black';
 
         //handles the window events
         window.addEventListener('resize', uiManager.resize, false);
@@ -49,7 +50,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         self.mousemove  =   function(tx, ty) {
-            console.log('move at ' + tx + ', ' + ty);
+            engine.addPoint(tx, ty);
         };
 
         self.mouseup    =   function(tx, ty) {
