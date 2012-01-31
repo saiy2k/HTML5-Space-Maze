@@ -33,6 +33,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.menuCanvas =   document.getElementById('menuCanvas');
         this.scoreCanvas=   document.getElementById('scoreCanvas');
         this.gOverCanvas=   document.getElementById('gameOverCanvas');
+        var touched     =   false;
 
         //init the game components
         var self        =   this;
@@ -46,15 +47,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         window.addEventListener('resize', uiManager.resize, false);
         window.addEventListener('orientationchange', uiManager.resize, false);
         self.mousedown  =   function(tx, ty) {
-            console.log('touch down at ' + tx + ', ' + ty);
+            touched     =   true;
         };
 
         self.mousemove  =   function(tx, ty) {
-            engine.addPoint(tx, ty);
+            if(touched)
+                engine.addPoint(tx, ty);
         };
 
         self.mouseup    =   function(tx, ty) {
-            console.log('up at ' + tx + ', ' + ty);
+            touched     =   false;
         };
 
         //sets up the initial UI and game loop

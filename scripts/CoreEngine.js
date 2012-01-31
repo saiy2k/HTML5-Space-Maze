@@ -25,11 +25,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 (function(undefined) {
     NumberMaze.CoreEngine           =   function(g) {
         var self                    =   this; 
+        var lastPoint               =   {x:0, y:0};
+        var gConfig                 =   NumberMaze.GameConfig;
+        var grid                    =   new NumberMaze.GridLayer(g);
         this.pointArray             =   new Array();
 
         this.addPoint               =   function(tx, ty) {
             var pt                  =   {x:tx, y:ty};
-            self.pointArray.push(pt);
+            var dist                =   Math.sqrt((lastPoint.x - tx) * (lastPoint.x - tx) + (lastPoint.y - ty) * (lastPoint.y - ty));
+            if (dist > gConfig.lineDelta) {
+                self.pointArray.push(pt);
+                lastPoint           =   pt;
+            }
         };
 
         this.update                 =   function(dt) {
@@ -38,13 +45,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.draw                   =   function(ctx) {
             ctx.clearRect(0, 0, 640, 480);
             ctx.beginPath();
-            //ctx.moveTo(self.pointArray[0].x, self.pointArray[0].y);
             for(var i = 0; i < self.pointArray.length; i++) {
                 ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);
             }
-            ctx.closePath();
-
             ctx.stroke();
+
+            grid.draw(ctx);
         };
     };
 })();  

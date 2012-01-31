@@ -27,5 +27,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         minCanvasHeight         :   240,
         maxCanvasWidth          :   640,
         maxCanvasHeight         :   480,
+        lineDelta               :   2,
+        rowCount                :   3,
+        colCount                :   3
     };
 })();
