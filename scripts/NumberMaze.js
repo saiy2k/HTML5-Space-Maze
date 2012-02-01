@@ -60,6 +60,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         //sets up the initial UI and game loop
+		//check
         $(this.menuCanvas).hide();
         $(this.scoreCanvas).hide();
         $(this.gOverCanvas).hide();
