@@ -26,8 +26,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <script type="text/javascript">
             if (typeof jQuery == 'undefined')
             {
-                document.write(unescape("%3Cscript src='../libs/jquery.js' type='text/javascript'%3E%3C/script%3E"));
+                document.write(unescape("%3Cscript src='libs/jquery.js' type='text/javascript'%3E%3C/script%3E"));
             }
+            Math.dist = function (p1, p2) {
+                return Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+            };
         </script>
         <script language='javascript' src='scripts/NumberMaze.js'></script>
         <script language='javascript' src='scripts/GameConfig.js'></script>

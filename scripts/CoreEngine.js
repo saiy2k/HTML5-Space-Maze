@@ -36,6 +36,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if (dist > gConfig.lineDelta) {
                 self.pointArray.push(pt);
                 lastPoint           =   pt;
+
+                if(grid.collidesWith(pt))
+                    console.log('collision detected');
             }
         };
 

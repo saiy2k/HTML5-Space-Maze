@@ -28,22 +28,36 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.character              =   ch;
         this.x                      =   x;
         this.y                      =   y;
+        this.radius                 =   20;
         this.angle                  =   0;
         this.delAngle               =   0.1;
+        this.circle                 =   true;
 
         this.resizeLayout           =   function(){
         };
 
+        this.collided               =   function() {
+            self.circle             =   false;;
+        };
+
         this.update                 =   function(dt) {
-            self.angle              +=  this.delAngle;
+            if(self.circle == true) {
+                self.angle          +=  this.delAngle;
+            } else {
+                if(self.delAngle < 3.14) {
+                    self.delAngle   +=  0.01;
+                    self.angle      +=  this.delAngle;
+                } else {
+                }
+            }
         };
 
         this.draw                   =   function(ctx) {
             ctx.fillText(self.character, self.x, self.y);
-            ctx.moveTo(self.x, self.y);
-            ctx.arc(self.x, self.y, 20, self.angle, self.angle - 0.85, true);
-            ctx.moveTo(self.x, self.y);
-            ctx.arc(self.x, self.y, 20, self.angle + 3.14, self.angle - 0.85 + 3.14, true);
+            ctx.moveTo(self.x + self.radius * Math.cos(self.angle), self.y + self.radius * Math.sin(self.angle));
+            ctx.arc(self.x, self.y, self.radius, self.angle, self.angle - 0.85, true);
+            ctx.moveTo(self.x + self.radius * Math.cos(self.angle + 3.14), self.y + self.radius * Math.sin(self.angle + 3.14));
+            ctx.arc(self.x, self.y, self.radius, self.angle + 3.14, self.angle - 0.85 + 3.14, true);
         };
     };
 })();

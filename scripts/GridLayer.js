@@ -43,6 +43,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.resizeLayout           =   function(){
         };
 
+        this.collidesWith           =   function(pt) {
+            for(var k = 0; k < 12; k++) {
+                if(Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
+                    self.letterArray[k].collided();
+                }
+            }
+        };
+
         this.update                 =   function(dt) {
             for(var k = 0; k < 12; k++) {
                 self.letterArray[k].update(dt);
