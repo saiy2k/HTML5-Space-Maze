@@ -60,7 +60,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         //sets up the initial UI and game loop
-        uiManager.resize();
         $(this.menuCanvas).hide();
         $(this.scoreCanvas).hide();
         $(this.gOverCanvas).hide();
@@ -77,6 +76,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         })();
  
         (function gameLoop() {
+            engine.update(1/30.0);
             engine.draw(context);
             window.requestAnimFrame(gameLoop);
         })();

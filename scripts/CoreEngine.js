@@ -40,10 +40,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.update                 =   function(dt) {
+            grid.update(dt);
         };
 
         this.draw                   =   function(ctx) {
             ctx.clearRect(0, 0, 640, 480);
+
             ctx.beginPath();
             for(var i = 0; i < self.pointArray.length; i++) {
                 ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);

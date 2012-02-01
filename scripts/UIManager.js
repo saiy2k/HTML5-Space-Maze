@@ -106,6 +106,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             self.left               =   $(gameArea).offset().left;
             self.top                =   $(gameArea).offset().top;
-        };
+        }();
     };
 })();  
