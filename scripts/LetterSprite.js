@@ -19,45 +19,97 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * This class is reponsible for rendering a single letter of the grid
- * and showing the circling animations around the letter
+ * adding various effects/animations as per the state of the letter
 */
 (function(undefined) {
     NumberMaze.LetterSprite         =   function(ch, x, y) {
         var self                    =   this;
-        var gConfig                 =   NumberMaze.GameConfig;
+
+        /** ASCII char rendered by this object
+         *  @type char
+         *  @public */
         this.character              =   ch;
+
+        /** x position of the object to render at
+         *  @type int
+         *  @public */
         this.x                      =   x;
+
+        /** y position of the object to render at
+         *  @type int
+         *  @public */
         this.y                      =   y;
+
+        /** radius of the revolving arc
+         *  @type int
+         *  @public */
         this.radius                 =   20;
-        this.angle                  =   0;
-        this.delAngle               =   0.1;
-        this.circle                 =   true;
+
+        /** flag that represents if the arc is revolving now
+         *  @type bool
+         *  @public */
+        this.circling               =   true;
+
+        /** current revolving angle
+         *  @type int
+         *  @private */
+        var angle                   =   0;
+
+        /** revolving speed of the arc
+         *  @type double
+         *  @private */
+        var delAngle                =   Math.PI;
+
+        /** length of the are to draw on screen
+         *  @type double
+         *  @private */
+        var arcLength               =   Math.PI / 4.0;
+
+        /** x displacement for shaking effect
+         *  @type int
+         *  @private */
+        var dx                      =   0;
+
+        /** y displacement for shaking effect
+         *  @type int
+         *  @private */
+        var dy                      =   0;
+
+        /** maximum vibration displacement
+         *  @type int
+         *  @private */
+        var delVibrate              =   6.0;
 
         this.resizeLayout           =   function(){
         };
 
         this.collided               =   function() {
-            self.circle             =   false;;
+            self.circling           =   false;
         };
 
         this.update                 =   function(dt) {
-            if(self.circle == true) {
-                self.angle          +=  this.delAngle;
+            if(self.circling == true) {
+                angle               +=  delAngle * dt;
             } else {
-                if(self.delAngle < 3.14) {
-                    self.delAngle   +=  0.01;
-                    self.angle      +=  this.delAngle;
+                if(arcLength < 3.14) {
+                    arcLength       *=  1.01;
+                    delAngle        *=  1.005;
+                    dx              =   Math.random() * delVibrate;
+                    dy              =   Math.random() * delVibrate;
+                    angle           +=  delAngle * dt;
                 } else {
                 }
             }
         };
 
+        /** renders the character and the arc around it
+         * @public */
         this.draw                   =   function(ctx) {
-            ctx.fillText(self.character, self.x, self.y);
-            ctx.moveTo(self.x + self.radius * Math.cos(self.angle), self.y + self.radius * Math.sin(self.angle));
-            ctx.arc(self.x, self.y, self.radius, self.angle, self.angle - 0.85, true);
-            ctx.moveTo(self.x + self.radius * Math.cos(self.angle + 3.14), self.y + self.radius * Math.sin(self.angle + 3.14));
-            ctx.arc(self.x, self.y, self.radius, self.angle + 3.14, self.angle - 0.85 + 3.14, true);
+            ctx.fillText(self.character, self.x + dx, self.y + dy);
+            ctx.moveTo(self.x + dx + self.radius * Math.cos(angle), self.y + dy + self.radius * Math.sin(angle));
+            ctx.arc(self.x + dx, self.y + dy, self.radius, angle, angle - arcLength, true);
+            ctx.moveTo(self.x + dx + self.radius * Math.cos(angle + 3.14), self.y + dy + self.radius * Math.sin(angle + 3.14));
+            ctx.arc(self.x + dx, self.y + dy, self.radius, angle + 3.14, angle - arcLength + 3.14, true);
         };
     };
 })();
