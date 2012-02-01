@@ -1,0 +1,56 @@
+<!--
+Copyright 2011 Saiyasodharan (http://saiy2k.blogspot.com/)
+
+This file is part of the open source game, Number Maze
+
+Number Maze is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Number Maze is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Number Maze - GethuGames</title>
+        <link rel='stylesheet' href='style.css' />
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script type="text/javascript">
+            if (typeof jQuery == 'undefined')
+            {
+                document.write(unescape("%3Cscript src='libs/jquery.js' type='text/javascript'%3E%3C/script%3E"));
+            }
+            Math.dist = function (p1, p2) {
+                return Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+            };
+        </script>
+        <script language='javascript' src='scripts/NumberMaze.js'></script>
+        <script language='javascript' src='scripts/GameConfig.js'></script>
+        <script language='javascript' src='scripts/UIManager.js'></script>
+        <script language='javascript' src='scripts/LetterSprite.js'></script>
+        <script language='javascript' src='scripts/GridLayer.js'></script>
+        <script language='javascript' src='scripts/CoreEngine.js'></script>
+        <script>
+            $(document).ready(function() {
+                // init the main gameEngine
+                var game = new NumberMaze();
+            });
+        </script>
+    </head>
+    <body> 
+        <div id='gameArea'>
+            <canvas class='gameScreen' id='menuCanvas'></canvas>
+            <canvas class='gameScreen' id='scoreCanvas'></canvas>
+            <canvas class='gameScreen' id='gameCanvas'></canvas>
+            <canvas class='gameScreen' id='gameOverCanvas'></canvas>
+        </div>
+    </body>
+</html>

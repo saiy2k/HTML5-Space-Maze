@@ -1,0 +1,19 @@
+Number Maze Game
+----------------
+
+There is 3 x 4 grid of numbers from 1 to 12 with a starting point A near 1 and and ending point B near 12. The user draws a line starting from A and goes through all the twelve numbers as instructed by the game and finally reaches point B. The challenge is that while drawing lines crossing numbers on the way, the line should not intersect with already drawn line, in which case the game gets over.
+To state in other way, the player needs to draw a line without intersecting with itself, touching all the points as instructed by the game and reach the end point.
+
+Difficulty:
+There will be 3 modes of difficulty: easy, medium and hard with grid sizes 3x3, 3x4 and 3x5 respectively. Within each mode, there will be several levels. As the levels progress, the timing will be tightened to increase the difficulty.
+
+Timing:
+Player needs to reach each number within the given time, once the number is reached additional time will be provided to reach the next number.
+
+Scoring:
+Score will be awarded for each reach of a number, a separate timer for combo will be running. If the numbers are reached before that combo timer runs out, additional points will be given. Then at the end of level, the remaining time adds up to the score.
+
+Technical Specs:
+    * The game dynamically resizes itself from a minimum resolution of 320x240 to 640x480 based on the window size.
+    * Definitely need to add some sort of leaderboard to save player's score. (mostly will try to integrate some 3rd party frameworks for this. if none is good, then server backend need to be written to do the same).
+    * All the game elements should be dynamic as possible showing some fluid movements all the time.
