@@ -34,6 +34,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             var pt                  =   {x:tx, y:ty};
             var dist                =   Math.sqrt((lastPoint.x - tx) * (lastPoint.x - tx) + (lastPoint.y - ty) * (lastPoint.y - ty));
             if (dist > gConfig.lineDelta) {
+                if(self.pointArray.length > 3) {
+                    var x1              =   tx;
+                    var y1              =   ty;
+                    var x2              =   self.pointArray[self.pointArray.length - 1].x;
+                    var y2              =   self.pointArray[self.pointArray.length - 1].y;
+                    for(var i = 0; i < self.pointArray.length - 2; i++) {
+                        var x3          =   self.pointArray[i].x;
+                        var y3          =   self.pointArray[i].y;
+                        var x4          =   self.pointArray[i+1].x;
+                        var y4          =   self.pointArray[i+1].y;
+                        if(Math.twoLineIntersects(x1, y2, x2, y2, x3, y3, x4, y4)) {
+                            console.log('outte');
+                        }
+                    }
+                }
                 self.pointArray.push(pt);
                 lastPoint           =   pt;
 

@@ -29,10 +29,25 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             {
                 document.write(unescape("%3Cscript src='libs/jquery.js' type='text/javascript'%3E%3C/script%3E"));
             }
+
             Math.dist = function (p1, p2) {
                 return Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
             };
+
             Math.PI = (22/7.0);
+
+            //refer: http://paulbourke.net/geometry/lineline2d/
+            Math.twoLineIntersects = function(x1, y1, x2, y2, x3, y3, x4, y4) {
+                var aNm         =   (x4 - x3)*(y1 - y3) - (y4 - y3)*(x1 - x3);
+                var bNm         =   (x2 - x1)*(y1 - y3) - (y2 - y1)*(x1 - x3);
+                var Dm          =   (y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1);
+                var a           =   aNm / Dm;
+                var b           =   bNm / Dm;
+                if (a > 0 && a < 1 && b > 0 && b < 1)
+                    return true;
+                else
+                    return false;
+            };
         </script>
         <script language='javascript' src='scripts/NumberMaze.js'></script>
         <script language='javascript' src='scripts/GameConfig.js'></script>
