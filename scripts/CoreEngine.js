@@ -55,6 +55,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.draw                   =   function(ctx) {
             ctx.clearRect(0, 0, 640, 480);
 
+            ctx.strokeStyle         =   'rgba(100, 100, 140, 0.8)';
+            ctx.lineCap             =   'round';
             ctx.beginPath();
             for(var i = 0; i < self.pointArray.length; i++) {
                 ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);

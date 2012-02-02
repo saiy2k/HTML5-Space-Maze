@@ -33,15 +33,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.menuCanvas =   document.getElementById('menuCanvas');
         this.scoreCanvas=   document.getElementById('scoreCanvas');
         this.gOverCanvas=   document.getElementById('gameOverCanvas');
+        this.context    =   this.gameCanvas.getContext('2d');
         var touched     =   false;
 
         //init the game components
         var self        =   this;
         var uiManager   =   new NumberMaze.UIManager(this);
         var engine      =   new NumberMaze.CoreEngine(this);
-        var context     =   this.gameCanvas.getContext('2d');
         uiManager.delegate = self;
-        context.fillStyle = 'black';
+        this.context.fillStyle = 'black';
 
         //handles the window events
         console.log(uiManager);
@@ -83,7 +83,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  
         (function gameLoop() {
             engine.update(1/30.0);
-            engine.draw(context);
+            engine.draw(self.context);
             window.requestAnimFrame(gameLoop);
         })();
     };

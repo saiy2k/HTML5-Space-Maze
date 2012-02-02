@@ -93,12 +93,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 angle               +=  delAngle * dt;
             } else {
                 if(arcLength < 3.14) {
-                    arcLength       *=  1.01;
+                    arcLength       *=  1.02;
                     delAngle        *=  1.005;
-                    dx              =   Math.random() * delVibrate;
-                    dy              =   Math.random() * delVibrate;
+                    dx              =   Math.random() * delVibrate - delVibrate / 2;
+                    dy              =   Math.random() * delVibrate - delVibrate / 2;
                     angle           +=  delAngle * dt;
                 } else {
+                    dx              =   0;
+                    dy              =   0;
                 }
             }
         };
@@ -106,7 +108,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** renders the character and the arc around it
          * @public */
         this.draw                   =   function(ctx) {
-            ctx.fillText(self.character, self.x + dx, self.y + dy);
+            ctx.fillText(self.character, self.x + dx - self.radius/4, self.y + dy + self.radius/4);
             ctx.moveTo(self.x + dx + self.radius * Math.cos(angle), self.y + dy + self.radius * Math.sin(angle));
             ctx.arc(self.x + dx, self.y + dy, self.radius, angle, angle - arcLength, true);
             ctx.moveTo(self.x + dx + self.radius * Math.cos(angle + 3.14), self.y + dy + self.radius * Math.sin(angle + 3.14));

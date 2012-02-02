@@ -58,7 +58,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
+            ctx.fillStyle           =   'rgba(50, 50, 90, 0.2)';
+            ctx.strokeStyle         =   'rgba(50, 50, 020, 0.8)';
+            ctx.lineWidth           =   cellWidth/70;
+            for(var i = 0; i < 12; i++) {
+                ctx.beginPath();
+                ctx.arc(self.letterArray[i].x, self.letterArray[i].y, self.letterArray[i].radius, 0, Math.PI*2, false);
+                ctx.fill();
+            }
             ctx.beginPath();
+            ctx.fillStyle           =   '#444';
+            ctx.font                =   'bold ' + cellWidth/14 + 'px Iceberg';
             for(var i = 0; i < 12; i++) {
                 self.letterArray[i].draw(ctx);
             }
