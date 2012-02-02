@@ -44,7 +44,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         var y3          =   self.pointArray[i].y;
                         var x4          =   self.pointArray[i+1].x;
                         var y4          =   self.pointArray[i+1].y;
-                        if(Math.twoLineIntersects(x1, y2, x2, y2, x3, y3, x4, y4)) {
+                        if(Math.twoLineIntersects(x1, y1, x2, y2, x3, y3, x4, y4)) {
                             console.log('outte');
                         }
                     }
