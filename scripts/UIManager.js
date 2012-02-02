@@ -30,7 +30,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var self                    =   this;
 
         /** reference to the object which subscribes for the mouse/touch events
-         *  @type any object that implements mouseup(x, y), mousemove(x, y) and mousedown(x, y) functions
+         *  any object that implements the following functions:
+         *      mouseup(x, y),
+         *      mousemove(x, y),
+         *      mousedown(x, y),
+         *      resizeLayout(tx, ty)
+         *  @type object
          *  @public */
         this.delegate               =   null;
 
@@ -72,7 +77,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  resizes the gamearea and all the canvases within the
          *  allowed range, maintaining the aspect ratio.
          *  Big thanks to tutorials in html5rocks.com for this logic */
-        this.resize = function() {
+        this.resize                 =   function() {
+            console.log('resize');
             var gConfig             =   NumberMaze.GameConfig;
             var widthToHeight       =   4 / 3;
             var newWidth            =   window.innerWidth;
@@ -106,6 +112,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             self.left               =   $(gameArea).offset().left;
             self.top                =   $(gameArea).offset().top;
-        }();
+
+            if(self.delegate)
+                self.delegate.resizeLayout(newWidth, newHeight);
+        };
+
+        this.resize();
     };
 })();  

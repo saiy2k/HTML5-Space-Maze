@@ -44,8 +44,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         context.fillStyle = 'black';
 
         //handles the window events
+        console.log(uiManager);
         window.addEventListener('resize', uiManager.resize, false);
         window.addEventListener('orientationchange', uiManager.resize, false);
+
         self.mousedown  =   function(tx, ty) {
             touched     =   true;
         };
@@ -59,8 +61,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             touched     =   false;
         };
 
+        this.resizeLayout           =   function(tWidth, tHeight) {
+            engine.resizeLayout(tWidth, tHeight);
+        };
+
         //sets up the initial UI and game loop
-		//check
         $(this.menuCanvas).hide();
         $(this.scoreCanvas).hide();
         $(this.gOverCanvas).hide();

@@ -27,21 +27,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var gConfig                 =   NumberMaze.GameConfig;
         this.rowCount               =   gConfig.rowCount;
         this.colCount               =   gConfig.colCount;
-        var cellWidth               =   (g.gameCanvas.width / self.colCount);
-        var cellHeight              =   (g.gameCanvas.height / self.rowCount);
+        var cellWidth               =   0;
+        var cellHeight              =   0;
         this.letterArray            =   new Array();
 
-        for(var k = 0; k < 12; k++) {
-            var i                   =   Math.floor(k / this.colCount);
-            var j                   =   k % this.colCount;
-            var x                   =   cellWidth * j + cellWidth / 2;
-            var y                   =   cellHeight * i + cellHeight / 2;
-            var ltr                 =   new NumberMaze.LetterSprite(k, x, y);
-            this.letterArray.push(ltr);
-        }
-
-        this.resizeLayout           =   function(){
-        };
+        this.resizeLayout           =   function(tWidth, tHeight){
+            cellWidth               =   (tWidth / self.colCount);
+            cellHeight              =   (tHeight / self.rowCount);
+            for(var k = 0; k < 12; k++) {
+                var i                   =   Math.floor(k / self.colCount);
+                var j                   =   k % self.colCount;
+                self.letterArray[k].x   =   cellWidth * j + cellWidth / 2;
+                self.letterArray[k].y   =   cellHeight * i + cellHeight / 2;
+                self.letterArray[k].resizeLayout(tWidth, tHeight);
+            }
+       };
 
         this.collidesWith           =   function(pt) {
             for(var k = 0; k < 12; k++) {
@@ -64,5 +64,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
             ctx.stroke();
         };
+        
+        for(var k = 0; k < 12; k++) {
+            var ltr                 =   new NumberMaze.LetterSprite(k, 0, 0);
+            this.letterArray.push(ltr);
+        }
+        this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
+
     };
 })();

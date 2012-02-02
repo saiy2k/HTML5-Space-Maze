@@ -42,6 +42,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
         };
 
+        this.resizeLayout           =   function(tWidth, tHeight) {
+            grid.resizeLayout(tWidth, tHeight);
+            //TODO:
+            //scale all the points in pointArray to new dimensions
+        };
+
         this.update                 =   function(dt) {
             grid.update(dt);
         };

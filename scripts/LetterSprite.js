@@ -80,7 +80,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var delVibrate              =   6.0;
 
-        this.resizeLayout           =   function(){
+        this.resizeLayout           =   function(tWidth, tHeight) {
+            self.radius             =   tWidth / 32;
         };
 
         this.collided               =   function() {
