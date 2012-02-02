@@ -28,6 +28,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var lastPoint               =   {x:0, y:0};
         var gConfig                 =   NumberMaze.GameConfig;
         var grid                    =   new NumberMaze.GridLayer(g);
+        var breakLines              =   false;
+        var lineSpeed               =   0.1;
         this.pointArray             =   new Array();
 
         this.addPoint               =   function(tx, ty) {
@@ -45,6 +47,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         var x4          =   self.pointArray[i+1].x;
                         var y4          =   self.pointArray[i+1].y;
                         if(Math.twoLineIntersects(x1, y1, x2, y2, x3, y3, x4, y4)) {
+                            breakLines  =   true;
                             console.log('outte');
                         }
                     }
@@ -65,6 +68,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.update                 =   function(dt) {
             grid.update(dt);
+            if(breakLines) {
+                for(var i = 0; i < self.pointArray.length; i++) {
+                    self.pointArray[i].y += lineSpeed;
+                    lineSpeed += 0.001;
+                }
+            }
         };
 
         this.draw                   =   function(ctx) {
