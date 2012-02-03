@@ -27,8 +27,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var lastPoint               =   {x:0, y:0};
         var gConfig                 =   NumberMaze.GameConfig;
         var breakLines              =   false;
-        var lineSpeed               =   0.1;
-        this.pointArray             =   new Array();
+        var breakFactor             =   0;
+        var lineSpeed               =   0;
+        this.pointArray;
 
         this.resizeLayout           =   function(tWidth, tHeight) {
             //TODO:
@@ -37,6 +38,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.reset                  =   function() {
             breakLines              =   false;
+            breakFactor             =   10;
             self.pointArray         =   new Array();
             lineSpeed               =   0.1;
         };
@@ -73,32 +75,35 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.update                 =   function(dt) {
             if(breakLines) {
                 for(var i = 0; i < self.pointArray.length; i++) {
-                    self.pointArray[i].y += lineSpeed;
-                    lineSpeed += 0.001;
-
-                    if (self.pointArray[0].y > 1000) {
-                        self.reset();
-                    }
+                    self.pointArray[i].x -= (640/2 - self.pointArray[i].x)/(100 - breakFactor);
+                    self.pointArray[i].y -= (480/2 - self.pointArray[i].y)/(100 - breakFactor);
+                }
+                breakFactor         *=  1.05;
+                console.log(breakFactor);
+                if(breakFactor > 100) {
+                    self.reset();
                 }
             }
         };
 
         this.draw                   =   function(ctx) {
-            ctx.strokeStyle         =   'rgba(100, 100, 140, 0.8)';
             ctx.lineCap             =   'round';
             ctx.beginPath();
             if(breakLines) {
-                for(var i = 0; i < self.pointArray.length - 2; i+=2) {
-                    ctx.moveTo(self.pointArray[i].x, self.pointArray[i].y);
-                    ctx.lineTo(self.pointArray[i + 1].x, self.pointArray[i + 1].y);
+                ctx.strokeStyle         =   'rgba(100, 100, 140, ' + (0.8 - breakFactor/100.0) + ')';
+                for(var i = 0; i < self.pointArray.length; i++) {
+                    ctx.lineTo(self.pointArray[i].x + Math.random() * breakFactor / 4, self.pointArray[i].y + Math.random() * breakFactor / 4);
                 }
             } else {
+                ctx.strokeStyle         =   'rgba(100, 100, 140, 0.8)';
                 for(var i = 0; i < self.pointArray.length; i++) {
                     ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);
                 }
             }
             ctx.stroke();
         };
+
+        this.reset();
     };
 
 })(); 
