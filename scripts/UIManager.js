@@ -84,8 +84,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.resize                 =   function() {
             var gConfig             =   NumberMaze.GameConfig;
             var widthToHeight       =   4 / 3;
-            var newWidth            =   window.innerWidth;
-            var newHeight           =   window.innerHeight;
+            var newWidth            =   window.innerWidth * .8;
+            var newHeight           =   window.innerHeight * .8;
             var newWidthToHeight    =   newWidth / newHeight;
 
             if (newWidthToHeight > widthToHeight) {

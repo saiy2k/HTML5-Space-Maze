@@ -49,6 +49,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var gLine                   =   new NumberMaze.GameLine(g);
         gLine.delegate              =   self;
 
+        /** hud that displays in-game menu
+         *  @type NumberMaze.HUDLayer
+         *  @private */
+        var hud                     =   new NumberMaze.HUDLayer(g);
+        hud.delegate                =   self;
+
         /** reset the current game */
         this.reset                  =   function() {
             state.grid              =   []; 
@@ -60,11 +66,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
             gLine.reset();
             grid.reset();
+            hud.reset();
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
             grid.resizeLayout(tWidth, tHeight);
             gLine.resizeLayout(tWidth, tHeight);
+            hud.resizeLayout(tWidth, tHeight);
         };
 
         this.addPoint               =   function(tx, ty) {
@@ -77,13 +85,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.update                 =   function(dt) {
             grid.update(dt);
             gLine.update(dt);
-
         };
 
         this.draw                   =   function(ctx) {
             ctx.clearRect(0, 0, 640, 480);
             gLine.draw(ctx);
             grid.draw(ctx);
+            hud.draw(ctx);
         };
 
         /** callback methods to handle the events of GameLine object */
@@ -102,6 +110,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.touchedAllPoints       =   function() {
+        };
+
+        /** callback methods to handle HUD events */
+        this.pauseButtonPressed     =   function() {
         };
 
         this.reset();

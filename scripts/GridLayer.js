@@ -62,12 +62,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  also updates the position of the numbers  */
         this.resizeLayout           =   function(tWidth, tHeight){
             cellWidth               =   (tWidth / gConfig.colCount);
-            cellHeight              =   (tHeight / gConfig.rowCount);
+            cellHeight              =   (tHeight / (gConfig.rowCount + 1));
             for(var k = 0; k < 12; k++) {
                 var i                   =   Math.floor(k / gConfig.colCount);
                 var j                   =   k % gConfig.colCount;
                 self.letterArray[k].x   =   cellWidth * j + cellWidth / 2;
-                self.letterArray[k].y   =   cellHeight * i + cellHeight / 2;
+                self.letterArray[k].y   =   cellHeight * i + cellHeight / 2 + tHeight * 0.2;
                 self.letterArray[k].resizeLayout(tWidth, tHeight);
             }
         };
