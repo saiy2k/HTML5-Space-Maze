@@ -53,8 +53,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** Core game engine which handles all game mechanics 
          *  @type NumberMaze.CoreEngine
          *  @private */
-        var engine      =   new NumberMaze.CoreEngine(this);
-        engine.delegate =   self.uiManager;
+        self.engine      =   new NumberMaze.CoreEngine(this);
+        self.engine.delegate =   self.uiManager;
 
         /** Object that handles the pause screen
          *  @type NumberMaze.PauseScreen
@@ -71,7 +71,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.mousedown  =   function(tx, ty) {
             touched     =   true;
             if (state.currentScreen == 'game') {
-                engine.hud.mousedown(tx, ty);
+                self.engine.hud.mousedown(tx, ty);
             } else if (state.currentScreen == 'paused') {
                 pauseScreen.mousedown(tx, ty);
             }
@@ -80,11 +80,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.mousemove  =   function(tx, ty) {
             if(touched) {
                 if(state.currentScreen == 'game')
-                    engine.addPoint(tx, ty);
+                    self.engine.addPoint(tx, ty);
                 else if (state.currentScreen == 'paused') {
                     //$(self.pauseCanvas).hide();
                     //state.currentScreen = 'game';
-                    //engine.reset();
+                    //self.engine.reset();
                 }
             }
         };
@@ -94,7 +94,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
-            engine.resizeLayout(tWidth, tHeight);
+            self.engine.resizeLayout(tWidth, tHeight);
         };
 
         //sets up the initial UI
@@ -115,17 +115,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         //actual game loop
         (function gameLoop() {
             if(state.currentScreen == 'game') {
-                engine.update(1/30.0);
-                engine.draw(self.context);
+                self.engine.update(1/30.0);
+                self.engine.draw(self.context);
             } else if (state.currentScreen == 'paused') {
-                engine.draw(self.context);
+                self.engine.draw(self.context);
 
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 pauseScreen.update(1/30.0);
                 pauseScreen.draw(self.screenCtx);
             } else if (state.currentScreen == 'gameover') {
-                engine.update(1/30.0);
-                engine.draw(self.context);
+                self.engine.update(1/30.0);
+                self.engine.draw(self.context);
                 pauseScreen.update(1/30.0);
                 pauseScreen.draw(self.screenCtx);
             }

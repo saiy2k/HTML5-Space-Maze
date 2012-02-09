@@ -136,6 +136,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.pauseScreenRestart     =   function() {
+            state.currentScreen     =   'game';
+            g.engine.reset();
+            $(g.menuCanvas).hide();
         };
 
         this.pauseScreenQuit        =   function() {

@@ -43,6 +43,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var height                  =   0;
 
         this.mousedown              =   function(tx, ty) {
+            if (ty  - height * 0.25 < height * 0.1) {
+                self.delegate.pauseScreenResume();
+            } else if (ty  - height * 0.35 < height * 0.1) {
+                self.delegate.pauseScreenRestart();
+            } else if (ty  - height * 0.45 < height * 0.1) {
+                self.delegate.pauseScreenHelp();
+            } else if (ty  - height * 0.55 < height * 0.1) {
+                self.delegate.pauseScreenQuit();
+            }
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
