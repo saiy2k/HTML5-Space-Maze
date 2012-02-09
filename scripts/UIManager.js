@@ -127,6 +127,28 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             $(g.pauseCanvas).show();
         };
 
+        /** callback methods to handle HUD events */
+        this.pauseButtonPressed     =   function() {
+            state.currentScreen     =   'paused';
+            g.screenCtx             =   g.pauseCanvas.getContext('2d');
+            $(g.pauseCanvas).show();
+        };
+
+        /** callback methods to handle pause screen events */
+        this.pauseScreenResume      =   function() {
+            state.currentScreen     =   'game';
+            $(g.pauseCanvas).hide();
+        };
+
+        this.pauseScreenRestart     =   function() {
+        };
+
+        this.pauseScreenQuit        =   function() {
+        };
+
+        this.pauseScreenHelp        =   function() {
+        };
+
         this.resize();
     };
 })();  

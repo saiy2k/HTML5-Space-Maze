@@ -52,8 +52,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** hud that displays in-game menu
          *  @type NumberMaze.HUDLayer
          *  @private */
-        var hud                     =   new NumberMaze.HUDLayer(g);
-        hud.delegate                =   self;
+        this.hud                    =   new NumberMaze.HUDLayer(g);
+        this.hud.delegate           =   g.uiManager;
 
         /** reset the current game */
         this.reset                  =   function() {
@@ -66,13 +66,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
             gLine.reset();
             grid.reset();
-            hud.reset();
+            self.hud.reset();
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
             grid.resizeLayout(tWidth, tHeight);
             gLine.resizeLayout(tWidth, tHeight);
-            hud.resizeLayout(tWidth, tHeight);
+            self.hud.resizeLayout(tWidth, tHeight);
         };
 
         this.addPoint               =   function(tx, ty) {
@@ -80,6 +80,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if(gLine.addPoint(tx, ty))
                 if(grid.collidesWith(pt))
                     console.log('collision detected');
+            self.hud.mousedown(tx, ty);
         }
 
         this.update                 =   function(dt) {
@@ -91,7 +92,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.clearRect(0, 0, 640, 480);
             gLine.draw(ctx);
             grid.draw(ctx);
-            hud.draw(ctx);
+            self.hud.draw(ctx);
         };
 
         /** callback methods to handle the events of GameLine object */
@@ -110,10 +111,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.touchedAllPoints       =   function() {
-        };
-
-        /** callback methods to handle HUD events */
-        this.pauseButtonPressed     =   function() {
         };
 
         this.reset();

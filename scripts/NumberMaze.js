@@ -47,42 +47,47 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.context    =   this.gameCanvas.getContext('2d');
         this.screenCtx;
 
-        /** uiManager handles the screen and the user interactions
+        /** self.uiManager handles the screen and the user interactions
          *  @type NumberMaze.UIManager
          *  @private */
-        var uiManager   =   new NumberMaze.UIManager(this);
-        uiManager.delegate = self;
+        self.uiManager   =   new NumberMaze.UIManager(this);
+        self.uiManager.delegate = self;
 
         /** Core game engine which handles all game mechanics 
          *  @type NumberMaze.CoreEngine
          *  @private */
         var engine      =   new NumberMaze.CoreEngine(this);
-        engine.delegate =   uiManager;
+        engine.delegate =   self.uiManager;
 
         /** Object that handles the pause screen
          *  @type NumberMaze.PauseScreen
          *  @private */
         var pauseScreen =   new NumberMaze.PauseScreen(this);
-        pauseScreen.delegate =   uiManager;
+        pauseScreen.delegate =   self.uiManager;
 
         //this.context.fillStyle = 'black';
 
         //handlers for the window events
-        window.addEventListener('resize', uiManager.resize, false);
-        window.addEventListener('orientationchange', uiManager.resize, false);
+        window.addEventListener('resize', self.uiManager.resize, false);
+        window.addEventListener('orientationchange', self.uiManager.resize, false);
 
         self.mousedown  =   function(tx, ty) {
             touched     =   true;
+            if (state.currentScreen == 'game') {
+                engine.hud.mousedown(tx, ty);
+            } else if (state.currentScreen == 'paused') {
+                pauseScreen.mousedown(tx, ty);
+            }
         };
 
         self.mousemove  =   function(tx, ty) {
             if(touched) {
                 if(state.currentScreen == 'game')
                     engine.addPoint(tx, ty);
-                else {
-                    $(self.pauseCanvas).hide();
-                    state.currentScreen = 'game';
-                    engine.reset();
+                else if (state.currentScreen == 'paused') {
+                    //$(self.pauseCanvas).hide();
+                    //state.currentScreen = 'game';
+                    //engine.reset();
                 }
             }
         };
@@ -118,6 +123,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if(state.currentScreen == 'game') {
                 engine.update(1/30.0);
                 engine.draw(self.context);
+            } else if (state.currentScreen == 'paused') {
+                engine.draw(self.context);
+
+                self.screenCtx.clearRect(0, 0, self.pauseCanvas.width, self.pauseCanvas.height);
+                pauseScreen.update(1/30.0);
+                pauseScreen.draw(self.screenCtx);
             } else if (state.currentScreen == 'gameover') {
                 engine.update(1/30.0);
                 engine.draw(self.context);

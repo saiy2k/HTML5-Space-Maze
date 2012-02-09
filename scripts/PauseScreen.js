@@ -28,13 +28,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** reference to the object which subscribes to the screen event
          *  the subsribed object should implement the following functions:
-         *      resume(),
-         *      restart(),
-         *      quit(),
-         *      help()
+         *      pauseScreenResume(),
+         *      pauseScreenRestart(),
+         *      pauseScreenQuit(),
+         *      pauseScreenHelp()
          *  @type object
          *  @public */
         self.delegate;
+
+        this.mousedown              =   function(tx, ty) {
+            self.delegate.pauseScreenResume();
+        };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
         };
@@ -46,4 +50,4 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.fillText('Paused', 20, 20);
         };
     };
-})();  
+})();
