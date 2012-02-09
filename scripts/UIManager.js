@@ -108,10 +108,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             g.gameCanvas.height     =   newHeight;
             g.menuCanvas.width      =   newWidth;
             g.menuCanvas.height     =   newHeight;
-            g.scoreCanvas.width     =   newWidth;
-            g.scoreCanvas.height    =   newHeight;
-            g.gOverCanvas.width     =   newWidth;
-            g.gOverCanvas.height    =   newHeight;
 
             self.left               =   $(gameArea).offset().left;
             self.top                =   $(gameArea).offset().top;
@@ -123,21 +119,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         //handlers for in-game events
         this.gameOver               =   function() {
             state.currentScreen     =   'gameover';
-            g.screenCtx             =   g.pauseCanvas.getContext('2d');
-            $(g.pauseCanvas).show();
+            $(g.menuCanvas).show();
         };
 
         /** callback methods to handle HUD events */
         this.pauseButtonPressed     =   function() {
             state.currentScreen     =   'paused';
-            g.screenCtx             =   g.pauseCanvas.getContext('2d');
-            $(g.pauseCanvas).show();
+            g.screenCtx             =   g.menuCanvas.getContext('2d');
+            $(g.menuCanvas).show();
         };
 
         /** callback methods to handle pause screen events */
         this.pauseScreenResume      =   function() {
             state.currentScreen     =   'game';
-            $(g.pauseCanvas).hide();
+            $(g.menuCanvas).hide();
         };
 
         this.pauseScreenRestart     =   function() {

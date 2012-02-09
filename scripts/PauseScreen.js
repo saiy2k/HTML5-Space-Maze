@@ -36,18 +36,44 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         self.delegate;
 
+        /** dimensions of the pause screen */
+        var x                       =   0;  
+        var y                       =   0;
+        var width                   =   0;
+        var height                  =   0;
+
         this.mousedown              =   function(tx, ty) {
-            self.delegate.pauseScreenResume();
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
-        };
+            x                       =   tWidth * 0.02;
+            y                       =   tHeight * 0.02;
+            width                   =   tWidth * 0.96;
+            height                  =   tHeight * 0.96;
+        }(g.menuCanvas.width, g.menuCanvas.height);
 
         this.update                 =   function(dt) {
         };
 
         this.draw                   =   function(ctx) {
-            ctx.fillText('Paused', 20, 20);
+            ctx.fillStyle           =   'rgba(0, 0, 0, 0.8)';
+            ctx.fillRect(x, y, width, height);
+
+            ctx.fillStyle           =   'rgba(255, 255, 255, 0.8)';
+            ctx.font                =   'bold ' + width/20 + 'px Iceberg';
+            ctx.fillText('Game Paused', width * 0.1, height * 0.1);
+
+            ctx.font                =   'bold ' + width/30 + 'px Iceberg';
+            ctx.fillText('Resume', width * 0.3, height * 0.3);
+
+            ctx.font                =   'bold ' + width/30 + 'px Iceberg';
+            ctx.fillText('Restart', width * 0.3, height * 0.4);
+
+            ctx.font                =   'bold ' + width/30 + 'px Iceberg';
+            ctx.fillText('Help', width * 0.3, height * 0.5);
+
+            ctx.font                =   'bold ' + width/30 + 'px Iceberg';
+            ctx.fillText('Quit', width * 0.3, height * 0.6);
         };
     };
 })();

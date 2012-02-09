@@ -41,11 +41,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.gameArea   =   document.getElementById('gameArea');
         this.gameCanvas =   document.getElementById('gameCanvas');
         this.menuCanvas =   document.getElementById('menuCanvas');
-        this.scoreCanvas=   document.getElementById('scoreCanvas');
-        this.pauseCanvas=   document.getElementById('pauseCanvas');
-        this.gOverCanvas=   document.getElementById('gameOverCanvas');
         this.context    =   this.gameCanvas.getContext('2d');
-        this.screenCtx;
+        this.screenCtx  =   this.menuCanvas.getContext('2d');
 
         /** self.uiManager handles the screen and the user interactions
          *  @type NumberMaze.UIManager
@@ -102,9 +99,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         //sets up the initial UI
         $(this.menuCanvas).hide();
-        $(this.scoreCanvas).hide();
-        $(this.gOverCanvas).hide();
-        $(this.pauseCanvas).hide();
 
         //sets up the game loop
         window.requestAnimFrame = (function(){
@@ -126,7 +120,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             } else if (state.currentScreen == 'paused') {
                 engine.draw(self.context);
 
-                self.screenCtx.clearRect(0, 0, self.pauseCanvas.width, self.pauseCanvas.height);
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 pauseScreen.update(1/30.0);
                 pauseScreen.draw(self.screenCtx);
             } else if (state.currentScreen == 'gameover') {
