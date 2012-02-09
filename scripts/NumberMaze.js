@@ -27,24 +27,40 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function($, undefined) {
     NumberMaze          =   function() {
-        //inits variables for all canvas
+        var self        =   this;
+
+        /** flag that determines if the mouse is touched down or not
+         *  @type Boolean */
+        var touched     =   false;
+
+        /** string that represents the current screen. Can have values:
+         *  menu, game, gameover, credits, info
+         *  @type String */
+        var screen      =   "game";
+
+        //inits variables for all canvas and DOM Objects
         this.gameArea   =   document.getElementById('gameArea');
         this.gameCanvas =   document.getElementById('gameCanvas');
         this.menuCanvas =   document.getElementById('menuCanvas');
         this.scoreCanvas=   document.getElementById('scoreCanvas');
         this.gOverCanvas=   document.getElementById('gameOverCanvas');
         this.context    =   this.gameCanvas.getContext('2d');
-        var touched     =   false;
 
-        //init the game components
-        var self        =   this;
+        /** uiManager handles the screens and the user interactions
+         *  @type NumberMaze.UIManager
+         *  @private */
         var uiManager   =   new NumberMaze.UIManager(this);
-        var engine      =   new NumberMaze.CoreEngine(this);
         uiManager.delegate = self;
-        this.context.fillStyle = 'black';
 
-        //handles the window events
-        console.log(uiManager);
+        /** Core game engine which handles all game mechanics 
+         *  @type NumberMaze.CoreEngine
+         *  @private */
+        var engine      =   new NumberMaze.CoreEngine(this);
+        engine.delegate =   self;
+
+        //this.context.fillStyle = 'black';
+
+        //handlers for the window events
         window.addEventListener('resize', uiManager.resize, false);
         window.addEventListener('orientationchange', uiManager.resize, false);
 
@@ -65,11 +81,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             engine.resizeLayout(tWidth, tHeight);
         };
 
-        //sets up the initial UI and game loop
+        //handlers for game events
+        this.gameOver   =   function() {
+        };
+
+        //sets up the initial UI
         $(this.menuCanvas).hide();
         $(this.scoreCanvas).hide();
         $(this.gOverCanvas).hide();
 
+        //sets up the game loop
         window.requestAnimFrame = (function(){
             return  window.requestAnimationFrame   || 
                 window.webkitRequestAnimationFrame || 
@@ -81,11 +102,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 };
         })();
  
+        //actual game loop
         (function gameLoop() {
-            engine.update(1/30.0);
-            engine.draw(self.context);
+            if(screen == 'game') {
+                engine.update(1/30.0);
+                engine.draw(self.context);
+            } else if (screen == 'gameover') {
+                engine.update(1/30.0);
+                engine.draw(self.context);
+            }
             window.requestAnimFrame(gameLoop);
         })();
     };
 })(jQuery);
-

@@ -26,8 +26,24 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
     NumberMaze.CoreEngine           =   function(g) {
         var self                    =   this; 
         var gConfig                 =   NumberMaze.GameConfig;
+
+        /** reference to the object which subscribes the game events
+         *  the subsribed object should implement the following functions:
+         *      gameOver(),
+         *  @type object
+         *  @public */
+        self.delegate;
+
+        /** Grid object that manages the numbers and their states
+         *  @type NumberMaze.GridLayer
+         *  @private */
         var grid                    =   new NumberMaze.GridLayer(g);
+
+        /** line object that draws and manages the game line
+         *  @type NumberMaze.GameLine
+         *  @private */
         var gLine                   =   new NumberMaze.GameLine(g);
+        gLine.delegate              =   self;
 
         this.resizeLayout           =   function(tWidth, tHeight) {
             grid.resizeLayout(tWidth, tHeight);
@@ -51,6 +67,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.clearRect(0, 0, 640, 480);
             gLine.draw(ctx);
             grid.draw(ctx);
+        };
+
+        /** callback methods to handle the events of GameLine object */
+        this.lineTouched            =   function() {
+        };
+
+        this.lineExploded           =   function() {
+            gLine.reset();
+            grid.reset();
+            self.delegate.gameOver();
         };
     };
 })();  

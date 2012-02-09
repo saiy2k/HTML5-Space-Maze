@@ -31,6 +31,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var cellHeight              =   0;
         this.letterArray            =   new Array();
 
+        this.reset                  =   function() {
+            for(var i = 0; i < 12; i++)
+                self.letterArray[i].reset();
+        };
+
         this.resizeLayout           =   function(tWidth, tHeight){
             cellWidth               =   (tWidth / self.colCount);
             cellHeight              =   (tHeight / self.rowCount);

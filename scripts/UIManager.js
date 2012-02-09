@@ -117,6 +117,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.delegate.resizeLayout(newWidth, newHeight);
         };
 
+        /** shows the game over screen on top of game engine */
+        this.showGameOver           =   function() {
+            g.gOverCanvas.show();
+        };
         this.resize();
     };
 })();  

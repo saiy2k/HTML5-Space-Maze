@@ -88,6 +88,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.circling           =   false;
         };
 
+        this.reset                  =   function() {
+            dx                      =   0;
+            dy                      =   0;
+            self.circling           =   true;
+            arcLength               =   Math.PI / 4.0;
+            delAngle                =   Math.PI;
+        };
+
         this.update                 =   function(dt) {
             if(self.circling == true) {
                 angle               +=  delAngle * dt;

@@ -31,6 +31,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var lineSpeed               =   0;
         this.pointArray;
 
+        /** reference to the object which subscribes for game line events
+         *  any object that implements the following functions:
+         *      lineTouched(),
+         *      lineExploded()
+         *  @type object
+         *  @public */
+        this.delegate;
+
         this.resizeLayout           =   function(tWidth, tHeight) {
             //TODO:
             //scale all the points in pointArray to new dimensions
@@ -61,6 +69,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         var y4          =   self.pointArray[i+1].y;
                         if(Math.twoLineIntersects(x1, y1, x2, y2, x3, y3, x4, y4)) {
                             breakLines  =   true;
+                            self.delegate.lineTouched();
                         }
                     }
                 }
@@ -79,8 +88,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     self.pointArray[i].y -= (480/2 - self.pointArray[i].y)/(100 - breakFactor);
                 }
                 breakFactor         *=  1.05;
-                console.log(breakFactor);
                 if(breakFactor > 100) {
+                    self.delegate.lineExploded();
                     self.reset();
                 }
             }
