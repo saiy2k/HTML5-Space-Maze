@@ -33,20 +33,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type Boolean */
         var touched     =   false;
 
-        /** string that represents the current screen. Can have values:
-         *  menu, game, gameover, credits, info
-         *  @type String */
-        var screen      =   "game";
+        /** reference to game state object
+         * @type NumberMaze.State */
+        var state       =   NumberMaze.State;
 
         //inits variables for all canvas and DOM Objects
         this.gameArea   =   document.getElementById('gameArea');
         this.gameCanvas =   document.getElementById('gameCanvas');
         this.menuCanvas =   document.getElementById('menuCanvas');
         this.scoreCanvas=   document.getElementById('scoreCanvas');
+        this.pauseCanvas=   document.getElementById('pauseCanvas');
         this.gOverCanvas=   document.getElementById('gameOverCanvas');
         this.context    =   this.gameCanvas.getContext('2d');
+        this.screenCtx;
 
-        /** uiManager handles the screens and the user interactions
+        /** uiManager handles the screen and the user interactions
          *  @type NumberMaze.UIManager
          *  @private */
         var uiManager   =   new NumberMaze.UIManager(this);
@@ -56,7 +57,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type NumberMaze.CoreEngine
          *  @private */
         var engine      =   new NumberMaze.CoreEngine(this);
-        engine.delegate =   self;
+        engine.delegate =   uiManager;
+
+        /** Object that handles the pause screen
+         *  @type NumberMaze.PauseScreen
+         *  @private */
+        var pauseScreen =   new NumberMaze.PauseScreen(this);
+        pauseScreen.delegate =   uiManager;
 
         //this.context.fillStyle = 'black';
 
@@ -69,8 +76,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         self.mousemove  =   function(tx, ty) {
-            if(touched)
-                engine.addPoint(tx, ty);
+            if(touched) {
+                if(state.currentScreen == 'game')
+                    engine.addPoint(tx, ty);
+                else {
+                    $(self.pauseCanvas).hide();
+                    state.currentScreen = 'game';
+                }
+            }
         };
 
         self.mouseup    =   function(tx, ty) {
@@ -81,14 +94,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             engine.resizeLayout(tWidth, tHeight);
         };
 
-        //handlers for game events
-        this.gameOver   =   function() {
-        };
-
         //sets up the initial UI
         $(this.menuCanvas).hide();
         $(this.scoreCanvas).hide();
         $(this.gOverCanvas).hide();
+        $(this.pauseCanvas).hide();
 
         //sets up the game loop
         window.requestAnimFrame = (function(){
@@ -104,12 +114,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  
         //actual game loop
         (function gameLoop() {
-            if(screen == 'game') {
+            if(state.currentScreen == 'game') {
                 engine.update(1/30.0);
                 engine.draw(self.context);
-            } else if (screen == 'gameover') {
+            } else if (state.currentScreen == 'gameover') {
                 engine.update(1/30.0);
                 engine.draw(self.context);
+                pauseScreen.update(1/30.0);
+                pauseScreen.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
         })();

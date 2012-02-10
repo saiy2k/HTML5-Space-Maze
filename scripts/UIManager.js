@@ -39,6 +39,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         this.delegate               =   null;
 
+        /** reference to game state object
+         * @type NumberMaze.State */
+        var state       =   NumberMaze.State;
+
         /** y-position of the game area in the document
          *  @type Number
          *  @public */
@@ -78,7 +82,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  allowed range, maintaining the aspect ratio.
          *  Big thanks to tutorials in html5rocks.com for this logic */
         this.resize                 =   function() {
-            console.log('resize');
             var gConfig             =   NumberMaze.GameConfig;
             var widthToHeight       =   4 / 3;
             var newWidth            =   window.innerWidth;
@@ -117,10 +120,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.delegate.resizeLayout(newWidth, newHeight);
         };
 
-        /** shows the game over screen on top of game engine */
-        this.showGameOver           =   function() {
-            g.gOverCanvas.show();
+        //handlers for in-game events
+        this.gameOver               =   function() {
+            state.currentScreen     =   'gameover';
+            g.screenCtx             =   g.pauseCanvas.getContext('2d');
+            $(g.pauseCanvas).show();
         };
+
         this.resize();
     };
 })();  

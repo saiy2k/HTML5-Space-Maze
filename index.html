@@ -50,12 +50,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             };
         </script>
         <script language='javascript' src='scripts/NumberMaze.js'></script>
+        <script language='javascript' src='scripts/State.js'></script>
         <script language='javascript' src='scripts/GameConfig.js'></script>
         <script language='javascript' src='scripts/UIManager.js'></script>
         <script language='javascript' src='scripts/LetterSprite.js'></script>
         <script language='javascript' src='scripts/GameLine.js'></script>
         <script language='javascript' src='scripts/GridLayer.js'></script>
         <script language='javascript' src='scripts/CoreEngine.js'></script>
+        <script language='javascript' src='scripts/PauseScreen.js'></script>
         <script>
             $(document).ready(function() {
                 // init the main gameEngine
@@ -65,10 +67,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
     </head>
     <body> 
         <div id='gameArea'>
+            <canvas class='gameScreen' id='gameCanvas'></canvas>
             <canvas class='gameScreen' id='menuCanvas'></canvas>
             <canvas class='gameScreen' id='scoreCanvas'></canvas>
             <canvas class='gameScreen' id='gameOverCanvas'></canvas>
-            <canvas class='gameScreen' id='gameCanvas'></canvas>
+            <canvas class='gameScreen' id='pauseCanvas'></canvas>
         </div>
     </body>
 </html>
