@@ -42,14 +42,30 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
+        var resumeButton            =   new NumberMaze.MenuButton("resume", 100, 80, 100, 30);
+        resumeButton.delegate       =   self;
+        var restartButton           =   new NumberMaze.MenuButton("restart", 100, 120, 100, 30);
+        restartButton.delegate      =   self;
+        var helpButton              =   new NumberMaze.MenuButton("help", 100, 160, 100, 30);
+        helpButton.delegate         =   self;
+        var quitButton              =   new NumberMaze.MenuButton("quit", 100, 200, 100, 30);
+        quitButton.delegate         =   self;
+
         this.mousedown              =   function(tx, ty) {
-            if (ty  - height * 0.25 < height * 0.1) {
+            resumeButton.mousedown(tx, ty);
+            restartButton.mousedown(tx, ty);
+            helpButton.mousedown(tx, ty);
+            quitButton.mousedown(tx, ty);
+        };
+
+        this.click                  =   function(btn) {
+            if(btn                  ==  resumeButton) {
                 self.delegate.pauseScreenResume();
-            } else if (ty  - height * 0.35 < height * 0.1) {
+            } else if (btn          ==  restartButton) {
                 self.delegate.pauseScreenRestart();
-            } else if (ty  - height * 0.45 < height * 0.1) {
+            } else if (btn          ==  helpButton) {
                 self.delegate.pauseScreenHelp();
-            } else if (ty  - height * 0.55 < height * 0.1) {
+            } else if (btn          ==  quitButton) {
                 self.delegate.pauseScreenQuit();
             }
         };
@@ -65,24 +81,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
-            ctx.fillStyle           =   'rgba(0, 0, 0, 0.8)';
+            ctx.fillStyle           =   'rgba(0, 0, 0, 0.6)';
             ctx.fillRect(x, y, width, height);
 
             ctx.fillStyle           =   'rgba(255, 255, 255, 0.8)';
             ctx.font                =   'bold ' + width/20 + 'px Iceberg';
             ctx.fillText('Game Paused', width * 0.1, height * 0.1);
 
-            ctx.font                =   'bold ' + width/30 + 'px Iceberg';
-            ctx.fillText('Resume', width * 0.3, height * 0.3);
-
-            ctx.font                =   'bold ' + width/30 + 'px Iceberg';
-            ctx.fillText('Restart', width * 0.3, height * 0.4);
-
-            ctx.font                =   'bold ' + width/30 + 'px Iceberg';
-            ctx.fillText('Help', width * 0.3, height * 0.5);
-
-            ctx.font                =   'bold ' + width/30 + 'px Iceberg';
-            ctx.fillText('Quit', width * 0.3, height * 0.6);
+            resumeButton.draw(ctx);
+            restartButton.draw(ctx);
+            helpButton.draw(ctx);
+            quitButton.draw(ctx);
         };
     };
 })();
