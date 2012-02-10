@@ -125,7 +125,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** callback methods to handle HUD events */
         this.pauseButtonPressed     =   function() {
             state.currentScreen     =   'paused';
-            g.screenCtx             =   g.menuCanvas.getContext('2d');
             $(g.menuCanvas).show();
         };
 

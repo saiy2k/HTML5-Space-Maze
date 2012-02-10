@@ -62,6 +62,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var pauseScreen =   new NumberMaze.PauseScreen(this);
         pauseScreen.delegate =   self.uiManager;
 
+        /** Object that handles the game over screen
+         *  @type NumberMaze.GameOver
+         *  @private */
+        var gameOver    =   new NumberMaze.GameOver(this);
+        gameOver.delegate =   self.uiManager;
+
         //this.context.fillStyle = 'black';
 
         //handlers for the window events
@@ -74,6 +80,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.engine.hud.mousedown(tx, ty);
             } else if (state.currentScreen == 'paused') {
                 pauseScreen.mousedown(tx, ty);
+            } else if (state.currentScreen == 'gameover') {
+                gameOver.mousedown(tx, ty);
             }
         };
 
@@ -81,11 +89,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if(touched) {
                 if(state.currentScreen == 'game')
                     self.engine.addPoint(tx, ty);
-                else if (state.currentScreen == 'paused') {
-                    //$(self.pauseCanvas).hide();
-                    //state.currentScreen = 'game';
-                    //self.engine.reset();
-                }
             }
         };
 
@@ -126,8 +129,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             } else if (state.currentScreen == 'gameover') {
                 self.engine.update(1/30.0);
                 self.engine.draw(self.context);
-                pauseScreen.update(1/30.0);
-                pauseScreen.draw(self.screenCtx);
+                gameOver.update(1/30.0);
+                gameOver.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
         })();
