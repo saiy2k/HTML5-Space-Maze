@@ -123,8 +123,24 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         //handlers for in-game events
         this.gameOver               =   function() {
             state.currentScreen     =   'gameover';
-            g.screenCtx             =   g.pauseCanvas.getContext('2d');
-            $(g.pauseCanvas).show();
+            g.screenCtx             =   g.gOverCanvas.getContext('2d');
+            $(g.gOverCanvas).show();
+        };
+
+        //handlers for pause screen events
+        this.resume                 =   function() {
+        };
+
+        this.restart                =   function() {
+            state.currentScreen     =   'game';
+            $(g.gOverCanvas).hide();
+            g.engine.reset();
+        };
+
+        this.quit                   =   function() {
+        };
+
+        this.help                   =   function() {
         };
 
         this.resize();

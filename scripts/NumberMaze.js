@@ -56,14 +56,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** Core game engine which handles all game mechanics 
          *  @type NumberMaze.CoreEngine
          *  @private */
-        var engine      =   new NumberMaze.CoreEngine(this);
-        engine.delegate =   uiManager;
+        this.engine      =   new NumberMaze.CoreEngine(this);
+        this.engine.delegate =   uiManager;
 
         /** Object that handles the pause screen
          *  @type NumberMaze.PauseScreen
          *  @private */
         var pauseScreen =   new NumberMaze.PauseScreen(this);
         pauseScreen.delegate =   uiManager;
+
+        /** Object that handles the game over screen
+         *  @type NumberMaze.GameOver
+         *  @private */
+        var gOverScreen =   new NumberMaze.GameOver(this);
+        gOverScreen.delegate =   uiManager;
 
         //this.context.fillStyle = 'black';
 
@@ -73,17 +79,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         self.mousedown  =   function(tx, ty) {
             touched     =   true;
+            if (state.currentScreen == 'gameover') {
+                gOverScreen.mousedown(tx, ty);
+            }
         };
 
         self.mousemove  =   function(tx, ty) {
             if(touched) {
                 if(state.currentScreen == 'game')
-                    engine.addPoint(tx, ty);
-                else {
-                    $(self.pauseCanvas).hide();
-                    state.currentScreen = 'game';
-                    engine.reset();
-                }
+                    self.engine.addPoint(tx, ty);
             }
         };
 
@@ -92,7 +96,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
-            engine.resizeLayout(tWidth, tHeight);
+            self.engine.resizeLayout(tWidth, tHeight);
         };
 
         //sets up the initial UI
@@ -116,13 +120,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         //actual game loop
         (function gameLoop() {
             if(state.currentScreen == 'game') {
-                engine.update(1/30.0);
-                engine.draw(self.context);
+                self.engine.update(1/30.0);
+                self.engine.draw(self.context);
             } else if (state.currentScreen == 'gameover') {
-                engine.update(1/30.0);
-                engine.draw(self.context);
-                pauseScreen.update(1/30.0);
-                pauseScreen.draw(self.screenCtx);
+                self.engine.update(1/30.0);
+                self.engine.draw(self.context);
+                gOverScreen.update(1/30.0);
+                gOverScreen.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
         })();

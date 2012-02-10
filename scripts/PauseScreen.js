@@ -36,6 +36,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         self.delegate;
 
+        this.mousedown              =   function(tx, ty) {
+            self.delegate.restart();
+        };
+
         this.resizeLayout           =   function(tWidth, tHeight) {
         };
 
