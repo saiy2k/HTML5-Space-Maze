@@ -26,6 +26,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         gameWidth               :   640,
         gameHeight              :   480,
         currentScreen           :   'game',
-        currentLevel            :   0
+        currentLevel            :   0,
+
+        /** a 2d array of integers that represent the state of numbers.
+         *  0 - open (yet to touch)
+         *  1 - target (next letter to touch)
+         *  2 - hit (the circle is touched and animating; ll change to closed once anim is over)
+         *  3 - closed (already touched, game over if touched again) */
+        gridStatus              :   []
     };
 })();

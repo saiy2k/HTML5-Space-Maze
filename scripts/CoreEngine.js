@@ -34,6 +34,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         self.delegate;
 
+        /** reference to game state object
+         * @type NumberMaze.State */
+        var state       =   NumberMaze.State;
+
         /** Grid object that manages the numbers and their states
          *  @type NumberMaze.GridLayer
          *  @private */
@@ -44,6 +48,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var gLine                   =   new NumberMaze.GameLine(g);
         gLine.delegate              =   self;
+
+        /** reset the current game */
+        this.reset                  =   function() {
+            state.grid              =   []; 
+            for (var i = 0; i < gConfig.rowCount; i++) {
+                state.grid[i]       =   [];
+                for (var j = 0; j < gConfig.colCount; j++) {
+                    state.grid[i][j]=   0;
+                }
+            }
+            gLine.reset();
+            grid.reset();
+        };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
             grid.resizeLayout(tWidth, tHeight);
@@ -74,9 +91,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.lineExploded           =   function() {
-            gLine.reset();
-            grid.reset();
             self.delegate.gameOver();
         };
+
+        /** callback methods to handle the events of GridLayer object */
+        this.touchedTargetPoint     =   function() {
+        };
+
+        this.touchedWrongPoint      =   function() {
+        };
+
+        this.touchedAllPoints       =   function() {
+        };
+
+        this.reset();
     };
 })();  

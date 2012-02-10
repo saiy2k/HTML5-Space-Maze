@@ -25,33 +25,70 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
     NumberMaze.GridLayer            =   function(g) {
         var self                    =   this;
         var gConfig                 =   NumberMaze.GameConfig;
-        this.rowCount               =   gConfig.rowCount;
-        this.colCount               =   gConfig.colCount;
+        var state                   =   NumberMaze.State;
+
+        /** reference to the object which subscribes to events in the GridLayer
+         *  any object that implements the following functions:
+         *      touchedTargetPoint()
+         *      touchedWrongPoint()
+         *      touchedAllPoints()
+         *  @type object
+         *  @public */
+        this.delegate               =   null;
+
+        /** width of the single cell that holds a number
+         *  @type int
+         *  @private */
         var cellWidth               =   0;
+
+        /** height of the single cell that holds a number
+         *  @type int
+         *  @private */
         var cellHeight              =   0;
+
+        /** array of letter objects that handles the animations of
+         *  individual letters
+         *  @type LetterSprite
+         *  @private */
         this.letterArray            =   new Array();
 
+        /** resets the state for a fresh new game */
         this.reset                  =   function() {
             for(var i = 0; i < 12; i++)
                 self.letterArray[i].reset();
         };
 
+        /** updates the cellWidth and cellHeight as per new game area.
+         *  also updates the position of the numbers  */
         this.resizeLayout           =   function(tWidth, tHeight){
-            cellWidth               =   (tWidth / self.colCount);
-            cellHeight              =   (tHeight / self.rowCount);
+            cellWidth               =   (tWidth / gConfig.colCount);
+            cellHeight              =   (tHeight / gConfig.rowCount);
             for(var k = 0; k < 12; k++) {
-                var i                   =   Math.floor(k / self.colCount);
-                var j                   =   k % self.colCount;
+                var i                   =   Math.floor(k / gConfig.colCount);
+                var j                   =   k % gConfig.colCount;
                 self.letterArray[k].x   =   cellWidth * j + cellWidth / 2;
                 self.letterArray[k].y   =   cellHeight * i + cellHeight / 2;
                 self.letterArray[k].resizeLayout(tWidth, tHeight);
             }
-       };
+        };
 
+        /** function to check if the given point collides with any of the
+         *  numbers. If collision is detected then based on the number's state
+         *  corresponding action is taken */
         this.collidesWith           =   function(pt) {
             for(var k = 0; k < 12; k++) {
                 if(self.letterArray[k].circling && Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
-                    self.letterArray[k].collided();
+                    var i, j;
+                    i               =   Math.floor(k / gConfig.colCount);
+                    j               =   Math.floor(k % gConfig.colCount);
+                    if (state.grid[i][j] == 0) {
+                        self.letterArray[k].collided();
+                        if(self.delegate)
+                            self.delegate.touchedTargetPoint();
+                    } else {
+                        if(self.delegate)
+                            self.delegate.touchedWrongPoint();
+                    }
                 }
             }
         };

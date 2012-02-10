@@ -82,6 +82,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 else {
                     $(self.pauseCanvas).hide();
                     state.currentScreen = 'game';
+                    engine.reset();
                 }
             }
         };

@@ -29,6 +29,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         maxCanvasHeight         :   480,
         lineDelta               :   3,
         rowCount                :   3,
-        colCount                :   3
+        colCount                :   4
     };
 })();
