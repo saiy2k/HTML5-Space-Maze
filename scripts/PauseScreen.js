@@ -75,7 +75,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             y                       =   tHeight * 0.02;
             width                   =   tWidth * 0.96;
             height                  =   tHeight * 0.96;
-        }(g.menuCanvas.width, g.menuCanvas.height);
+        };
 
         this.update                 =   function(dt) {
         };
@@ -93,5 +93,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             helpButton.draw(ctx);
             quitButton.draw(ctx);
         };
+
+        this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)
     };
 })();

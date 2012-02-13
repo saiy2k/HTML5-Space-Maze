@@ -57,11 +57,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** reset the current game */
         this.reset                  =   function() {
-            state.grid              =   []; 
+            state.gridStatus        =   []; 
             for (var i = 0; i < gConfig.rowCount; i++) {
-                state.grid[i]       =   [];
+                state.gridStatus[i] =   [];
                 for (var j = 0; j < gConfig.colCount; j++) {
-                    state.grid[i][j]=   0;
+                    state.gridStatus[i][j]=   0;
                 }
             }
             gLine.reset();
