@@ -49,22 +49,30 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var gLine                   =   new NumberMaze.GameLine(g);
         gLine.delegate              =   self;
 
+        /** hud that displays in-game menu
+         *  @type NumberMaze.HUDLayer
+         *  @private */
+        this.hud                    =   new NumberMaze.HUDLayer(g);
+        this.hud.delegate           =   g.uiManager;
+
         /** reset the current game */
         this.reset                  =   function() {
-            state.grid              =   []; 
+            state.gridStatus        =   []; 
             for (var i = 0; i < gConfig.rowCount; i++) {
-                state.grid[i]       =   [];
+                state.gridStatus[i] =   [];
                 for (var j = 0; j < gConfig.colCount; j++) {
-                    state.grid[i][j]=   0;
+                    state.gridStatus[i][j]=   0;
                 }
             }
             gLine.reset();
             grid.reset();
+            self.hud.reset();
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
             grid.resizeLayout(tWidth, tHeight);
             gLine.resizeLayout(tWidth, tHeight);
+            self.hud.resizeLayout(tWidth, tHeight);
         };
 
         this.addPoint               =   function(tx, ty) {
@@ -72,18 +80,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if(gLine.addPoint(tx, ty))
                 if(grid.collidesWith(pt))
                     console.log('collision detected');
+            self.hud.mousedown(tx, ty);
         }
 
         this.update                 =   function(dt) {
             grid.update(dt);
             gLine.update(dt);
-
         };
 
         this.draw                   =   function(ctx) {
             ctx.clearRect(0, 0, 640, 480);
             gLine.draw(ctx);
             grid.draw(ctx);
+            self.hud.draw(ctx);
         };
 
         /** callback methods to handle the events of GameLine object */

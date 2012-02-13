@@ -36,51 +36,65 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** reference to game state object
          * @type NumberMaze.State */
         var state       =   NumberMaze.State;
+        state.gridStatus=   [];
+        for (var i = 0; i < NumberMaze.GameConfig.rowCount; i++) {
+            state.gridStatus[i]       =   [];
+            for (var j = 0; j < NumberMaze.GameConfig.colCount; j++) {
+                state.gridStatus[i][j]=   0;
+            }
+        }
 
         //inits variables for all canvas and DOM Objects
         this.gameArea   =   document.getElementById('gameArea');
         this.gameCanvas =   document.getElementById('gameCanvas');
         this.menuCanvas =   document.getElementById('menuCanvas');
-        this.scoreCanvas=   document.getElementById('scoreCanvas');
-        this.pauseCanvas=   document.getElementById('pauseCanvas');
-        this.gOverCanvas=   document.getElementById('gameOverCanvas');
         this.context    =   this.gameCanvas.getContext('2d');
-        this.screenCtx;
+        this.screenCtx  =   this.menuCanvas.getContext('2d');
 
-        /** uiManager handles the screen and the user interactions
+        /** self.uiManager handles the screen and the user interactions
          *  @type NumberMaze.UIManager
          *  @private */
-        var uiManager   =   new NumberMaze.UIManager(this);
-        uiManager.delegate = self;
+        self.uiManager   =   new NumberMaze.UIManager(this);
+        self.uiManager.delegate = self;
 
         /** Core game engine which handles all game mechanics 
          *  @type NumberMaze.CoreEngine
          *  @private */
-        this.engine      =   new NumberMaze.CoreEngine(this);
-        this.engine.delegate =   uiManager;
+        self.engine      =   new NumberMaze.CoreEngine(this);
+        self.engine.delegate =   self.uiManager;
 
         /** Object that handles the pause screen
          *  @type NumberMaze.PauseScreen
          *  @private */
-        var pauseScreen =   new NumberMaze.PauseScreen(this);
-        pauseScreen.delegate =   uiManager;
+        self.pauseScreen =   new NumberMaze.PauseScreen(this);
+        self.pauseScreen.delegate =   self.uiManager;
+
+        /** Object that handles the game over screen
+         *  @type NumberMaze.GameOver
+         *  @private */
+        self.gameOver    =   new NumberMaze.GameOver(this);
+        self.gameOver.delegate =   self.uiManager;
 
         /** Object that handles the game over screen
          *  @type NumberMaze.GameOver
          *  @private */
         var gOverScreen =   new NumberMaze.GameOver(this);
-        gOverScreen.delegate =   uiManager;
+        gOverScreen.delegate =   self.uiManager;
 
         //this.context.fillStyle = 'black';
 
         //handlers for the window events
-        window.addEventListener('resize', uiManager.resize, false);
-        window.addEventListener('orientationchange', uiManager.resize, false);
+        window.addEventListener('resize', self.uiManager.resize, false);
+        window.addEventListener('orientationchange', self.uiManager.resize, false);
 
         self.mousedown  =   function(tx, ty) {
             touched     =   true;
-            if (state.currentScreen == 'gameover') {
-                gOverScreen.mousedown(tx, ty);
+            if (state.currentScreen == 'game') {
+                self.engine.hud.mousedown(tx, ty);
+            } else if (state.currentScreen == 'paused') {
+                self.pauseScreen.mousedown(tx, ty);
+            } else if (state.currentScreen == 'gameover') {
+                self.gameOver.mousedown(tx, ty);
             }
         };
 
@@ -95,15 +109,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             touched     =   false;
         };
 
-        this.resizeLayout           =   function(tWidth, tHeight) {
+        self.resizeLayout           =   function(tWidth, tHeight) {
             self.engine.resizeLayout(tWidth, tHeight);
+            self.pauseScreen.resizeLayout(tWidth, tHeight);
+            self.gameOver.resizeLayout(tWidth, tHeight);
         };
 
         //sets up the initial UI
         $(this.menuCanvas).hide();
-        $(this.scoreCanvas).hide();
-        $(this.gOverCanvas).hide();
-        $(this.pauseCanvas).hide();
 
         //sets up the game loop
         window.requestAnimFrame = (function(){
@@ -122,11 +135,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if(state.currentScreen == 'game') {
                 self.engine.update(1/30.0);
                 self.engine.draw(self.context);
+            } else if (state.currentScreen == 'paused') {
+                self.engine.draw(self.context);
+
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.pauseScreen.update(1/30.0);
+                self.pauseScreen.draw(self.screenCtx);
             } else if (state.currentScreen == 'gameover') {
                 self.engine.update(1/30.0);
                 self.engine.draw(self.context);
-                gOverScreen.update(1/30.0);
-                gOverScreen.draw(self.screenCtx);
+                self.gameOver.update(1/30.0);
+                self.gameOver.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
         })();

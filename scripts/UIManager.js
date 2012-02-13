@@ -84,8 +84,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.resize                 =   function() {
             var gConfig             =   NumberMaze.GameConfig;
             var widthToHeight       =   4 / 3;
-            var newWidth            =   window.innerWidth;
-            var newHeight           =   window.innerHeight;
+            var newWidth            =   window.innerWidth * .8;
+            var newHeight           =   window.innerHeight * .8;
             var newWidthToHeight    =   newWidth / newHeight;
 
             if (newWidthToHeight > widthToHeight) {
@@ -108,10 +108,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             g.gameCanvas.height     =   newHeight;
             g.menuCanvas.width      =   newWidth;
             g.menuCanvas.height     =   newHeight;
-            g.scoreCanvas.width     =   newWidth;
-            g.scoreCanvas.height    =   newHeight;
-            g.gOverCanvas.width     =   newWidth;
-            g.gOverCanvas.height    =   newHeight;
 
             self.left               =   $(gameArea).offset().left;
             self.top                =   $(gameArea).offset().top;
@@ -123,24 +119,31 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         //handlers for in-game events
         this.gameOver               =   function() {
             state.currentScreen     =   'gameover';
-            g.screenCtx             =   g.gOverCanvas.getContext('2d');
-            $(g.gOverCanvas).show();
+            $(g.menuCanvas).show();
         };
 
-        //handlers for pause screen events
-        this.resume                 =   function() {
+        /** callback methods to handle HUD events */
+        this.pauseButtonPressed     =   function() {
+            state.currentScreen     =   'paused';
+            $(g.menuCanvas).show();
         };
 
-        this.restart                =   function() {
+        /** callback methods to handle pause screen events */
+        this.pauseScreenResume      =   function() {
             state.currentScreen     =   'game';
-            $(g.gOverCanvas).hide();
+            $(g.menuCanvas).hide();
+        };
+
+        this.pauseScreenRestart     =   function() {
+            state.currentScreen     =   'game';
             g.engine.reset();
+            $(g.menuCanvas).hide();
         };
 
-        this.quit                   =   function() {
+        this.pauseScreenQuit        =   function() {
         };
 
-        this.help                   =   function() {
+        this.pauseScreenHelp        =   function() {
         };
 
         this.resize();

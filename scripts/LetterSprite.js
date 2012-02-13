@@ -22,7 +22,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  * adding various effects/animations as per the state of the letter
 */
 (function(undefined) {
-    NumberMaze.LetterSprite         =   function(ch, x, y) {
+    NumberMaze.LetterSprite         =   function(ch, x, y, gx, gy) {
         var self                    =   this;
 
         /** ASCII char rendered by this object
@@ -40,15 +40,25 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         this.y                      =   y;
 
+        /** x position of the object in the grid
+         *  @type int
+         *  @public */
+        this.gridX                  =   gx;
+
+        /** y position of the object in the grid
+         *  @type int
+         *  @public */
+        this.gridY                  =   gy;
+
         /** radius of the revolving arc
          *  @type int
          *  @public */
         this.radius                 =   20;
 
-        /** flag that represents if the arc is revolving now
-         *  @type bool
+        /** delta radius of the revolving arc
+         *  @type int
          *  @public */
-        this.circling               =   true;
+        this.dRadius                =   5;
 
         /** current revolving angle
          *  @type int
@@ -80,26 +90,45 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var delVibrate              =   6.0;
 
+        /** state of the game
+         *  @type int
+         *  @private */
+        var state                   =   NumberMaze.State;
+
         this.resizeLayout           =   function(tWidth, tHeight) {
             self.radius             =   tWidth / 32;
         };
 
         this.collided               =   function() {
-            self.circling           =   false;
+            state.gridStatus[self.gridX][self.gridY] = 2;
+        };
+
+        this.open                   =   function() {
+            self.reset();
+            state.gridStatus[self.gridX][self.gridY] = 1;
         };
 
         this.reset                  =   function() {
             dx                      =   0;
             dy                      =   0;
-            self.circling           =   true;
+            state.gridStatus[self.gridX][self.gridY] = 0;
             arcLength               =   Math.PI / 4.0;
             delAngle                =   Math.PI;
+            if(self.gridY == 2 && self.gridX == 1)
+                state.gridStatus[self.gridX][self.gridY] = 1;
+            self.radius             =   20;
         };
 
         this.update                 =   function(dt) {
-            if(self.circling == true) {
+            var st                  =   state.gridStatus[self.gridX][self.gridY];
+            if(st == 0) {
                 angle               +=  delAngle * dt;
-            } else {
+            } else if(st == 1) {
+                angle               +=  delAngle * dt * -2;
+                self.radius         +=  self.dRadius / 20.0;
+                if (self.radius > 20 || self.radius < 10)
+                    self.dRadius    *=  -1;
+            } else if(st == 2) {
                 if(arcLength < 3.14) {
                     arcLength       *=  1.02;
                     delAngle        *=  1.005;
@@ -107,6 +136,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     dy              =   Math.random() * delVibrate - delVibrate / 2;
                     angle           +=  delAngle * dt;
                 } else {
+                    self.radius     =   20;
+                    state.gridStatus[self.gridX][self.gridY] = 3;
                     dx              =   0;
                     dy              =   0;
                 }

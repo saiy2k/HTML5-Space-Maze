@@ -62,12 +62,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  also updates the position of the numbers  */
         this.resizeLayout           =   function(tWidth, tHeight){
             cellWidth               =   (tWidth / gConfig.colCount);
-            cellHeight              =   (tHeight / gConfig.rowCount);
+            cellHeight              =   (tHeight / (gConfig.rowCount + 1));
             for(var k = 0; k < 12; k++) {
                 var i                   =   Math.floor(k / gConfig.colCount);
                 var j                   =   k % gConfig.colCount;
                 self.letterArray[k].x   =   cellWidth * j + cellWidth / 2;
-                self.letterArray[k].y   =   cellHeight * i + cellHeight / 2;
+                self.letterArray[k].y   =   cellHeight * i + cellHeight / 2 + tHeight * 0.2;
                 self.letterArray[k].resizeLayout(tWidth, tHeight);
             }
         };
@@ -77,18 +77,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  corresponding action is taken */
         this.collidesWith           =   function(pt) {
             for(var k = 0; k < 12; k++) {
-                if(self.letterArray[k].circling && Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
-                    var i, j;
-                    i               =   Math.floor(k / gConfig.colCount);
-                    j               =   Math.floor(k % gConfig.colCount);
-                    if (state.grid[i][j] == 0) {
+                var i, j;
+                i                   =   Math.floor(k / gConfig.colCount);
+                j                   =   Math.floor(k % gConfig.colCount);
+                if(Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
+                    if (state.gridStatus[i][j] == 1) {
                         self.letterArray[k].collided();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
+                        self.letterArray[Math.round(Math.random() * 11)].open();
                     } else {
                         if(self.delegate)
                             self.delegate.touchedWrongPoint();
                     }
+                    break;
                 }
             }
         };
@@ -118,7 +120,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
         
         for(var k = 0; k < 12; k++) {
-            var ltr                 =   new NumberMaze.LetterSprite(k, 0, 0);
+            i                       =   Math.floor(k / gConfig.colCount);
+            j                       =   Math.floor(k % gConfig.colCount);
+            var ltr                 =   new NumberMaze.LetterSprite(k, 0, 0, i, j);
             this.letterArray.push(ltr);
         }
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
