@@ -69,6 +69,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.mainMenu    =   new NumberMaze.MainMenu(this);
         self.mainMenu.delegate =   self.uiManager;
 
+        /** Object that handles the credits screen
+         *  @type NumberMaze.CreditsScreen
+         *  @private */
+        self.creditsScreen=   new NumberMaze.Credits(this);
+        self.creditsScreen.delegate =   self.uiManager;
+
+        /** Object that handles the leaderboard screen
+         *  @type NumberMaze.LBoard
+         *  @private */
+        self.LBoard      =   new NumberMaze.LBoard(this);
+        self.LBoard.delegate =   self.uiManager;
+
         /** Object that handles the pause screen
          *  @type NumberMaze.PauseScreen
          *  @private */
@@ -103,6 +115,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.pauseScreen.mousedown(tx, ty);
             } else if (state.currentScreen == 'gameover') {
                 self.gameOver.mousedown(tx, ty);
+            } else if (state.currentScreen == 'lboard') {
+                self.LBoard.mousedown(tx, ty);
+            } else if (state.currentScreen == 'credits') {
+                self.creditsScreen.mousedown(tx, ty);
             }
         };
 
@@ -158,9 +174,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.gameOver.update(1/30.0);
                 self.gameOver.draw(self.screenCtx);
             } else if (state.currentScreen == 'menu') {
+                self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.mainMenu.update(1/30.0);
                 self.mainMenu.draw(self.screenCtx);
+            } else if (state.currentScreen == 'lboard') {
+                self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.LBoard.update(1/30.0);
+                self.LBoard.draw(self.screenCtx);
+            } else if (state.currentScreen == 'credits') {
+                self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.creditsScreen.update(1/30.0);
+                self.creditsScreen.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
         })();

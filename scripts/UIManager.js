@@ -139,20 +139,41 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             $(g.menuCanvas).hide();
         };
         this.pauseScreenQuit        =   function() {
+            state.currentScreen     =   'menu';
+            g.mainMenu.reset();
+            $(g.menuCanvas).show();
         };
         this.pauseScreenHelp        =   function() {
         };
 
         /** callback methods to handle main menu events */
         this.mainMenuNewGameEasy    =   function() {
+            state.currentScreen     =   'game';
+            $(g.menuCanvas).hide();
         };
         this.mainMenuNewGameHard    =   function() {
+            state.currentScreen     =   'game';
+            $(g.menuCanvas).hide();
         };
-        this.mainMenuNewGamePracice =   function() {
+        this.mainMenuNewGamePractice=   function() {
+            state.currentScreen     =   'game';
+            $(g.menuCanvas).hide();
         };
         this.mainMenuLeaderboard    =   function() {
+            state.currentScreen     =   'lboard';
         };
         this.mainMenuCredits        =   function() {
+            state.currentScreen     =   'credits';
+        };
+
+        /** callback methods to handle leader board events */
+        this.LBoardBack             =   function() {
+            state.currentScreen     =   'menu';
+        };
+
+        /** callback methods to handle credits screen events */
+        this.creditsBack            =   function() {
+            state.currentScreen     =   'menu';
         };
 
         this.resize();
