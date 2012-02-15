@@ -63,6 +63,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.engine      =   new NumberMaze.CoreEngine(this);
         self.engine.delegate =   self.uiManager;
 
+        /** Object that handles the main menu screen
+         *  @type NumberMaze.MainMenu
+         *  @private */
+        self.mainMenu    =   new NumberMaze.MainMenu(this);
+        self.mainMenu.delegate =   self.uiManager;
+
         /** Object that handles the pause screen
          *  @type NumberMaze.PauseScreen
          *  @private */
@@ -91,6 +97,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             touched     =   true;
             if (state.currentScreen == 'game') {
                 self.engine.hud.mousedown(tx, ty);
+            } else if (state.currentScreen == 'menu') {
+                self.mainMenu.mousedown(tx, ty);
             } else if (state.currentScreen == 'paused') {
                 self.pauseScreen.mousedown(tx, ty);
             } else if (state.currentScreen == 'gameover') {
@@ -111,12 +119,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         self.resizeLayout           =   function(tWidth, tHeight) {
             self.engine.resizeLayout(tWidth, tHeight);
+            self.mainMenu.resizeLayout(tWidth, tHeight);
             self.pauseScreen.resizeLayout(tWidth, tHeight);
             self.gameOver.resizeLayout(tWidth, tHeight);
         };
 
         //sets up the initial UI
-        $(this.menuCanvas).hide();
+        //$(this.menuCanvas).hide();
 
         //sets up the game loop
         window.requestAnimFrame = (function(){
@@ -144,8 +153,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             } else if (state.currentScreen == 'gameover') {
                 self.engine.update(1/30.0);
                 self.engine.draw(self.context);
+
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.gameOver.update(1/30.0);
                 self.gameOver.draw(self.screenCtx);
+            } else if (state.currentScreen == 'menu') {
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.mainMenu.update(1/30.0);
+                self.mainMenu.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
         })();

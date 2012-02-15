@@ -133,17 +133,26 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.currentScreen     =   'game';
             $(g.menuCanvas).hide();
         };
-
         this.pauseScreenRestart     =   function() {
             state.currentScreen     =   'game';
             g.engine.reset();
             $(g.menuCanvas).hide();
         };
-
         this.pauseScreenQuit        =   function() {
         };
-
         this.pauseScreenHelp        =   function() {
+        };
+
+        /** callback methods to handle main menu events */
+        this.mainMenuNewGameEasy    =   function() {
+        };
+        this.mainMenuNewGameHard    =   function() {
+        };
+        this.mainMenuNewGamePracice =   function() {
+        };
+        this.mainMenuLeaderboard    =   function() {
+        };
+        this.mainMenuCredits        =   function() {
         };
 
         this.resize();
