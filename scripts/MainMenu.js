@@ -49,19 +49,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var newGameButton           =   new NumberMaze.MenuButton("new game", 140, 80, 160, 30);
+        var newGameButton           =   new NumberMaze.MenuButton("new game", 100, 80, 100, 30);
         newGameButton.delegate      =   self;
-        var practiceButton          =   new NumberMaze.MenuButton("practice", 320, 60, 160, 30);
+        var practiceButton          =   new NumberMaze.MenuButton("practice", 100, 80, 100, 30);
         practiceButton.delegate     =   self;
-        var easyButton              =   new NumberMaze.MenuButton("easy", 320, 100, 160, 30);
+        var easyButton              =   new NumberMaze.MenuButton("easy", 100, 80, 100, 30);
         easyButton.delegate         =   self;
-        var hardButton              =   new NumberMaze.MenuButton("hard", 320, 140, 160, 30);
+        var hardButton              =   new NumberMaze.MenuButton("hard", 100, 80, 100, 30);
         hardButton.delegate         =   self;
-        var lboardButton            =   new NumberMaze.MenuButton("score board", 140, 120, 160, 30);
+        var lboardButton            =   new NumberMaze.MenuButton("score board", 100, 120, 100, 30);
         lboardButton.delegate       =   self;
-        var musicButton             =   new NumberMaze.MenuButton("music on", 140, 160, 160, 30);
+        var musicButton             =   new NumberMaze.MenuButton("music", 100, 160, 100, 30);
         musicButton.delegate        =   self;
-        var creditsButton           =   new NumberMaze.MenuButton("credits", 140, 200, 160, 30);
+        var creditsButton           =   new NumberMaze.MenuButton("credits", 100, 200, 100, 30);
         creditsButton.delegate      =   self;
 
         this.mousedown              =   function(tx, ty) {
@@ -112,7 +112,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
-            ctx.fillStyle           =   'rgba(55, 55, 55, 0.8)';
+            ctx.fillStyle           =   'rgba(0, 0, 0, 0.6)';
+            ctx.fillRect(x, y, width, height);
+
+            ctx.fillStyle           =   'rgba(255, 255, 255, 0.8)';
             ctx.font                =   'bold ' + width/20 + 'px Iceberg';
             ctx.fillText('Main Menu', width * 0.1, height * 0.1);
 
