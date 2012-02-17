@@ -51,9 +51,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** hud that displays in-game menu
          *  @type NumberMaze.HUDLayer
-         *  @private */
+         *  @public */
         this.hud                    =   new NumberMaze.HUDLayer(g);
         this.hud.delegate           =   g.uiManager;
+
+        /** component that takes care of scoring and timing logics
+         *  @type NumberMaze.Score
+         *  @public */
+        var score                   =   new NumberMaze.Score(g);
+        score.delegate              =   self;
 
         /** reset the current game */
         this.reset                  =   function() {
@@ -67,6 +73,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             gLine.reset();
             grid.reset();
             self.hud.reset();
+            score.reset();
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
@@ -86,6 +93,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.update                 =   function(dt) {
             grid.update(dt);
             gLine.update(dt);
+            score.update(dt);
+            self.hud.update(dt, score.chkPointRemain);
         };
 
         this.draw                   =   function(ctx) {

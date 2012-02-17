@@ -33,6 +33,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  1 - target (next letter to touch)
          *  2 - hit (the circle is touched and animating; ll change to closed once anim is over)
          *  3 - closed (already touched, game over if touched again) */
-        gridStatus              :   []
+        gridStatus              :   [],
+
+        /** elapsed time since the start of the level */
+        elapsedtime             :   0
     };
 })();
