@@ -99,7 +99,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.fillStyle           =   'rgba(0, 0, 0, 0.5)';
             ctx.fillRect(self.x, self.y, self.width, self.height);
             ctx.fillStyle           =   'rgba(255, 255, 255, 0.8)';
-            ctx.fillText(self.text, self.x + dx, self.y + dy);
+            ctx.fillText(self.text, self.x + self.width / 2 + dx, self.y + dy);
         };
 
         this.reset();

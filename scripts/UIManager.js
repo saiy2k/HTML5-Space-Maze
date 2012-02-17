@@ -112,6 +112,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.left               =   $(gameArea).offset().left;
             self.top                =   $(gameArea).offset().top;
 
+            NumberMaze.MenuButton.prototype.screenWidth  =   newWidth;
+            NumberMaze.MenuButton.prototype.screenHeight =   newHeight;
+
             if(self.delegate)
                 self.delegate.resizeLayout(newWidth, newHeight);
         };

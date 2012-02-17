@@ -49,19 +49,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var newGameButton           =   new NumberMaze.MenuButton("new game", 100, 80, 100, 30);
+        var newGameButton           =   new NumberMaze.MenuButton("new game", 0, 0, 120, 30);
         newGameButton.delegate      =   self;
-        var practiceButton          =   new NumberMaze.MenuButton("practice", 100, 80, 100, 30);
+        var practiceButton          =   new NumberMaze.MenuButton("practice", 0, 0, 100, 30);
         practiceButton.delegate     =   self;
-        var easyButton              =   new NumberMaze.MenuButton("easy", 100, 80, 100, 30);
+        var easyButton              =   new NumberMaze.MenuButton("easy", 0, 0, 100, 30);
         easyButton.delegate         =   self;
-        var hardButton              =   new NumberMaze.MenuButton("hard", 100, 80, 100, 30);
+        var hardButton              =   new NumberMaze.MenuButton("hard", 0, 0, 100, 30);
         hardButton.delegate         =   self;
-        var lboardButton            =   new NumberMaze.MenuButton("score board", 100, 120, 100, 30);
+        var lboardButton            =   new NumberMaze.MenuButton("score board", 0, 0, 120, 30);
         lboardButton.delegate       =   self;
-        var musicButton             =   new NumberMaze.MenuButton("music", 100, 160, 100, 30);
+        var musicButton             =   new NumberMaze.MenuButton("music", 0, 0, 120, 30);
         musicButton.delegate        =   self;
-        var creditsButton           =   new NumberMaze.MenuButton("credits", 100, 200, 100, 30);
+        var creditsButton           =   new NumberMaze.MenuButton("credits", 0, 0, 120, 30);
         creditsButton.delegate      =   self;
 
         this.mousedown              =   function(tx, ty) {
@@ -104,21 +104,38 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
+            var                         size;
+
             width                   =   tWidth;
             height                  =   tHeight;
+
+            newGameButton.x         =   (tWidth - newGameButton.width) / 2;
+            newGameButton.y         =   height * 0.3;
+            lboardButton.x          =   (tWidth - lboardButton.width) / 2;
+            lboardButton.y          =   height * 0.45;
+            musicButton.x           =   (tWidth - musicButton.width) / 2;
+            musicButton.y           =   height * 0.6;
+            creditsButton.x         =   (tWidth - creditsButton.width) / 2;
+            creditsButton.y         =   height * 0.75;
+
+            practiceButton.x        =   (newGameButton.x + newGameButton.width + tWidth * 0.02);
+            practiceButton.y        =   height * 0.2;
+            easyButton.x            =   (newGameButton.x + newGameButton.width + tWidth * 0.02);
+            easyButton.y            =   height * 0.3;
+            hardButton.x            =   (newGameButton.x + newGameButton.width + tWidth * 0.02);
+            hardButton.y            =   height * 0.4;
         };
 
         this.update                 =   function(dt) {
         };
 
         this.draw                   =   function(ctx) {
-            ctx.fillStyle           =   'rgba(0, 0, 0, 0.6)';
-            ctx.fillRect(x, y, width, height);
+            ctx.textAlign           =   'center';
+            ctx.fillStyle           =   'rgba(55, 55, 55, 0.8)';
+            ctx.font                =   'bold ' + width/20 + 'px Homemade Apple';
+            ctx.fillText('Number Maze', width / 2, height * 0.15);
 
-            ctx.fillStyle           =   'rgba(255, 255, 255, 0.8)';
-            ctx.font                =   'bold ' + width/20 + 'px Iceberg';
-            ctx.fillText('Main Menu', width * 0.1, height * 0.1);
-
+            ctx.font                =   width/40 + 'px Homemade Apple';
             newGameButton.draw(ctx);
             lboardButton.draw(ctx);
             musicButton.draw(ctx);
