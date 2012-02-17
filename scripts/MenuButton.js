@@ -77,6 +77,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var dy                      =   0;
 
+        /** line Oscillation height
+         *  @type int
+         *  @private */
+        var lineOsc                 =   0;
+        var dLineOsc                =   1.0;
+        var over                    =   false;
+
         this.resizeLayout           =   function(tWidth, tHeight) {
         };
 
@@ -85,6 +92,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             dy                      =   self.height / 2;
             arcLength               =   Math.PI / 4.0;
             delAngle                =   Math.PI;
+            lineOsc                 =   self.height / 2;
         };
 
         this.mousedown              =   function(tx, ty) {
@@ -93,12 +101,32 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
         };
 
+        this.mousemove              =   function(tx, ty) {
+            if(tx > self.x && tx < self.x + self.width && ty > self.y && ty < self.y + self.height) {
+                over                =   true;
+            } else {
+                over                =   false;
+                lineOsc             =   self.height / 2;
+            }
+        };
+
+        this.update                 =   function(dt) {
+            if(over) {
+                lineOsc                 +=  dLineOsc;
+                if (lineOsc > self.height || lineOsc < 0)
+                    dLineOsc            *=  -1;
+            }
+        };
+
         /** renders the text and the arc around it
          * @public */
         this.draw                   =   function(ctx) {
-            ctx.fillStyle           =   'rgba(0, 0, 0, 0.5)';
-            ctx.fillRect(self.x, self.y, self.width, self.height);
-            ctx.fillStyle           =   'rgba(255, 255, 255, 0.8)';
+            ctx.beginPath();
+            ctx.quadraticCurveTo(self.x, self.y + self.height / 2, self.x, self.y + self.height / 2);
+            ctx.quadraticCurveTo(self.x + self.width / 2, self.y + self.height / 2 + lineOsc, self.x + self.width, self.y + self.height / 2);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.fillStyle           =   'rgba(55, 55, 55, 0.8)';
             ctx.fillText(self.text, self.x + self.width / 2 + dx, self.y + dy);
         };
 

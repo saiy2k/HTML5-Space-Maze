@@ -123,6 +123,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         self.mousemove  =   function(tx, ty) {
+            if(state.currentScreen == 'menu')
+                self.mainMenu.mousemove(tx, ty);
             if(touched) {
                 if(state.currentScreen == 'game')
                     self.engine.addPoint(tx, ty);

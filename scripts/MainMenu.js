@@ -38,10 +38,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         self.delegate;
 
+        /** array of points to show mouse move animation
+         *  @type array(point)
+         *  @type public */
+        this.pointArray;
+
         /** flag that determines if the difficulty pop up should be shown
          *  @type bool
          *  @private */
         var showDiff;
+
+        /** time since last point removal
+         *  @type int
+         *  @private */
+        var elapsed;
 
         /** dimensions of the pause screen */
         var x                       =   0;  
@@ -64,6 +74,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var creditsButton           =   new NumberMaze.MenuButton("credits", 0, 0, 120, 30);
         creditsButton.delegate      =   self;
 
+        this.addPoint               =   function(tx, ty) {
+            var pt                  =   {x:tx, y:ty};   
+
+            if(self.pointArray.length > 1) {
+                if(Math.dist(pt, self.pointArray[self.pointArray.length - 1]) > 3) {
+                    self.pointArray.push(pt);
+                }
+            } else {
+                self.pointArray.push(pt);
+            }
+        };
+
         this.mousedown              =   function(tx, ty) {
             newGameButton.mousedown(tx, ty);
             lboardButton.mousedown(tx, ty);
@@ -75,7 +97,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 hardButton.mousedown(tx, ty);
                 practiceButton.mousedown(tx, ty);
             }
-                
+        };
+
+        this.mousemove              =   function(tx, ty) {
+            self.addPoint(tx, ty);
+            newGameButton.mousemove(tx, ty);
+            lboardButton.mousemove(tx, ty);
+            musicButton.mousemove(tx, ty);
+            creditsButton.mousemove(tx, ty);
+
+            if(showDiff) {
+                easyButton.mousemove(tx, ty);
+                hardButton.mousemove(tx, ty);
+                practiceButton.mousemove(tx, ty);
+            }
         };
 
         this.click                  =   function(btn) {
@@ -100,7 +135,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.reset                  =   function() {
+            elapsed                 =   0;
             showDiff                =   false;
+            self.pointArray         =   [];
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
@@ -127,6 +164,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.update                 =   function(dt) {
+            elapsed                 +=  dt;
+            if (elapsed > 0.4 - self.pointArray.length / 20) {
+                self.pointArray.shift();
+                elapsed             =   0;
+            }
+            newGameButton.update(dt);
+            lboardButton.update(dt);
+            musicButton.update(dt);
+            creditsButton.update(dt);
         };
 
         this.draw                   =   function(ctx) {
@@ -134,8 +180,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.fillStyle           =   'rgba(55, 55, 55, 0.8)';
             ctx.font                =   'bold ' + width/20 + 'px Homemade Apple';
             ctx.fillText('Number Maze', width / 2, height * 0.15);
+            ctx.strokeStyle     =   'rgba(55, 55, 155, 0.2)';
+            ctx.lineWidth       =   width / 200;
+            ctx.lineCap         =   'round';
+            ctx.beginPath();
 
-            ctx.font                =   width/40 + 'px Homemade Apple';
+            if(self.pointArray.length > 0) {
+                ctx.moveTo(self.pointArray[0].x, self.pointArray[0].y);
+                for(var i = 1; i < self.pointArray.length; i++) {
+                    ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);
+                }
+                ctx.stroke();
+                ctx.closePath();
+            }
+
+            ctx.font                =   width/30 + 'px Homemade Apple';
             newGameButton.draw(ctx);
             lboardButton.draw(ctx);
             musicButton.draw(ctx);
@@ -148,6 +207,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
         };
 
+        self.reset();
         this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)
     };
 })();
