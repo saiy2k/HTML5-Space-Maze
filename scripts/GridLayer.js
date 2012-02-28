@@ -82,13 +82,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 j                   =   Math.floor(k % gConfig.colCount);
                 if(Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
                     if (state.gridStatus[i][j] == 1) {
-                        self.letterArray[k].collided();
+                        self.letterArray[k].jingle();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
                         self.letterArray[Math.round(Math.random() * 11)].open();
-                    } else {
+                    } else if (state.gridStatus[i][j] == 0) {
+                        self.letterArray[k].explode();
                         if(self.delegate)
-                            self.delegate.touchedWrongPoint();
+                            window.setTimeout(self.delegate.touchedWrongPoint, 1400);
                     }
                     break;
                 }

@@ -42,6 +42,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type NumberMaze.GridLayer
          *  @private */
         var grid                    =   new NumberMaze.GridLayer(g);
+        grid.delegate               =   self;
 
         /** line object that draws and manages the game line
          *  @type NumberMaze.GameLine
@@ -51,9 +52,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** hud that displays in-game menu
          *  @type NumberMaze.HUDLayer
-         *  @private */
+         *  @public */
         this.hud                    =   new NumberMaze.HUDLayer(g);
         this.hud.delegate           =   g.uiManager;
+
+        /** component that takes care of scoring and timing logics
+         *  @type NumberMaze.Score
+         *  @public */
+        var score                   =   new NumberMaze.Score(g);
+        score.delegate              =   self;
 
         /** reset the current game */
         this.reset                  =   function() {
@@ -67,6 +74,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             gLine.reset();
             grid.reset();
             self.hud.reset();
+            score.reset();
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
@@ -86,12 +94,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.update                 =   function(dt) {
             grid.update(dt);
             gLine.update(dt);
+            score.update(dt);
+            self.hud.update(dt, score.chkPointRemain, score.currentScore);
         };
 
         this.draw                   =   function(ctx) {
             ctx.clearRect(0, 0, 640, 480);
             gLine.draw(ctx);
             grid.draw(ctx);
+            ctx.font                =   'bold 20px Iceberg';
             self.hud.draw(ctx);
         };
 
@@ -105,12 +116,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** callback methods to handle the events of GridLayer object */
         this.touchedTargetPoint     =   function() {
+            score.targetTouched();
         };
 
         this.touchedWrongPoint      =   function() {
+            self.delegate.gameOver();
         };
 
         this.touchedAllPoints       =   function() {
+        };
+
+        /** callback to handle the events of score object */
+        this.gameTimeOut            =   function() {
         };
 
         this.reset();

@@ -99,8 +99,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.radius             =   tWidth / 32;
         };
 
-        this.collided               =   function() {
+        /** this method changes the state to 'hit', thus showing
+         *  the hit animation */
+        this.jingle                 =   function() {
             state.gridStatus[self.gridX][self.gridY] = 2;
+        };
+
+        /** this method changes the state to 'explode', thus showing
+         *  the explosion animation */
+        this.explode                =   function() {
+            state.gridStatus[self.gridX][self.gridY] = 4;
         };
 
         this.open                   =   function() {
@@ -140,6 +148,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     state.gridStatus[self.gridX][self.gridY] = 3;
                     dx              =   0;
                     dy              =   0;
+                }
+            } else if (st == 4) {
+                arcLength           *=  0.95;
+                delAngle            *=  1.01;
+                dx                  =   Math.random() * delVibrate * 2 - delVibrate;
+                dy                  =   Math.random() * delVibrate * 2 - delVibrate;
+                angle               +=  delAngle * dt;
+                self.radius         *=  1.01;
+                if (self.radius > 40) {
+                    state.gridStatus[self.gridX][self.gridY] = 3;
                 }
             }
         };

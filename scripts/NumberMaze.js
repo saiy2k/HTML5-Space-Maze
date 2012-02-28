@@ -33,6 +33,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type Boolean */
         var touched     =   false;
 
+        /** previous frame's render time
+         *  @type double */
+        var prevFTime   =   0;
+
         /** reference to game state object
          * @type NumberMaze.State */
         var state       =   NumberMaze.State;
@@ -156,39 +160,45 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     window.setTimeout(callback, 1000 / 60);
                 };
         })();
+
+        prevFTime                   =   new Date().getTime();
  
         //actual game loop
         (function gameLoop() {
+            var time                =   new Date().getTime();
+            var dt                  =   (time - prevFTime) / 1000.0;
+            prevFTime               =   time;
+
             if(state.currentScreen == 'game') {
-                self.engine.update(1/30.0);
+                self.engine.update(dt);
                 self.engine.draw(self.context);
             } else if (state.currentScreen == 'paused') {
                 self.engine.draw(self.context);
 
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.pauseScreen.update(1/30.0);
+                self.pauseScreen.update(dt);
                 self.pauseScreen.draw(self.screenCtx);
             } else if (state.currentScreen == 'gameover') {
-                self.engine.update(1/30.0);
+                self.engine.update(dt);
                 self.engine.draw(self.context);
 
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.gameOver.update(1/30.0);
+                self.gameOver.update(dt);
                 self.gameOver.draw(self.screenCtx);
             } else if (state.currentScreen == 'menu') {
                 self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.mainMenu.update(1/30.0);
+                self.mainMenu.update(dt);
                 self.mainMenu.draw(self.screenCtx);
             } else if (state.currentScreen == 'lboard') {
                 self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.LBoard.update(1/30.0);
+                self.LBoard.update(dt);
                 self.LBoard.draw(self.screenCtx);
             } else if (state.currentScreen == 'credits') {
                 self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.creditsScreen.update(1/30.0);
+                self.creditsScreen.update(dt);
                 self.creditsScreen.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
