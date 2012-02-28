@@ -28,17 +28,36 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var self                    =   this; 
         var gConfig                 =   NumberMaze.GameConfig;
 
+        /** reference to the object which subscribes the to the events
+         *  the subsribed object should implement the following functions:
+         *      gameTimeOut(),
+         *  @type object
+         *  @public */
+        self.delegate;
+
         /** reference to game state object
          *  @type NumberMaze.State */
-        var state       =   NumberMaze.State;
+        var state                   =   NumberMaze.State;
+
+        /** this holds the player's score in current level
+         *  @type int */
+        this.currentScore           =   0;
 
         /** time remaining to reach the next target
          *  @type double */
-        this.chkPointRemain= 0;
+        this.chkPointRemain         =   0;
 
         /** reset the current game */
         this.reset                  =   function() {
             self.chkPointRemain     =   10.0;
+            self.currentScore       =   0;
+        };
+
+        /** this method is invoked if a target is touched */
+        this.targetTouched          =   function() {
+            self.currentScore       +=  self.chkPointRemain * 100;
+            self.chkPointRemain     +=  Math.random() * 5.0 + 5.0;
+            console.log(self.currentScore);
         };
 
         this.update                 =   function(dt) {

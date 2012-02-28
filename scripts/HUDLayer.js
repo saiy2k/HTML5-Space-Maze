@@ -31,6 +31,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
         var chkTime                 =   0;
+        var score                   =   0;
 
         /** reference to the object which subscribes to events in this layer
          *  any object that implements the following functions:
@@ -56,15 +57,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             height                  =   tHeight * 0.1;
         };
 
-        this.update                 =   function(dt, time) {
+        this.update                 =   function(dt, time, tScore) {
             chkTime                 =   time;
+            score                   =   tScore;
         };
 
         this.draw                   =   function(ctx) {
             ctx.fillStyle           =   'rgba(0, 0, 0, 0.25)';
             ctx.fillRect(x, y, width, height);
             ctx.fillRect(width * 0.91, y + 4, width * 0.08, height - y * 4);
-            ctx.fillText(chkTime.toFixed(2), 20, 20);
+            ctx.fillText(chkTime.toFixed(2), 20, 30);
+            ctx.fillText(Math.round(score), 120, 30);
         };
         
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
