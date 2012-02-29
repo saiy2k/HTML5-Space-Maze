@@ -28,6 +28,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         currentScreen           :   'game',
         currentLevel            :   0,
 
+        /** represents if the gameplay is started or the scene is just being rendered */
+        active                  :   true,
+
         /** a 2d array of integers that represent the state of numbers.
          *  0 - open (yet to touch)
          *  1 - target (next letter to touch)

@@ -75,6 +75,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             grid.reset();
             self.hud.reset();
             score.reset();
+            state.active            =   true;
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
@@ -84,17 +85,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.addPoint               =   function(tx, ty) {
-            var pt                  =   {x:tx, y:ty};
-            if(gLine.addPoint(tx, ty))
-                if(grid.collidesWith(pt))
-                    console.log('collision detected');
-            self.hud.mousedown(tx, ty);
+            if(state.active) {
+                var pt                  =   {x:tx, y:ty};
+                if(gLine.addPoint(tx, ty))
+                    if(grid.collidesWith(pt))
+                        console.log('collision detected');
+                self.hud.mousedown(tx, ty);
+            }
         }
 
         this.update                 =   function(dt) {
             grid.update(dt);
             gLine.update(dt);
-            score.update(dt);
+            if(state.active) {
+                score.update(dt);
+            }
             self.hud.update(dt, score.chkPointRemain, score.currentScore);
         };
 
@@ -108,6 +113,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** callback methods to handle the events of GameLine object */
         this.lineTouched            =   function() {
+            state.active            =   false;
         };
 
         this.lineExploded           =   function() {
@@ -120,6 +126,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.touchedWrongPoint      =   function() {
+            state.active            =   false; 
+        };
+
+        this.wrongPointExploded     =   function() {
             self.delegate.gameOver();
         };
 
@@ -127,9 +137,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         /** callback to handle the events of score object */
-        this.gameTimeOut            =   function() {
+        this.timeOut                =   function() {
+            state.active            =   false;
+            window.setTimeout(self.delegate.gameOver, 1000);
         };
 
         this.reset();
     };
-})();  
+})(); 

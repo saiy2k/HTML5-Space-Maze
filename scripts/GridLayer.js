@@ -88,8 +88,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         self.letterArray[Math.round(Math.random() * 11)].open();
                     } else if (state.gridStatus[i][j] == 0) {
                         self.letterArray[k].explode();
-                        if(self.delegate)
-                            window.setTimeout(self.delegate.touchedWrongPoint, 1400);
+                        if(self.delegate) {
+                            self.delegate.touchedWrongPoint();
+                            window.setTimeout(self.delegate.wrongPointExploded, 1400);
+                        }
                     }
                     break;
                 }

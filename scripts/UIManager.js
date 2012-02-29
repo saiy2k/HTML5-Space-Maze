@@ -152,14 +152,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** callback methods to handle main menu events */
         this.mainMenuNewGameEasy    =   function() {
             state.currentScreen     =   'game';
+            g.engine.reset();
             $(g.menuCanvas).hide();
         };
         this.mainMenuNewGameHard    =   function() {
             state.currentScreen     =   'game';
+            g.engine.reset();
             $(g.menuCanvas).hide();
         };
         this.mainMenuNewGamePractice=   function() {
             state.currentScreen     =   'game';
+            g.engine.reset();
             $(g.menuCanvas).hide();
         };
         this.mainMenuLeaderboard    =   function() {
