@@ -56,7 +56,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** this method is invoked if a target is touched */
         this.targetTouched          =   function() {
             self.currentScore       +=  self.chkPointRemain * 100;
-            self.chkPointRemain     +=  Math.random() * 2.0 + 2.0;
+            self.chkPointRemain     +=  Math.random() * 2.0 + 8.0;
         };
 
         this.update                 =   function(dt) {
