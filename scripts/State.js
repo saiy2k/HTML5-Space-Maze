@@ -25,7 +25,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
     NumberMaze.State                =   {
         gameWidth               :   640,
         gameHeight              :   480,
-        currentScreen           :   'game',
+        currentScreen           :   'menu',
         currentLevel            :   0,
 
         /** represents if the gameplay is started or the scene is just being rendered */

@@ -202,6 +202,25 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.creditsScreen.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
+
+            Playtomic.Log.View(7158, "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
+
+            var simple_score = {};
+            simple_score.Name = 'sai';;
+            simple_score.Points = 100;;
+
+            Playtomic.Leaderboards.Save(simple_score, "easy"); 
+/*
+            Playtomic.GeoIP.Lookup(callback);
+
+function SetPlayerCountry(country, response)
+{
+    console.log('trace location');
+if(response.Success)
+    trace("Player is from " + country.Code + " / " + country.Name);
+}
+*/
+
         })();
     };
 })(jQuery);
