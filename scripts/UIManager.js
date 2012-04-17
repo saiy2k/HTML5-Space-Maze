@@ -19,8 +19,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Manages all the UI related features from dynamic scaling of game
- * as per the window size, handlers for various UI controls,
- * screen transitions, etc.,
+ * as per the window size, gets input either through mouse or touch,
+ * handlers for various UI controls, screen transitions, etc.,
 */
 (function(undefined) {
     NumberMaze.UIManager            =   function(g) {

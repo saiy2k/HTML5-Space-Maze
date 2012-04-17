@@ -52,6 +52,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         this.letterArray            =   new Array();
 
+        this.getNextLetter          =   function() {
+            return Math.round(Math.random() * 11);
+        };
+
         /** resets the state for a fresh new game */
         this.reset                  =   function() {
             for(var i = 0; i < 12; i++)
@@ -85,7 +89,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         self.letterArray[k].jingle();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
-                        self.letterArray[Math.round(Math.random() * 11)].open();
+                        vat nextPoint = getNextLetter();
+                        self.letterArray[nextPoint].open();
                     } else if (state.gridStatus[i][j] == 0) {
                         self.letterArray[k].explode();
                         if(self.delegate) {
