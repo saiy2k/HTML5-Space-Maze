@@ -47,6 +47,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
                 data: null,
                 success: function(resp) {
+                    NumberMaze.State.authProvider = 'google';
                     NumberMaze.State.userInfo = resp;
                     $('#notloggedin').hide();
                     $('#loggedin').show();
