@@ -25,3 +25,17 @@ border:1px solid;
     width:100%;
     height:100%;
 }
+
+#profileDiv {
+    background: rgba(100, 100, 200, 0.6);
+    border-radius: 12px;
+    width: 20%;
+    height: 8%;
+    padding: 1%;
+    margin: 1%;
+}
+
+.socialIcon {
+    width: 30%;
+    height: 98%;
+}

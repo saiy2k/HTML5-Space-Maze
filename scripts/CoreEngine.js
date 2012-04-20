@@ -84,12 +84,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.addPoint               =   function(tx, ty) {
-            var pt                  =   {x:tx, y:ty};
-            if(gLine.addPoint(tx, ty))
-                if(grid.collidesWith(pt))
-                    console.log('collision detected');
-            self.hud.mousedown(tx, ty);
-        }
+            if(state.active) {
+                var pt                  =   {x:tx, y:ty};
+                if(gLine.addPoint(tx, ty))
+                    if(grid.collidesWith(pt))
+                        console.log('collision detected');
+                self.hud.mousedown(tx, ty);
+            }
+        };
 
         this.update                 =   function(dt) {
             grid.update(dt);

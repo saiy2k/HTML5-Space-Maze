@@ -50,6 +50,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             };
         </script>
         <script language='javascript' src='scripts/NumberMaze.js'></script>
+        <script language='javascript' src='scripts/profiles/GPlusWrapper.js'></script>
         <script language='javascript' src='scripts/State.js'></script>
         <script language='javascript' src='scripts/GameConfig.js'></script>
         <script language='javascript' src='scripts/UIManager.js'></script>
@@ -76,6 +77,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <div id='gameArea'>
             <canvas class='gameScreen' id='gameCanvas'></canvas>
             <canvas class='otherScreen' id='menuCanvas'></canvas>
-        </div>
+            <div id='profileDiv' style="position:absolute;">
+               <div id='notloggedin'>
+                   <img src='images/gplusIcon.png' alt='google plus icon' id='gPlusLogin' class='socialIcon'/>
+                   <img src='images/fbIcon.png' alt='facebook icon' id='fbLogin' class='socialIcon'/>
+                   <img src='images/twitterIcon.png' alt='twitter icon' id='twitterLogin' class='socialIcon'/>
+               </div>
+               <div id='loggedin' style='font-size: 12px'>
+               </div>
+            </div>
+       </div>
     </body>
 </html>

@@ -37,6 +37,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         gridStatus              :   [],
 
         /** elapsed time since the start of the level */
-        elapsedtime             :   0
+        elapsedtime             :   0,
+
+        /** Authentication provider. Can have values:
+         *  google, facebook, twitter */
+        authProvider            :   '',
+
+        /** User object. Contains the details of user, once the
+         *  user is authorized through any oauth providers.
+         *  Structure of this object might differ between different
+         *  providers */
+        userInfo                :   {}
     };
 })();
