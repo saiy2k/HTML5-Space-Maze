@@ -60,7 +60,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.update                 =   function(dt, time, tScore) {
-            fontSize                +=  delFontSize;
+            //fontSize                +=  delFontSize;
             //console.log(fontSize);
             if (fontSize > 24 || fontSize < 12) {
                 if (fontSize > 24)

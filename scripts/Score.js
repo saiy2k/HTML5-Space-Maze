@@ -49,7 +49,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** reset the current game */
         this.reset                  =   function() {
-            self.chkPointRemain     =   6.0;
+            self.chkPointRemain     =   60.0;
             self.currentScore       =   0;
         };
 

@@ -131,7 +131,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 angle               +=  delAngle * dt;
             } else if(st == 1) {
                 angle               +=  delAngle * dt * -2;
-                self.radius         +=  self.dRadius / 20.0;
+                self.radius         +=  self.dRadius / 5.0;
                 if (self.radius > 20 || self.radius < 10)
                     self.dRadius    *=  -1;
             } else if(st == 2) {

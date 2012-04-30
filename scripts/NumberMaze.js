@@ -115,10 +115,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.engine.hud.mousedown(tx, ty);
             } else if (state.currentScreen == 'menu') {
                 self.mainMenu.mousedown(tx, ty);
-            } else if (state.currentScreen == 'paused') {
-                self.pauseScreen.mousedown(tx, ty);
-            } else if (state.currentScreen == 'gameover') {
-                self.gameOver.mousedown(tx, ty);
             } else if (state.currentScreen == 'lboard') {
                 self.LBoard.mousedown(tx, ty);
             } else if (state.currentScreen == 'credits') {
@@ -137,6 +133,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         self.mouseup    =   function(tx, ty) {
             touched     =   false;
+            if(state.currentScreen == 'game' && self.engine.won == false) {
+                window.setTimeout(self.uiManager.gameOver());
+            } else if (state.currentScreen == 'paused') {
+                self.pauseScreen.mouseup(tx, ty);
+            } else if (state.currentScreen == 'gameover') {
+                self.gameOver.mouseup(tx, ty);
+            }
         };
 
         self.resizeLayout           =   function(tWidth, tHeight) {

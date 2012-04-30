@@ -63,8 +63,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var score                   =   new NumberMaze.Score(g);
         score.delegate              =   self;
 
+        this.won                    =   true;
+
         /** reset the current game */
         this.reset                  =   function() {
+            self.won                =   false;
             state.gridStatus        =   []; 
             for (var i = 0; i < gConfig.rowCount; i++) {
                 state.gridStatus[i] =   [];
@@ -110,6 +113,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             grid.draw(ctx);
             ctx.font                =   'bold 20px Iceberg';
             self.hud.draw(ctx);
+
+            if(self.won)
+                ctx.fillText('GAME WON', 100, 100);
         };
 
         /** callback methods to handle the events of GameLine object */
@@ -136,12 +142,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.touchedAllPoints       =   function() {
             window.setTimeout(self.delegate.gameWon, 2000);
+            self.won                =   true;
         };
 
         /** callback to handle the events of score object */
         this.timeOut                =   function() {
             state.active            =   false;
-            window.setTimeout(self.delegate.gameOver, 1000);
+            //window.setTimeout(self.delegate.gameOver, 1000);
         };
 
         this.reset();
