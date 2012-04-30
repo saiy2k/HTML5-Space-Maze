@@ -110,8 +110,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         window.addEventListener('orientationchange', self.uiManager.resize, false);
 
         self.mousedown  =   function(tx, ty) {
-            touched     =   true;
             if (state.currentScreen == 'game') {
+                if (state.inGameState == 'waiting') {
+                    state.inGameState = 'playing';
+                }
                 self.engine.hud.mousedown(tx, ty);
             } else if (state.currentScreen == 'menu') {
                 self.mainMenu.mousedown(tx, ty);
@@ -125,14 +127,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.mousemove  =   function(tx, ty) {
             if(state.currentScreen == 'menu')
                 self.mainMenu.mousemove(tx, ty);
-            if(touched) {
+            if(state.inGameState == 'playing') {
                 if(state.currentScreen == 'game')
                     self.engine.addPoint(tx, ty);
             }
         };
 
         self.mouseup    =   function(tx, ty) {
-            touched     =   false;
             if(state.currentScreen == 'game' && self.engine.won == false) {
                 window.setTimeout(self.uiManager.gameOver());
             } else if (state.currentScreen == 'paused') {

@@ -63,11 +63,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var score                   =   new NumberMaze.Score(g);
         score.delegate              =   self;
 
-        this.won                    =   true;
-
         /** reset the current game */
         this.reset                  =   function() {
-            self.won                =   false;
+            state.inGameState       =   'waiting';
             state.gridStatus        =   []; 
             for (var i = 0; i < gConfig.rowCount; i++) {
                 state.gridStatus[i] =   [];
@@ -114,16 +112,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.font                =   'bold 20px Iceberg';
             self.hud.draw(ctx);
 
-            if(self.won)
+            if(state.inGameState == 'won')
                 ctx.fillText('GAME WON', 100, 100);
         };
 
         /** callback methods to handle the events of GameLine object */
         this.lineTouched            =   function() {
+            state.inGameState       =   'exploding';
             state.active            =   false;
         };
 
         this.lineExploded           =   function() {
+            state.inGameState       =   'lose';
             self.delegate.gameOver();
         };
 
@@ -133,22 +133,25 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.touchedWrongPoint      =   function() {
+            state.inGameState       =   'exploding';
             state.active            =   false; 
         };
 
         this.wrongPointExploded     =   function() {
+            state.inGameState       -   'lose';
             self.delegate.gameOver();
         };
 
         this.touchedAllPoints       =   function() {
+            state.inGameState       =   'won';
             window.setTimeout(self.delegate.gameWon, 2000);
-            self.won                =   true;
         };
 
         /** callback to handle the events of score object */
         this.timeOut                =   function() {
+            state.inGameState       =   'lose';
             state.active            =   false;
-            //window.setTimeout(self.delegate.gameOver, 1000);
+            window.setTimeout(self.delegate.gameOver, 1000);
         };
 
         this.reset();

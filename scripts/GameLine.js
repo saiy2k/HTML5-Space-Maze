@@ -49,9 +49,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             breakFactor             =   10;
             self.pointArray         =   new Array();
             lineSpeed               =   0.1;
+            var pt                  =   {x:30, y:80};
+            self.pointArray.push(pt);
         };
 
         this.addPoint               =   function(tx, ty) {
+            console.log(self.pointArray.length);
             if(breakLines)
                 return;
             var pt                  =   {x:tx, y:ty};
@@ -99,12 +102,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.lineCap             =   'round';
             ctx.beginPath();
             if(breakLines) {
-                ctx.strokeStyle         =   'rgba(100, 100, 140, ' + (0.8 - breakFactor/100.0) + ')';
+                ctx.strokeStyle     =   'rgba(100, 100, 140, ' + (0.8 - breakFactor/100.0) + ')';
                 for(var i = 0; i < self.pointArray.length; i++) {
                     ctx.lineTo(self.pointArray[i].x + Math.random() * breakFactor / 4, self.pointArray[i].y + Math.random() * breakFactor / 4);
                 }
             } else {
-                ctx.strokeStyle         =   'rgba(100, 100, 140, 0.8)';
+                ctx.strokeStyle     =   'rgba(100, 100, 140, 0.8)';
                 for(var i = 0; i < self.pointArray.length; i++) {
                     ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);
                 }
@@ -114,5 +117,4 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.reset();
     };
-
 })(); 
