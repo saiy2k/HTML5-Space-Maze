@@ -122,8 +122,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.gridStatus[self.gridX][self.gridY] = 0;
             arcLength               =   Math.PI / 4.0;
             delAngle                =   Math.PI;
-            if(self.gridY == 2 && self.gridX == 1)
-                state.gridStatus[self.gridX][self.gridY] = 1;
             self.radius             =   20;
         };
 

@@ -30,6 +30,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** reference to the object which subscribes the game events
          *  the subsribed object should implement the following functions:
          *      gameOver(),
+         *      gameWon()
          *  @type object
          *  @public */
         self.delegate;
@@ -134,6 +135,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.touchedAllPoints       =   function() {
+            window.setTimeout(self.delegate.gameWon, 2000);
         };
 
         /** callback to handle the events of score object */

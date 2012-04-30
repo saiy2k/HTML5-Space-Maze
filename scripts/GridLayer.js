@@ -52,14 +52,42 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         this.letterArray            =   new Array();
 
+        /** order of target numbers
+         *  @type int[]
+         *  @public */
+        this.targetArray            =   [12];
+
+        /** index of the current target
+         *  @type int
+         *  @public */
+        this.targetIndex            =   0;
+
         this.getNextLetter          =   function() {
-            return Math.round(Math.random() * 11);
+            return self.targetArray[targetIndex++];
         };
 
         /** resets the state for a fresh new game */
         this.reset                  =   function() {
-            for(var i = 0; i < 12; i++)
+            targetIndex             =   0;
+
+            for(var i = 0; i < 12; i++) {
+                self.targetArray[i] =   i;
                 self.letterArray[i].reset();
+            }
+
+            for(var i = 0; i < 12; i++) {
+                var rnd             =   Math.round(Math.random() * 11);
+                var tmp;
+                tmp                 =   self.targetArray[i];
+                self.targetArray[i] =   self.targetArray[rnd];
+                self.targetArray[rnd]=  tmp;
+            }
+
+            for(var i = 0; i < 12; i++) {
+                console.log(self.targetArray[i]);
+            }
+
+            self.letterArray[self.targetArray[targetIndex]].open();
         };
 
         /** updates the cellWidth and cellHeight as per new game area.
@@ -86,11 +114,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 j                   =   Math.floor(k % gConfig.colCount);
                 if(Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
                     if (state.gridStatus[i][j] == 1) {
+                        console.log('touched');
                         self.letterArray[k].jingle();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
-                        vat nextPoint = getNextLetter();
-                        self.letterArray[nextPoint].open();
+                        if(targetIndex == 12 && self.delegate) {
+                            self.delegate.touchedAllPoints();
+                        } else {
+                            var nextPoint = self.getNextLetter();
+                            self.letterArray[nextPoint].open();
+                        }
                     } else if (state.gridStatus[i][j] == 0) {
                         self.letterArray[k].explode();
                         if(self.delegate) {

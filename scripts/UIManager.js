@@ -125,6 +125,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             $(g.menuCanvas).show();
         };
 
+        this.gameWon                =   function() {
+            state.currentLevel++;
+            g.engine.reset();
+        };
+
         /** callback methods to handle HUD events */
         this.pauseButtonPressed     =   function() {
             state.currentScreen     =   'paused';
