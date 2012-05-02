@@ -173,7 +173,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             $(g.menuCanvas).hide();
         };
         this.mainMenuLeaderboard    =   function() {
+            self.delegate.LBoard.reset();
             state.currentScreen     =   'lboard';
+            
         };
         this.mainMenuCredits        =   function() {
             state.currentScreen     =   'credits';
