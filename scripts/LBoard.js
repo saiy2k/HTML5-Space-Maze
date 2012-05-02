@@ -34,6 +34,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         self.delegate;
 
+
+        /** array of score PlayTomic score object
+         *  @type array (PlayTomic.Score)
+         *  @public */
+        self.scoreList = [];
+
         /** dimensions of the pause screen */
         var x                       =   0;  
         var y                       =   0;
@@ -54,6 +60,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.reset                  =   function() {
+            Playtomic.Leaderboards.List('easy', scoreListingComplete);
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
@@ -69,9 +76,22 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.font                =   'bold ' + width/20 + 'px Iceberg';
             ctx.fillText('leader boards', width * 0.1, height * 0.1);
 
+            for (var i = 0; i < self.scoreList.length; i++) {
+                var score           =   self.scoreList[i];
+                ctx.fillText(" - " + score.Name + " got " + score.Points + " on " + score.SDate, 200, 100 + i * 30);
+            }
+
             backButton.draw(ctx);
         };
 
         this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)
+
+        function scoreListingComplete(scores, numscores, response) {
+            if (response.Success) {
+                self.scoreList      =   scores;
+            } else {
+                console.log(response);
+            }
+        }
     };
 })();

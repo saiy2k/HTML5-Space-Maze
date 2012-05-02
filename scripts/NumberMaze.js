@@ -110,15 +110,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         window.addEventListener('orientationchange', self.uiManager.resize, false);
 
         self.mousedown  =   function(tx, ty) {
-            touched     =   true;
             if (state.currentScreen == 'game') {
+                if (state.inGameState == 'waiting') {
+                    state.inGameState = 'playing';
+                }
                 self.engine.hud.mousedown(tx, ty);
             } else if (state.currentScreen == 'menu') {
                 self.mainMenu.mousedown(tx, ty);
-            } else if (state.currentScreen == 'paused') {
-                self.pauseScreen.mousedown(tx, ty);
-            } else if (state.currentScreen == 'gameover') {
-                self.gameOver.mousedown(tx, ty);
             } else if (state.currentScreen == 'lboard') {
                 self.LBoard.mousedown(tx, ty);
             } else if (state.currentScreen == 'credits') {
@@ -129,14 +127,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.mousemove  =   function(tx, ty) {
             if(state.currentScreen == 'menu')
                 self.mainMenu.mousemove(tx, ty);
-            if(touched) {
+            if(state.inGameState == 'playing') {
                 if(state.currentScreen == 'game')
                     self.engine.addPoint(tx, ty);
             }
         };
 
         self.mouseup    =   function(tx, ty) {
-            touched     =   false;
+            if(state.currentScreen == 'game' && self.engine.won == false) {
+                window.setTimeout(self.uiManager.gameOver());
+            } else if (state.currentScreen == 'paused') {
+                self.pauseScreen.mouseup(tx, ty);
+            } else if (state.currentScreen == 'gameover') {
+                self.gameOver.mouseup(tx, ty);
+            }
         };
 
         self.resizeLayout           =   function(tWidth, tHeight) {
@@ -203,5 +207,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
             window.requestAnimFrame(gameLoop);
         })();
-    };
+ 
+        Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
+
+        var simple_score = {};
+        simple_score.Name = 'player 1';
+        simple_score.Points = 200;
+        Playtomic.Leaderboards.Save(simple_score, "easy"); 
+
+   };
 })(jQuery);

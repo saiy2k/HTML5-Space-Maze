@@ -30,6 +30,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** reference to the object which subscribes the game events
          *  the subsribed object should implement the following functions:
          *      gameOver(),
+         *      gameWon()
          *  @type object
          *  @public */
         self.delegate;
@@ -64,6 +65,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** reset the current game */
         this.reset                  =   function() {
+            state.inGameState       =   'waiting';
             state.gridStatus        =   []; 
             for (var i = 0; i < gConfig.rowCount; i++) {
                 state.gridStatus[i] =   [];
@@ -75,6 +77,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             grid.reset();
             self.hud.reset();
             score.reset();
+            state.active            =   true;
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
@@ -84,17 +87,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.addPoint               =   function(tx, ty) {
-            var pt                  =   {x:tx, y:ty};
-            if(gLine.addPoint(tx, ty))
-                if(grid.collidesWith(pt))
-                    console.log('collision detected');
-            self.hud.mousedown(tx, ty);
+            if(state.active) {
+                var pt                  =   {x:tx, y:ty};
+                if(gLine.addPoint(tx, ty))
+                    if(grid.collidesWith(pt))
+                        console.log('collision detected');
+                self.hud.mousedown(tx, ty);
+            }
         }
 
         this.update                 =   function(dt) {
             grid.update(dt);
             gLine.update(dt);
-            score.update(dt);
+            if(state.active) {
+                score.update(dt);
+            }
             self.hud.update(dt, score.chkPointRemain, score.currentScore);
         };
 
@@ -104,13 +111,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             grid.draw(ctx);
             ctx.font                =   'bold 20px Iceberg';
             self.hud.draw(ctx);
+
+            if(state.inGameState == 'won')
+                ctx.fillText('GAME WON', 100, 100);
         };
 
         /** callback methods to handle the events of GameLine object */
         this.lineTouched            =   function() {
+            state.inGameState       =   'exploding';
+            state.active            =   false;
         };
 
         this.lineExploded           =   function() {
+            state.inGameState       =   'lose';
             self.delegate.gameOver();
         };
 
@@ -120,10 +133,25 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.touchedWrongPoint      =   function() {
+            state.inGameState       =   'exploding';
+            state.active            =   false; 
+        };
+
+        this.wrongPointExploded     =   function() {
+            state.inGameState       -   'lose';
             self.delegate.gameOver();
         };
 
         this.touchedAllPoints       =   function() {
+            state.inGameState       =   'won';
+            window.setTimeout(self.delegate.gameWon, 2000);
+        };
+
+        /** callback to handle the events of score object */
+        this.timeOut                =   function() {
+            state.inGameState       =   'lose';
+            state.active            =   false;
+            window.setTimeout(self.delegate.gameOver, 1000);
         };
 
         /** callback to handle the events of score object */
@@ -131,5 +159,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.reset();
+        gLine.scoreRef              =   score;
     };
-})();  
+})(); 

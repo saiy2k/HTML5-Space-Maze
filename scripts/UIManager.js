@@ -19,8 +19,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Manages all the UI related features from dynamic scaling of game
- * as per the window size, handlers for various UI controls,
- * screen transitions, etc.,
+ * as per the window size, gets input either through mouse or touch,
+ * handlers for various UI controls, screen transitions, etc.,
 */
 (function(undefined) {
     NumberMaze.UIManager            =   function(g) {
@@ -65,6 +65,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         $(gameArea).mousemove(function(e) {
             var x                   =   e.pageX - self.left;
             var y                   =   e.pageY - self.top;
+            console.log(x);
             if(self.delegate)
                 self.delegate.mousemove(x, y);
         });
@@ -121,8 +122,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         //handlers for in-game events
         this.gameOver               =   function() {
+            console.log('gameover');
             state.currentScreen     =   'gameover';
             $(g.menuCanvas).show();
+        };
+
+        this.gameWon                =   function() {
+            state.currentLevel++;
+            g.engine.reset();
         };
 
         /** callback methods to handle HUD events */
@@ -152,18 +159,23 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** callback methods to handle main menu events */
         this.mainMenuNewGameEasy    =   function() {
             state.currentScreen     =   'game';
+            g.engine.reset();
             $(g.menuCanvas).hide();
         };
         this.mainMenuNewGameHard    =   function() {
             state.currentScreen     =   'game';
+            g.engine.reset();
             $(g.menuCanvas).hide();
         };
         this.mainMenuNewGamePractice=   function() {
             state.currentScreen     =   'game';
+            g.engine.reset();
             $(g.menuCanvas).hide();
         };
         this.mainMenuLeaderboard    =   function() {
+            self.delegate.LBoard.reset();
             state.currentScreen     =   'lboard';
+            
         };
         this.mainMenuCredits        =   function() {
             state.currentScreen     =   'credits';

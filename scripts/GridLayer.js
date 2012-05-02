@@ -52,10 +52,61 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         this.letterArray            =   new Array();
 
+        /** order of target numbers
+         *  @type int[]
+         *  @public */
+        this.targetArray            =   [12];
+
+        /** index of the current target
+         *  @type int
+         *  @public */
+        this.targetIndex            =   0;
+
+        /** starting point sptire
+         *  @type LetterSprite
+         *  @private */
+        var startSprite;
+
+        /** ending point sptire
+         *  @type LetterSprite
+         *  @private */
+        var endSprite;
+
+        /** index of the current target number
+         *  @type int
+         *  @private */
+        var currentTarget;
+
+        /** index of the previous target number
+         *  @type int
+         *  @private */
+        var prevTarget;
+
+        this.getNextLetter          =   function() {
+            return self.targetArray[targetIndex++];
+        };
+
         /** resets the state for a fresh new game */
         this.reset                  =   function() {
-            for(var i = 0; i < 12; i++)
+            targetIndex             =   0;
+
+            for(var i = 0; i < 12; i++) {
+                self.targetArray[i] =   i;
                 self.letterArray[i].reset();
+            }
+
+            for(var i = 0; i < 12; i++) {
+                var rnd             =   Math.round(Math.random() * 11);
+                var tmp;
+                tmp                 =   self.targetArray[i];
+                self.targetArray[i] =   self.targetArray[rnd];
+                self.targetArray[rnd]=  tmp;
+            }
+
+            self.letterArray[self.targetArray[targetIndex]].open();
+
+            startSprite.arcLength   =   Math.PI;
+            endSprite.arcLength     =   Math.PI;
         };
 
         /** updates the cellWidth and cellHeight as per new game area.
@@ -85,11 +136,25 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         self.letterArray[k].jingle();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
-                        self.letterArray[Math.round(Math.random() * 11)].open();
+                        if(targetIndex == 12 && self.delegate) {
+                            self.delegate.touchedAllPoints();
+                        } else {
+                            prevTarget      =   currentTarget;
+                            currentTarget   =   self.getNextLetter();
+                            self.letterArray[currentTarget].open();
+                        }
                     } else if (state.gridStatus[i][j] == 0) {
                         self.letterArray[k].explode();
-                        if(self.delegate)
-                            window.setTimeout(self.delegate.touchedWrongPoint, 1400);
+                        if(self.delegate) {
+                            self.delegate.touchedWrongPoint();
+                            window.setTimeout(self.delegate.wrongPointExploded, 1400);
+                        }
+                    } else if (k != prevTarget) {
+                        self.letterArray[k].explode();
+                        if(self.delegate) {
+                            self.delegate.touchedWrongPoint();
+                            window.setTimeout(self.delegate.wrongPointExploded, 1400);
+                        }
                     }
                     break;
                 }
@@ -111,12 +176,27 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 ctx.arc(self.letterArray[i].x, self.letterArray[i].y, self.letterArray[i].radius, 0, Math.PI*2, false);
                 ctx.fill();
             }
+
+            ctx.fillStyle           =   'rgba(250, 20, 0, 0.8)';
+            ctx.beginPath();
+            var index               =   self.targetArray[targetIndex-1];
+            if (index == undefined)
+                index               =   self.targetArray[targetIndex];
+            ctx.arc(self.letterArray[index].x, self.letterArray[index].y, self.letterArray[index].radius, 0, Math.PI*2, false);
+            ctx.fill();
+
             ctx.beginPath();
             ctx.fillStyle           =   '#444';
             ctx.font                =   'bold ' + cellWidth/14 + 'px Iceberg';
             for(var i = 0; i < 12; i++) {
                 self.letterArray[i].draw(ctx);
             }
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.lineStyle           =   'rgba(250, 20, 0, 0.8)';
+            startSprite.draw(ctx);
+            endSprite.draw(ctx);
             ctx.stroke();
         };
         
@@ -127,6 +207,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             this.letterArray.push(ltr);
         }
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
+
+        startSprite                 =   new NumberMaze.LetterSprite('.', 30, 80, 0, 0);
+        startSprite.radius          =   8;
+
+        endSprite                   =   new NumberMaze.LetterSprite('.', 610, 440, 0, 0);
+        endSprite.radius            =   8;
 
     };
 })();

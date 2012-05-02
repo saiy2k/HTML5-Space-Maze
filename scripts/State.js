@@ -25,8 +25,24 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
     NumberMaze.State                =   {
         gameWidth               :   640,
         gameHeight              :   480,
+
+        /** holds a unique ID that represents the screen that is 
+         *  currently being rendered.
+         *  Possible values: game, menu, lboard, credits, paused, gameover
+         *  @type String
+         *  @public */
         currentScreen           :   'game',
+
+        /** represents the current in-game state.
+         *  Possible values being waiting, playing, exploding, won, lose
+         *  @type String
+         *  @public */
+        inGameState             :   'waiting',
+
         currentLevel            :   0,
+
+        /** represents if the gameplay is started or the scene is just being rendered */
+        active                  :   true,
 
         /** a 2d array of integers that represent the state of numbers.
          *  0 - open (yet to touch)

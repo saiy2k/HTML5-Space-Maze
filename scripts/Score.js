@@ -49,15 +49,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** reset the current game */
         this.reset                  =   function() {
-            self.chkPointRemain     =   10.0;
+            self.chkPointRemain     =   6.0;
             self.currentScore       =   0;
         };
 
         /** this method is invoked if a target is touched */
         this.targetTouched          =   function() {
-            self.currentScore       +=  self.chkPointRemain * 100;
-            self.chkPointRemain     +=  Math.random() * 5.0 + 5.0;
-            console.log(self.currentScore);
+            var scoreAwarded        =   self.chkPointRemain * 100;
+            self.currentScore       +=  scoreAwarded; 
+            self.chkPointRemain     +=  Math.random() * 2.0 + 1.0;
+            return                      scoreAwarded;
         };
 
         this.update                 =   function(dt) {
@@ -65,7 +66,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.chkPointRemain     -=  dt;
 
             if (self.chkPointRemain <=  0) {
-                self.chkPointRemain =   Math.random() * 5.0 + 5.0;
+                self.delegate.timeOut();
             }
         };
 

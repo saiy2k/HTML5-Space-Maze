@@ -73,7 +73,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** length of the are to draw on screen
          *  @type double
          *  @private */
-        var arcLength               =   Math.PI / 4.0;
+        this.arcLength               =   Math.PI / 4.0;
 
         /** x displacement for shaking effect
          *  @type int
@@ -120,10 +120,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             dx                      =   0;
             dy                      =   0;
             state.gridStatus[self.gridX][self.gridY] = 0;
-            arcLength               =   Math.PI / 4.0;
+            self.arcLength               =   Math.PI / 4.0;
             delAngle                =   Math.PI;
-            if(self.gridY == 2 && self.gridX == 1)
-                state.gridStatus[self.gridX][self.gridY] = 1;
             self.radius             =   20;
         };
 
@@ -133,12 +131,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 angle               +=  delAngle * dt;
             } else if(st == 1) {
                 angle               +=  delAngle * dt * -2;
-                self.radius         +=  self.dRadius / 20.0;
+                self.radius         +=  self.dRadius / 5.0;
                 if (self.radius > 20 || self.radius < 10)
                     self.dRadius    *=  -1;
             } else if(st == 2) {
-                if(arcLength < 3.14) {
-                    arcLength       *=  1.02;
+                if(self.arcLength < 3.14) {
+                    self.arcLength       *=  1.02;
                     delAngle        *=  1.005;
                     dx              =   Math.random() * delVibrate - delVibrate / 2;
                     dy              =   Math.random() * delVibrate - delVibrate / 2;
@@ -150,7 +148,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     dy              =   0;
                 }
             } else if (st == 4) {
-                arcLength           *=  0.95;
+                self.arcLength           *=  0.95;
                 delAngle            *=  1.01;
                 dx                  =   Math.random() * delVibrate * 2 - delVibrate;
                 dy                  =   Math.random() * delVibrate * 2 - delVibrate;
@@ -167,9 +165,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.draw                   =   function(ctx) {
             ctx.fillText(self.character, self.x + dx - self.radius/4, self.y + dy + self.radius/4);
             ctx.moveTo(self.x + dx + self.radius * Math.cos(angle), self.y + dy + self.radius * Math.sin(angle));
-            ctx.arc(self.x + dx, self.y + dy, self.radius, angle, angle - arcLength, true);
+            ctx.arc(self.x + dx, self.y + dy, self.radius, angle, angle - self.arcLength, true);
             ctx.moveTo(self.x + dx + self.radius * Math.cos(angle + 3.14), self.y + dy + self.radius * Math.sin(angle + 3.14));
-            ctx.arc(self.x + dx, self.y + dy, self.radius, angle + 3.14, angle - arcLength + 3.14, true);
+            ctx.arc(self.x + dx, self.y + dy, self.radius, angle + 3.14, angle - self.arcLength + 3.14, true);
         };
     };
 })();

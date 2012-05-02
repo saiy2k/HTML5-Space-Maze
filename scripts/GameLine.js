@@ -39,6 +39,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         this.delegate;
 
+        /** reference to score object
+         *  @type NumberMaze.Score
+         *  @public */
+        this.scoreRef;
+
         this.resizeLayout           =   function(tWidth, tHeight) {
             //TODO:
             //scale all the points in pointArray to new dimensions
@@ -49,11 +54,24 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             breakFactor             =   10;
             self.pointArray         =   new Array();
             lineSpeed               =   0.1;
+            var pt                  =   {x:30, y:80};
+            self.pointArray.push(pt);
         };
 
         this.addPoint               =   function(tx, ty) {
             if(breakLines)
                 return;
+
+            console.log(tx);
+            if(tx <= g.gameCanvas.width / 100.0 ||
+                    ty <= g.gameCanvas.height / 100.0 ||
+                    tx >= 99.0 * g.gameCanvas.width / 100.0 ||
+                    ty >= 99.0 * g.gameCanvas.height / 100.0) {
+                breakLines          =   true;
+                self.delegate.lineTouched();
+                return;
+            }
+
             var pt                  =   {x:tx, y:ty};
             var dist                =   Math.sqrt((lastPoint.x - tx) * (lastPoint.x - tx) + (lastPoint.y - ty) * (lastPoint.y - ty));
             if (dist > gConfig.lineDelta) {
@@ -70,6 +88,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         if(Math.twoLineIntersects(x1, y1, x2, y2, x3, y3, x4, y4)) {
                             breakLines  =   true;
                             self.delegate.lineTouched();
+                            return          false;
                         }
                     }
                 }
@@ -96,23 +115,26 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
+            var lastPoint           =   self.pointArray.length - 1;
             ctx.lineCap             =   'round';
             ctx.beginPath();
             if(breakLines) {
-                ctx.strokeStyle         =   'rgba(100, 100, 140, ' + (0.8 - breakFactor/100.0) + ')';
+                ctx.strokeStyle     =   'rgba(100, 100, 140, ' + (0.8 - breakFactor/100.0) + ')';
                 for(var i = 0; i < self.pointArray.length; i++) {
                     ctx.lineTo(self.pointArray[i].x + Math.random() * breakFactor / 4, self.pointArray[i].y + Math.random() * breakFactor / 4);
                 }
             } else {
-                ctx.strokeStyle         =   'rgba(100, 100, 140, 0.8)';
+                ctx.strokeStyle     =   'rgba(100, 100, 140, 0.8)';
                 for(var i = 0; i < self.pointArray.length; i++) {
                     ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);
                 }
             }
             ctx.stroke();
+
+            ctx.font                =   'bold 24px Iceberg';
+            ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
         };
 
         this.reset();
     };
-
 })(); 

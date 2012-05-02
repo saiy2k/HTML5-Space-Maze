@@ -51,7 +51,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var quitButton              =   new NumberMaze.MenuButton("quit", 100, 200, 100, 30);
         quitButton.delegate         =   self;
 
-        this.mousedown              =   function(tx, ty) {
+        this.mouseup                =   function(tx, ty) {
             resumeButton.mousedown(tx, ty);
             restartButton.mousedown(tx, ty);
             helpButton.mousedown(tx, ty);
