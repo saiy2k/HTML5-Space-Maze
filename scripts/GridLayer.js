@@ -72,6 +72,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var endSprite;
 
+        /** index of the current target number
+         *  @type int
+         *  @private */
+        var currentTarget;
+
+        /** index of the previous target number
+         *  @type int
+         *  @private */
+        var prevTarget;
+
         this.getNextLetter          =   function() {
             return self.targetArray[targetIndex++];
         };
@@ -94,6 +104,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
 
             self.letterArray[self.targetArray[targetIndex]].open();
+
+            startSprite.arcLength   =   Math.PI;
+            endSprite.arcLength     =   Math.PI;
         };
 
         /** updates the cellWidth and cellHeight as per new game area.
@@ -120,17 +133,23 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 j                   =   Math.floor(k % gConfig.colCount);
                 if(Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
                     if (state.gridStatus[i][j] == 1) {
-                        console.log('touched');
                         self.letterArray[k].jingle();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
                         if(targetIndex == 12 && self.delegate) {
                             self.delegate.touchedAllPoints();
                         } else {
-                            var nextPoint = self.getNextLetter();
-                            self.letterArray[nextPoint].open();
+                            prevTarget      =   currentTarget;
+                            currentTarget   =   self.getNextLetter();
+                            self.letterArray[currentTarget].open();
                         }
                     } else if (state.gridStatus[i][j] == 0) {
+                        self.letterArray[k].explode();
+                        if(self.delegate) {
+                            self.delegate.touchedWrongPoint();
+                            window.setTimeout(self.delegate.wrongPointExploded, 1400);
+                        }
+                    } else if (k != prevTarget) {
                         self.letterArray[k].explode();
                         if(self.delegate) {
                             self.delegate.touchedWrongPoint();
@@ -146,8 +165,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             for(var k = 0; k < 12; k++) {
                 self.letterArray[k].update(dt);
             }
-            startSprite.update(dt);
-            endSprite.update(dt);
         };
 
         this.draw                   =   function(ctx) {
@@ -193,13 +210,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         startSprite                 =   new NumberMaze.LetterSprite('.', 30, 80, 0, 0);
         startSprite.radius          =   8;
-        startSprite.delAngle        =   Math.PI * 5;
-        startSprite.arcLength       =   Math.PI * 1.5;
 
         endSprite                   =   new NumberMaze.LetterSprite('.', 610, 440, 0, 0);
         endSprite.radius            =   8;
-        endSprite.delAngle          =   Math.PI * 5;
-        endSprite.arcLength         =   Math.PI * 1.5;
 
     };
 })();

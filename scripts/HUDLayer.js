@@ -81,8 +81,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.fillRect(x, y, width, height);
             ctx.fillRect(width * 0.91, y + 4, width * 0.08, height - y * 4);
             ctx.fillText(Math.round(score), 120, 30);
-            ctx.font                =   'bold ' + fontSize + 'px Iceberg';
-            ctx.fillText(chkTime.toFixed(2), 20, 30);
         };
         
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);

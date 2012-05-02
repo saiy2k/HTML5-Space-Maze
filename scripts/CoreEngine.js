@@ -155,5 +155,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.reset();
+        gLine.scoreRef              =   score;
     };
 })(); 

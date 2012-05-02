@@ -39,6 +39,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         this.delegate;
 
+        /** reference to score object
+         *  @type NumberMaze.Score
+         *  @public */
+        this.scoreRef;
+
         this.resizeLayout           =   function(tWidth, tHeight) {
             //TODO:
             //scale all the points in pointArray to new dimensions
@@ -54,9 +59,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.addPoint               =   function(tx, ty) {
-            console.log(self.pointArray.length);
             if(breakLines)
                 return;
+
+            console.log(tx);
+            if(tx <= g.gameCanvas.width / 100.0 ||
+                    ty <= g.gameCanvas.height / 100.0 ||
+                    tx >= 99.0 * g.gameCanvas.width / 100.0 ||
+                    ty >= 99.0 * g.gameCanvas.height / 100.0) {
+                breakLines          =   true;
+                self.delegate.lineTouched();
+                return;
+            }
+
             var pt                  =   {x:tx, y:ty};
             var dist                =   Math.sqrt((lastPoint.x - tx) * (lastPoint.x - tx) + (lastPoint.y - ty) * (lastPoint.y - ty));
             if (dist > gConfig.lineDelta) {
@@ -73,6 +88,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         if(Math.twoLineIntersects(x1, y1, x2, y2, x3, y3, x4, y4)) {
                             breakLines  =   true;
                             self.delegate.lineTouched();
+                            return          false;
                         }
                     }
                 }
@@ -99,6 +115,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
+            var lastPoint           =   self.pointArray.length - 1;
             ctx.lineCap             =   'round';
             ctx.beginPath();
             if(breakLines) {
@@ -113,6 +130,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 }
             }
             ctx.stroke();
+
+            ctx.font                =   'bold 24px Iceberg';
+            ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
         };
 
         this.reset();
