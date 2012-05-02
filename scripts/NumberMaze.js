@@ -202,27 +202,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.creditsScreen.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
-/*
-            Playtomic.GeoIP.Lookup(callback);
-
-function SetPlayerCountry(country, response)
-{
-    console.log('trace location');
-if(response.Success)
-    trace("Player is from " + country.Code + " / " + country.Name);
-}
-*/
-
         })();
  
-            console.log('updating score');
-            Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
+        Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
 
-            var simple_score = {};
-            simple_score.Name = 'bai';
-            simple_score.Points = 20;
-
-            Playtomic.Leaderboards.Save(simple_score, "easy"); 
+        var simple_score = {};
+        simple_score.Name = 'player 1';
+        simple_score.Points = 200;
+        Playtomic.Leaderboards.Save(simple_score, "easy"); 
 
    };
 })(jQuery);
