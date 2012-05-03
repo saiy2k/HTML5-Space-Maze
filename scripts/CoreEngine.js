@@ -63,6 +63,27 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var score                   =   new NumberMaze.Score(g);
         score.delegate              =   self;
 
+        /** boolean that determines whether the score pop up animation
+         *  is being rendred
+         *  @type bool
+         *  @private */
+        var showBonusPop            =   false;
+
+        /** number of seconds awarded as time bonus
+         *  @type float
+         *  @private */
+        var timeBonus               =   0.0;
+
+        /** time pop anim tween value
+         *  @type float
+         *  @private */
+        var timeAnimDelta           =   1.0;
+
+        function animateScorePopup() {
+            showBonusPop            =   true;
+            timeAnimDelta           =   1.0;
+        }
+
         /** reset the current game */
         this.reset                  =   function() {
             state.inGameState       =   'waiting';
@@ -114,6 +135,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             if(state.inGameState == 'won')
                 ctx.fillText('GAME WON', 100, 100);
+
+            if(showBonusPop) {
+                var                     lastIndex;
+                lastIndex           =   gLine.pointArray.length - 1;
+                ctx.fillText(timeBonus.toFixed(2), gLine.pointArray[lastIndex].x, gLine.pointArray[lastIndex].y - (80 * (1 - timeAnimDelta)));
+
+                timeAnimDelta       -=  0.02;
+
+                if (timeAnimDelta <= 0)
+                    showBonusPop    =   false;
+            }
         };
 
         /** callback methods to handle the events of GameLine object */
@@ -129,7 +161,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** callback methods to handle the events of GridLayer object */
         this.touchedTargetPoint     =   function() {
-            score.targetTouched();
+            timeBonus               =   score.targetTouched();
+            animateScorePopup();
         };
 
         this.touchedWrongPoint      =   function() {

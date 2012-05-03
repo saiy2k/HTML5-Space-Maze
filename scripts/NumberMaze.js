@@ -174,7 +174,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             prevFTime               =   time;
 
             if(state.currentScreen == 'game') {
-                self.engine.update(dt);
+                if(state.inGameState != 'waiting')
+                    self.engine.update(dt);
                 self.engine.draw(self.context);
             } else if (state.currentScreen == 'paused') {
                 self.engine.draw(self.context);
