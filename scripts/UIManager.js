@@ -65,7 +65,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         $(gameArea).mousemove(function(e) {
             var x                   =   e.pageX - self.left;
             var y                   =   e.pageY - self.top;
-            console.log(x);
             if(self.delegate)
                 self.delegate.mousemove(x, y);
         });

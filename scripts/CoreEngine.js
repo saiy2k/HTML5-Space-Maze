@@ -120,10 +120,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.update                 =   function(dt) {
             grid.update(dt);
             gLine.update(dt);
-            if(state.active) {
+            if(state.inGameState == 'playing') {
                 score.update(dt);
+                self.hud.update(dt, score.chkPointRemain, score.currentScore);
             }
-            self.hud.update(dt, score.chkPointRemain, score.currentScore);
         };
 
         this.draw                   =   function(ctx) {

@@ -62,7 +62,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if(breakLines)
                 return;
 
-            console.log(tx);
             if(tx <= g.gameCanvas.width / 100.0 ||
                     ty <= g.gameCanvas.height / 100.0 ||
                     tx >= 99.0 * g.gameCanvas.width / 100.0 ||
@@ -131,8 +130,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
             ctx.stroke();
 
-            ctx.font                =   'bold 24px Iceberg';
-            ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
+            if (NumberMaze.State.inGameState == 'playing') {
+                ctx.font                =   'bold 24px Iceberg';
+                ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
+            }
         };
 
         this.reset();

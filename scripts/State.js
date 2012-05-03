@@ -28,7 +28,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** holds a unique ID that represents the screen that is 
          *  currently being rendered.
-         *  Possible values: game, menu, lboard, credits, paused, gameover
+         *  Possible values: game, menu, lboard, credits, paused, gameover, gamewon
          *  @type String
          *  @public */
         currentScreen           :   'game',

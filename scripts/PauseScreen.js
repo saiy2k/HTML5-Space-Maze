@@ -42,13 +42,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var resumeButton            =   new NumberMaze.MenuButton("resume", 100, 80, 100, 30);
+        var resumeButton            =   new NumberMaze.MenuButton("resume", 0, 0, 100, 30);
         resumeButton.delegate       =   self;
-        var restartButton           =   new NumberMaze.MenuButton("restart", 100, 120, 100, 30);
+        var restartButton           =   new NumberMaze.MenuButton("restart", 0, 0, 100, 30);
         restartButton.delegate      =   self;
-        var helpButton              =   new NumberMaze.MenuButton("help", 100, 160, 100, 30);
+        var helpButton              =   new NumberMaze.MenuButton("help", 0, 0, 100, 30);
         helpButton.delegate         =   self;
-        var quitButton              =   new NumberMaze.MenuButton("quit", 100, 200, 100, 30);
+        var quitButton              =   new NumberMaze.MenuButton("quit", 0, 0, 100, 30);
         quitButton.delegate         =   self;
 
         this.mouseup                =   function(tx, ty) {
@@ -75,18 +75,33 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             y                       =   tHeight * 0.02;
             width                   =   tWidth * 0.96;
             height                  =   tHeight * 0.96;
+
+            resumeButton.x          =   (tWidth - resumeButton.width) * 0.3;
+            resumeButton.y          =   height * 0.8;
+            restartButton.x         =   (tWidth - restartButton.width) * 0.7;
+            restartButton.y         =   height * 0.8;
+            helpButton.x            =   (tWidth - helpButton.width) * 0.3;
+            helpButton.y            =   height * 0.9;
+            quitButton.x            =   (tWidth - quitButton.width) * 0.7;
+            quitButton.y            =   height * 0.9;
         };
 
         this.update                 =   function(dt) {
+            resumeButton.update(dt);
+            restartButton.update(dt);
+            helpButton.update(dt);
+            quitButton.update(dt);
         };
 
         this.draw                   =   function(ctx) {
-            ctx.fillStyle           =   'rgba(0, 0, 0, 0.6)';
+            ctx.textAlign           =   'center';
+            ctx.fillStyle           =   'rgba(0, 0, 0, 0.8)';
             ctx.fillRect(x, y, width, height);
+            ctx.strokeRect(x, y, width, height);
 
             ctx.fillStyle           =   'rgba(255, 255, 255, 0.8)';
             ctx.font                =   'bold ' + width/20 + 'px Iceberg';
-            ctx.fillText('Game Paused', width * 0.1, height * 0.1);
+            ctx.fillText('Game Paused', width * 0.5, height * 0.15);
 
             resumeButton.draw(ctx);
             restartButton.draw(ctx);

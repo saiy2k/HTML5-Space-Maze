@@ -126,7 +126,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.quadraticCurveTo(self.x + self.width / 2, self.y + self.height / 2 + lineOsc, self.x + self.width, self.y + self.height / 2);
             ctx.stroke();
             ctx.closePath();
-            ctx.fillStyle           =   'rgba(55, 55, 55, 0.8)';
             ctx.fillText(self.text, self.x + self.width / 2 + dx, self.y + dy);
         };
 
