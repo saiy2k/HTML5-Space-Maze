@@ -60,7 +60,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.reset                  =   function() {
-            Playtomic.Leaderboards.List('easy', scoreListingComplete);
+            Playtomic.Leaderboards.List('hard', scoreListingComplete);
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
@@ -87,6 +87,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)
 
         function scoreListingComplete(scores, numscores, response) {
+            console.log('score listing complete');
             if (response.Success) {
                 self.scoreList      =   scores;
             } else {

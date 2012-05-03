@@ -95,7 +95,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.letterArray[i].reset();
             }
 
-            /*
             for(var i = 0; i < 12; i++) {
                 var rnd             =   Math.round(Math.random() * 11);
                 var tmp;
@@ -103,7 +102,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.targetArray[i] =   self.targetArray[rnd];
                 self.targetArray[rnd]=  tmp;
             }
-            */
 
             self.letterArray[self.targetArray[targetIndex]].open();
 

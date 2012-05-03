@@ -84,6 +84,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             timeAnimDelta           =   1.0;
         }
 
+        function submitScore() {
+            console.log('submitted user score');
+            var simple_score        =   {};
+            simple_score.Name       =   state.playerName;
+            simple_score.Points     =   Math.round(score.currentScore);
+            console.log(simple_score);
+            Playtomic.Leaderboards.Save(simple_score, "hard"); 
+        }
+
         this.getScore               =   function() {
             return score.currentScore;
         }
@@ -175,6 +184,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.lineExploded           =   function() {
             state.inGameState       =   'lose';
             self.delegate.gameOver();
+            submitScore();
         };
 
         /** callback methods to handle the events of GridLayer object */
@@ -191,6 +201,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.wrongPointExploded     =   function() {
             state.inGameState       -   'lose';
             self.delegate.gameOver();
+            submitScore();
         };
 
         this.touchedAllPoints       =   function() {
@@ -198,6 +209,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.inGameState       =   'won';
             score.currentScore      +=  score.chkPointRemain;
             window.setTimeout(self.delegate.gameWon, 2000);
+
         };
 
         /** callback to handle the events of score object */
@@ -205,6 +217,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.inGameState       =   'lose';
             state.active            =   false;
             window.setTimeout(self.delegate.gameOver, 1000);
+            submitScore();
         };
 
         /** callback to handle the events of score object */
