@@ -52,6 +52,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     $('#notloggedin').hide();
                     $('#loggedin').show();
                     $('#loggedin').html('Welcome, <br/>' + resp.name);
+                    NumberMaze.State.playerName = resp.name;
                     console.log(resp);
                 },
                 dataType: "jsonp"

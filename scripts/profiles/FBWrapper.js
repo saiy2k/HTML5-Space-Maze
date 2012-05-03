@@ -37,6 +37,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                             $('#loggedin').html('Welcome, <br/>' + response.name);
                             console.log(response);
                             console.log('Good to see you, ' + response.name + '.');
+                            NumberMaze.State.playerName = response.name;
                         });
                     } else {
                         console.log('User cancelled login or did not fully authorize.');
