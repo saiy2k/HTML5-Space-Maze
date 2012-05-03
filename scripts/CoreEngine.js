@@ -84,6 +84,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             timeAnimDelta           =   1.0;
         }
 
+        this.getScore               =   function() {
+            return score.currentScore;
+        }
+
         /** reset the current game */
         this.reset                  =   function() {
             state.inGameState       =   'waiting';
@@ -98,6 +102,23 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             grid.reset();
             self.hud.reset();
             score.reset();
+            state.active            =   true;
+        };
+
+        /** procecd to next level */
+        this.nextLevel              =   function() {
+            state.inGameState       =   'waiting';
+            state.gridStatus        =   []; 
+            for (var i = 0; i < gConfig.rowCount; i++) {
+                state.gridStatus[i] =   [];
+                for (var j = 0; j < gConfig.colCount; j++) {
+                    state.gridStatus[i][j]=   0;
+                }
+            }
+            gLine.reset();
+            grid.reset();
+            self.hud.reset();
+            score.chkPointRemain    =   20.0 - state.currentLevel * 2;
             state.active            =   true;
         };
 
@@ -132,9 +153,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             grid.draw(ctx);
             ctx.font                =   'bold 20px Iceberg';
             self.hud.draw(ctx);
-
-            if(state.inGameState == 'won')
-                ctx.fillText('GAME WON', 100, 100);
 
             if(showBonusPop) {
                 var                     lastIndex;
@@ -176,7 +194,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.touchedAllPoints       =   function() {
+            state.currentLevel++;
             state.inGameState       =   'won';
+            score.currentScore      +=  score.chkPointRemain;
             window.setTimeout(self.delegate.gameWon, 2000);
         };
 

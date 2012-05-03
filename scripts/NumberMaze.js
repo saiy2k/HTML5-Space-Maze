@@ -97,6 +97,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.gameOver    =   new NumberMaze.GameOver(this);
         self.gameOver.delegate =   self.uiManager;
 
+        /** Object that handles the game win screen
+         *  @type NumberMaze.WonScreen
+         *  @private */
+        self.gameWin     =   new NumberMaze.WonScreen(this);
+        self.gameWin.delegate =   self.uiManager;
+
         /** Object that handles the game over screen
          *  @type NumberMaze.GameOver
          *  @private */
@@ -140,6 +146,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.pauseScreen.mouseup(tx, ty);
             } else if (state.currentScreen == 'gameover') {
                 self.gameOver.mouseup(tx, ty);
+            } else if (state.currentScreen == 'gamewon') {
+                self.gameWin.mouseup(tx, ty);
             }
         };
 
@@ -148,10 +156,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.mainMenu.resizeLayout(tWidth, tHeight);
             self.pauseScreen.resizeLayout(tWidth, tHeight);
             self.gameOver.resizeLayout(tWidth, tHeight);
+            self.gameWin.resizeLayout(tWidth, tHeight);
         };
-
-        //sets up the initial UI
-        //$(this.menuCanvas).hide();
 
         //sets up the game loop
         window.requestAnimFrame = (function(){
@@ -189,6 +195,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.gameOver.update(dt);
                 self.gameOver.draw(self.screenCtx);
+            } else if (state.currentScreen == 'gamewon') {
+                self.engine.update(dt);
+                self.engine.draw(self.context);
+
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.gameWin.update(dt);
+                self.gameWin.draw(self.screenCtx);
             } else if (state.currentScreen == 'menu') {
                 self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);

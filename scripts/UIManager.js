@@ -127,13 +127,27 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.gameWon                =   function() {
-            state.currentLevel++;
-            g.engine.reset();
+            console.log('game won');
+            state.currentScreen     =   'gamewon';
+            g.gameWin.score         =   g.engine.getScore();
+            $(g.menuCanvas).show();
         };
 
         /** callback methods to handle HUD events */
         this.pauseButtonPressed     =   function() {
             state.currentScreen     =   'paused';
+            $(g.menuCanvas).show();
+        };
+        
+        /** callback methods to handle game win screen events */
+        this.gWonScreenNext         =   function() {
+            state.currentScreen     =   'game';
+            g.engine.nextLevel();
+            $(g.menuCanvas).hide();
+        };
+        this.gWonScreenQuit         =   function() {
+            state.currentScreen     =   'menu';
+            g.mainMenu.reset();
             $(g.menuCanvas).show();
         };
 

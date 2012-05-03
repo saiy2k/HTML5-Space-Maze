@@ -49,15 +49,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** reset the current game */
         this.reset                  =   function() {
-            self.chkPointRemain     =   6.0;
+            self.chkPointRemain     =   20.0;
             self.currentScore       =   0;
         };
 
         /** this method is invoked if a target is touched */
         this.targetTouched          =   function() {
-            var scoreAwarded        =   self.chkPointRemain * 100;
             var timeAwarded         =   Math.random() * 2.0 + 1.0;
-            self.currentScore       +=  scoreAwarded; 
             self.chkPointRemain     +=  timeAwarded;
             return                      timeAwarded;
         };
