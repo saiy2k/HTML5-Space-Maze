@@ -136,7 +136,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         console.log('collision detected');
                 self.hud.mousedown(tx, ty);
             }
-        }
+        };
 
         this.update                 =   function(dt) {
             grid.update(dt);

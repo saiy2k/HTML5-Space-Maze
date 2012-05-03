@@ -77,6 +77,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.delegate.mouseup(x, y);
         });
 
+        /** handler for googlePlus login button */
+        $('#gPlusLogin').click(function() {
+            NumberMaze.GPlusWrapper().login();
+        });
+
+        /** handler for facebook login button */
+        $('#fbLogin').click(function() {
+            NumberMaze.FBWrapper().login();
+        });
+
         /** handler for window resize / orientation change events
          *  resizes the gamearea and all the canvases within the
          *  allowed range, maintaining the aspect ratio.
