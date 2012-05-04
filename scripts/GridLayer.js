@@ -90,17 +90,33 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.reset                  =   function() {
             targetIndex             =   0;
 
+            part1=new Array("0","1","4","5");
+            part2=new Array("2","3","6","7");
+            part3=new Array("8","9");
+            part4=new Array("10","11");
+
+            currentValue=0;
+            currentIndex=0;
+            currentArray="none";
+            currentVal=0;
+            completed=new Array();
+
+            getNumber();
+
             for(var i = 0; i < 12; i++) {
-                self.targetArray[i] =   i;
-                self.letterArray[i].reset();
+                self.targetArray[i] =   currentValue;
+                gettingVal(currentValue);
+            }
+
+            console.log('final order');
+            for(var i = 0; i < completed.length; i++) {
+                //console.log(self.targetArray[i]);
+                console.log(completed[i]);
             }
 
             for(var i = 0; i < 12; i++) {
-                var rnd             =   Math.round(Math.random() * 11);
-                var tmp;
-                tmp                 =   self.targetArray[i];
-                self.targetArray[i] =   self.targetArray[rnd];
-                self.targetArray[rnd]=  tmp;
+                //self.targetArray[i] =   i;
+                self.letterArray[i].reset();
             }
 
             self.letterArray[self.targetArray[targetIndex]].open();
