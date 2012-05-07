@@ -39,6 +39,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         inGameState             :   'waiting',
 
+        /** represents the game mode either practise / easy / hard
+         *  @type String
+         *  @public */
+        gameMode                :   'practise',
+
         currentLevel            :   0,
 
         /** represents if the gameplay is started or the scene is just being rendered */

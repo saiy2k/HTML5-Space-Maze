@@ -92,6 +92,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.reset                  =   function() {
             state.inGameState       =   'waiting';
             state.gridStatus        =   []; 
+
+            if(state.gameMode       ==  'hard')
+                gConfig.colCount    =   4;
+            else
+                gConfig.colCount    =   3;
+
+            if(state.gameMode       ==  'practise')
+                score.delegate      =   null;
+            else
+                score.delegate      =   self;
+
             for (var i = 0; i < gConfig.rowCount; i++) {
                 state.gridStatus[i] =   [];
                 for (var j = 0; j < gConfig.colCount; j++) {
@@ -103,6 +114,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.hud.reset();
             score.reset();
             state.active            =   true;
+
+            self.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
         };
 
         /** procecd to next level */
@@ -141,7 +154,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.update                 =   function(dt) {
             grid.update(dt);
             gLine.update(dt);
-            if(state.inGameState == 'playing') {
+            if(state.inGameState == 'playing' && state.gameMode != 'practise') {
                 score.update(dt);
                 self.hud.update(dt, score.chkPointRemain, score.currentScore);
             }
