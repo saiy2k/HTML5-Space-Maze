@@ -31,10 +31,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  Possible values: game, menu, lboard, credits, paused, gameover, gamewon
          *  @type String
          *  @public */
-        currentScreen           :   'game',
+        currentScreen           :   'menu',
 
         /** represents the current in-game state.
-         *  Possible values being waiting, playing, exploding, won, lose
+         *  Possible values being waiting, playing, ending, exploding, won, lose
          *  @type String
          *  @public */
         inGameState             :   'waiting',

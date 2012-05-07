@@ -154,7 +154,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.update                 =   function(dt) {
             grid.update(dt);
             gLine.update(dt);
-            if(state.inGameState == 'playing' && state.gameMode != 'practise') {
+            if((state.inGameState == 'playing') && state.gameMode != 'practise') {
                 score.update(dt);
                 self.hud.update(dt, score.chkPointRemain, score.currentScore);
             }

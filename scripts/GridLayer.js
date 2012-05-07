@@ -144,12 +144,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  numbers. If collision is detected then based on the number's state
          *  corresponding action is taken */
         this.collidesWith           =   function(pt) {
+
+            if (state.inGameState == 'ending') {
+                if (Math.dist({x:endSprite.x, y:endSprite.y}, pt) < endSprite.radius) {
+                    console.log('ending');
+                    self.delegate.touchedAllPoints();
+                }
+                return;
+            }
+
             for(var k = 0; k < tCount; k++) {
                 var i, j;
                 i                   =   Math.floor(k / gConfig.colCount);
                 j                   =   Math.floor(k % gConfig.colCount);
                 if(Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
-                    console.log('grid');
+                    console.log('grid' + k);
                     for (ii = 0; ii < gConfig.rowCount; ii++) {
                         var str = '';
                         for (jj = 0; jj < gConfig.colCount; jj++) {
@@ -161,8 +170,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         self.letterArray[k].jingle();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
-                        if(targetIndex == tCount && self.delegate) {
-                            self.delegate.touchedAllPoints();
+                        if(targetIndex == tCount) {
+                            console.log('changed to ending');
+                            state.inGameState = 'ending';
+                            endSprite.open();
                         } else {
                             prevTarget      =   currentTarget;
                             currentTarget   =   self.getNextLetter();
@@ -187,9 +198,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.update                 =   function(dt) {
-            for(var k = 0; k < tCount; k++) {
-                self.letterArray[k].update(dt);
-            }
+            if (state.inGameState == 'ending')
+                endSprite.update(dt*3);
+            else
+                for(var k = 0; k < tCount; k++) {
+                    self.letterArray[k].update(dt);
+                }
         };
 
         this.draw                   =   function(ctx) {
