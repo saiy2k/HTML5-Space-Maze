@@ -56,12 +56,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** current x position (for accelerometer input)
          *  @type int
          *  @private */
-        var xx                      =   20;
+        var xx                      =   200;
 
         /** current y position (for accelerometer input)
          *  @type int
          *  @private */
-        var yy                      =   40;
+        var yy                      =   120;
 
         /** mousedown event, filters inside the game area */
         $(gameArea).mousedown(function(e) {
@@ -140,11 +140,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         if (window.DeviceMotionEvent) {
             window.addEventListener('devicemotion', function(e) {
                     //$('#dbg').val('x ' + e.accelerationIncludingGravity.x + '; y ' + e.accelerationIncludingGravity.y + ';z ' + e.accelerationIncludingGravity.z);
-                    $('#dbg').val(Math.round(xx), + ' ' + Math.round(yy) ); 
-                    xx              +=  e.accelerationIncludingGravity.x/4.0;
-                    yy              -=  e.accelerationIncludingGravity.y/4.0;
+                    console.log(Math.round(xx) + ', ' + Math.round(yy)); 
+                                    
+                    xx              +=  e.accelerationIncludingGravity.y/4.0;
+                    yy              +=  e.accelerationIncludingGravity.x/4.0;
                     self.delegate.mousedown(xx, yy);
                     self.delegate.mousemove(xx, yy);
+                                    
                     }, false);
         } else {
         }
