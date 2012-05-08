@@ -123,6 +123,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.gameOver               =   function() {
             console.log('gameover');
             state.currentScreen     =   'gameover';
+            g.gameOver.score        =   g.engine.getScore();
             $(g.menuCanvas).show();
         };
 
