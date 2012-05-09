@@ -53,6 +53,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         this.left                   =   0;
 
+        /** current x position (for accelerometer input)
+         *  @type int
+         *  @private */
+        var xx                      =   200;
+
+        /** current y position (for accelerometer input)
+         *  @type int
+         *  @private */
+        var yy                      =   120;
+
         /** mousedown event, filters inside the game area */
         $(gameArea).mousedown(function(e) {
             var x                   =   e.pageX - self.left;
@@ -240,6 +250,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             event.preventDefault();
         }
 
+        if (window.DeviceMotionEvent) {
+            window.addEventListener('devicemotion', function(e) {
+                    //$('#dbg').val('x ' + e.accelerationIncludingGravity.x + '; y ' + e.accelerationIncludingGravity.y + ';z ' + e.accelerationIncludingGravity.z);
+                    console.log(Math.round(xx) + ', ' + Math.round(yy)); 
+                                    
+                    xx              +=  e.accelerationIncludingGravity.y/4.0;
+                    yy              +=  e.accelerationIncludingGravity.x/4.0;
+                    self.delegate.mousedown(xx, yy);
+                    self.delegate.mousemove(xx, yy);
+                                    
+                    }, false);
+        } else {
+        }
         this.resize();
         document.addEventListener("touchstart", touchHandler, true);
         document.addEventListener("touchmove", touchHandler, true);
