@@ -64,7 +64,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.elapsedTime       +=  dt;
             self.chkPointRemain     -=  dt;
 
-            if (self.chkPointRemain <=  0) {
+            if (self.chkPointRemain <=  0 && delegate) {
                 self.delegate.timeOut();
             }
         };

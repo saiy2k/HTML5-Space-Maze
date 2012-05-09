@@ -82,25 +82,42 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var prevTarget;
 
+        /** number of letters
+         *  @type int
+         *  @private */
+        var tCount;
+
         this.getNextLetter          =   function() {
             return self.targetArray[targetIndex++];
         };
 
         /** resets the state for a fresh new game */
         this.reset                  =   function() {
+            tCount                  =   gConfig.rowCount * gConfig.colCount;
             targetIndex             =   0;
+        
+            for(var k = 0; k < tCount; k++) {
+                i                       =   Math.floor(k / gConfig.colCount);
+                j                       =   Math.floor(k % gConfig.colCount);
+                var ltr                 =   new NumberMaze.LetterSprite(k, 0, 0, i, j);
+                this.letterArray.push(ltr);
+            }
 
-            for(var i = 0; i < 12; i++) {
+            for(var i = 0; i < tCount; i++) {
                 self.targetArray[i] =   i;
                 self.letterArray[i].reset();
             }
 
-            for(var i = 0; i < 12; i++) {
-                var rnd             =   Math.round(Math.random() * 11);
+            for(var i = 0; i < tCount; i++) {
+                var rnd             =   Math.round(Math.random() * (tCount - 1));
                 var tmp;
                 tmp                 =   self.targetArray[i];
                 self.targetArray[i] =   self.targetArray[rnd];
                 self.targetArray[rnd]=  tmp;
+            }
+
+            for(var i = 0; i < tCount; i++) {
+                console.log(self.targetArray[i]);
             }
 
             self.letterArray[self.targetArray[targetIndex]].open();
@@ -114,7 +131,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.resizeLayout           =   function(tWidth, tHeight){
             cellWidth               =   (tWidth / gConfig.colCount);
             cellHeight              =   (tHeight / (gConfig.rowCount + 1));
-            for(var k = 0; k < 12; k++) {
+            for(var k = 0; k < tCount; k++) {
                 var i                   =   Math.floor(k / gConfig.colCount);
                 var j                   =   k % gConfig.colCount;
                 self.letterArray[k].x   =   cellWidth * j + cellWidth / 2;
@@ -127,17 +144,36 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  numbers. If collision is detected then based on the number's state
          *  corresponding action is taken */
         this.collidesWith           =   function(pt) {
-            for(var k = 0; k < 12; k++) {
+
+            if (state.inGameState == 'ending') {
+                if (Math.dist({x:endSprite.x, y:endSprite.y}, pt) < endSprite.radius) {
+                    console.log('ending');
+                    self.delegate.touchedAllPoints();
+                }
+                return;
+            }
+
+            for(var k = 0; k < tCount; k++) {
                 var i, j;
                 i                   =   Math.floor(k / gConfig.colCount);
                 j                   =   Math.floor(k % gConfig.colCount);
                 if(Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
+                    console.log('grid' + k);
+                    for (ii = 0; ii < gConfig.rowCount; ii++) {
+                        var str = '';
+                        for (jj = 0; jj < gConfig.colCount; jj++) {
+                            str += state.gridStatus[ii][jj] + ', ';
+                        }
+                        console.log(str);
+                    }
                     if (state.gridStatus[i][j] == 1) {
                         self.letterArray[k].jingle();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
-                        if(targetIndex == 12 && self.delegate) {
-                            self.delegate.touchedAllPoints();
+                        if(targetIndex == tCount) {
+                            console.log('changed to ending');
+                            state.inGameState = 'ending';
+                            endSprite.open();
                         } else {
                             prevTarget      =   currentTarget;
                             currentTarget   =   self.getNextLetter();
@@ -162,16 +198,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.update                 =   function(dt) {
-            for(var k = 0; k < 12; k++) {
-                self.letterArray[k].update(dt);
-            }
+            if (state.inGameState == 'ending')
+                endSprite.update(dt*3);
+            else
+                for(var k = 0; k < tCount; k++) {
+                    self.letterArray[k].update(dt);
+                }
         };
 
         this.draw                   =   function(ctx) {
             ctx.fillStyle           =   'rgba(50, 50, 90, 0.2)';
             ctx.strokeStyle         =   'rgba(50, 50, 020, 0.8)';
-            ctx.lineWidth           =   cellWidth/70;
-            for(var i = 0; i < 12; i++) {
+            ctx.lineWidth           =   cellWidth / 70;
+            for(var i = 0; i < tCount; i++) {
                 ctx.beginPath();
                 ctx.arc(self.letterArray[i].x, self.letterArray[i].y, self.letterArray[i].radius, 0, Math.PI*2, false);
                 ctx.fill();
@@ -188,7 +227,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.beginPath();
             ctx.fillStyle           =   '#444';
             ctx.font                =   'bold ' + cellWidth/14 + 'px Iceberg';
-            for(var i = 0; i < 12; i++) {
+            for(var i = 0; i < tCount; i++) {
                 self.letterArray[i].draw(ctx);
             }
             ctx.stroke();
@@ -199,13 +238,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             endSprite.draw(ctx);
             ctx.stroke();
         };
-        
-        for(var k = 0; k < 12; k++) {
-            i                       =   Math.floor(k / gConfig.colCount);
-            j                       =   Math.floor(k % gConfig.colCount);
-            var ltr                 =   new NumberMaze.LetterSprite(k, 0, 0, i, j);
-            this.letterArray.push(ltr);
-        }
+
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
 
         startSprite                 =   new NumberMaze.LetterSprite('.', 30, 80, 0, 0);

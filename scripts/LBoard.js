@@ -72,9 +72,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
+            ctx.textAlign           =   'center';
             ctx.fillStyle           =   'rgba(55, 55, 55, 0.8)';
             ctx.font                =   'bold ' + width/20 + 'px Iceberg';
-            ctx.fillText('leader boards', width * 0.1, height * 0.1);
+            ctx.fillText('leader boards', width * 0.5, height * 0.1);
 
             for (var i = 0; i < self.scoreList.length; i++) {
                 var score           =   self.scoreList[i];

@@ -34,6 +34,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         self.delegate;
 
+        /** game score */
+        this.score                  =   0;
+
         /** dimensions of the pause screen */
         var x                       =   0;  
         var y                       =   0;
@@ -44,6 +47,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         restartButton.delegate      =   self;
         var quitButton              =   new NumberMaze.MenuButton("quit", 0, 0, 100, 30);
         quitButton.delegate         =   self;
+        var lBoardButton            =   new NumberMaze.MenuButton("scoreboard", 0, 0, 100, 30);
+        lBoardButton.delegate       =   self;
 
         this.mouseup                =   function(tx, ty) {
             restartButton.mousedown(tx, ty);
@@ -68,11 +73,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             restartButton.y         =   height * 0.8;
             quitButton.x            =   (tWidth - quitButton.width) * 0.7;
             quitButton.y            =   height * 0.8;
+            lBoardButton.x          =   (tWidth - quitButton.width) * 0.5;
+            lBoardButton.y          =   height * 0.92;
         };
 
         this.update                 =   function(dt) {
             restartButton.update(dt);
             quitButton.update(dt);
+            lBoardButton.update(dt);
         };
 
         this.draw                   =   function(ctx) {
@@ -85,8 +93,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.font                =   'bold ' + width/20 + 'px Iceberg';
             ctx.fillText('Game Over', width * 0.5, height * 0.15);
 
+            ctx.fillText('Your score is ', width * 0.5, height * 0.3);
+            ctx.fillText(Math.round(self.score), width * 0.5, height * 0.4);
+
             restartButton.draw(ctx);
             quitButton.draw(ctx);
+            lBoardButton.draw(ctx);
         };
 
         this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)

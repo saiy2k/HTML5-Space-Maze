@@ -133,6 +133,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.gameOver               =   function() {
             console.log('gameover');
             state.currentScreen     =   'gameover';
+            g.gameOver.score        =   g.engine.getScore();
             $(g.menuCanvas).show();
         };
 
@@ -182,16 +183,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** callback methods to handle main menu events */
         this.mainMenuNewGameEasy    =   function() {
             state.currentScreen     =   'game';
+            state.gameMode          =   'easy';
             g.engine.reset();
             $(g.menuCanvas).hide();
         };
         this.mainMenuNewGameHard    =   function() {
             state.currentScreen     =   'game';
+            state.gameMode          =   'hard';
             g.engine.reset();
             $(g.menuCanvas).hide();
         };
         this.mainMenuNewGamePractice=   function() {
             state.currentScreen     =   'game';
+            state.gameMode          =   'practise';
             g.engine.reset();
             $(g.menuCanvas).hide();
         };
@@ -214,6 +218,32 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.currentScreen     =   'menu';
         };
 
+        function touchHandler(event) {
+            var touches = event.changedTouches,
+            first = touches[0],
+            type = "";
+            switch(event.type)
+            {
+                case "touchstart": type = "mousedown"; break;
+                case "touchmove":  type="mousemove"; break;        
+                case "touchend":   type="mouseup"; break;
+                default: return;
+            }
+
+            var simulatedEvent = document.createEvent("MouseEvent");
+            simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+            first.screenX, first.screenY, 
+            first.clientX, first.clientY, false, 
+            false, false, false, 0/*left*/, null);
+
+            first.target.dispatchEvent(simulatedEvent);
+            event.preventDefault();
+        }
+
         this.resize();
+        document.addEventListener("touchstart", touchHandler, true);
+        document.addEventListener("touchmove", touchHandler, true);
+        document.addEventListener("touchend", touchHandler, true);
+        document.addEventListener("touchcancel", touchHandler, true); 
     };
 })();  

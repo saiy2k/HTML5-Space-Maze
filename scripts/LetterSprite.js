@@ -136,7 +136,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     self.dRadius    *=  -1;
             } else if(st == 2) {
                 if(self.arcLength < 3.14) {
-                    self.arcLength       *=  1.02;
+                    self.arcLength  *=  1.02;
                     delAngle        *=  1.005;
                     dx              =   Math.random() * delVibrate - delVibrate / 2;
                     dy              =   Math.random() * delVibrate - delVibrate / 2;
@@ -148,7 +148,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     dy              =   0;
                 }
             } else if (st == 4) {
-                self.arcLength           *=  0.95;
+                self.arcLength      *=  0.95;
                 delAngle            *=  1.01;
                 dx                  =   Math.random() * delVibrate * 2 - delVibrate;
                 dy                  =   Math.random() * delVibrate * 2 - delVibrate;

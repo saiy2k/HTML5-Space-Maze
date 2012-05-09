@@ -130,7 +130,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
             ctx.stroke();
 
-            if (NumberMaze.State.inGameState == 'playing') {
+            if (NumberMaze.State.inGameState == 'playing' && NumberMaze.State.gameMode != 'practise') {
                 ctx.font                =   'bold 24px Iceberg';
                 ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
             }
