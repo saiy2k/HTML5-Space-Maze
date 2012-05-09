@@ -25,7 +25,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
     NumberMaze.GameLine             =   function(g) {
         var self                    =   this; 
         var lastPoint               =   {x:0, y:0};
-        var gConfig                 =   NumberMaze.GameConfig;
         var breakLines              =   false;
         var breakFactor             =   0;
         var lineSpeed               =   0;
@@ -43,6 +42,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type NumberMaze.Score
          *  @public */
         this.scoreRef;
+
+        /** reference to game state object
+         * @type NumberMaze.State */
+        var state       =   NumberMaze.State;
 
         this.resizeLayout           =   function(tWidth, tHeight) {
             //TODO:
@@ -73,7 +76,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             var pt                  =   {x:tx, y:ty};
             var dist                =   Math.sqrt((lastPoint.x - tx) * (lastPoint.x - tx) + (lastPoint.y - ty) * (lastPoint.y - ty));
-            if (dist > gConfig.lineDelta) {
+            if (dist > state.lineDelta) {
                 if(self.pointArray.length > 3) {
                     var x1              =   tx;
                     var y1              =   ty;
