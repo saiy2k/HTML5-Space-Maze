@@ -43,16 +43,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var restartButton           =   new NumberMaze.MenuButton("restart", 0, 0, 100, 30);
+        var restartButton           =   new NumberMaze.MenuButton("restart", 0.3, 0.8, 0.2, 0.1);
         restartButton.delegate      =   self;
-        var quitButton              =   new NumberMaze.MenuButton("quit", 0, 0, 100, 30);
+        var quitButton              =   new NumberMaze.MenuButton("quit", 0.7, 0.8, 0.2, 0.1);
         quitButton.delegate         =   self;
-        var lBoardButton            =   new NumberMaze.MenuButton("scoreboard", 0, 0, 100, 30);
+        var lBoardButton            =   new NumberMaze.MenuButton("scoreboard", 0.5, 0.92, 0.2, 0.1);
         lBoardButton.delegate       =   self;
 
         this.mouseup                =   function(tx, ty) {
-            restartButton.mousedown(tx, ty);
-            quitButton.mousedown(tx, ty);
+            restartButton.mouseup(tx, ty);
+            quitButton.mouseup(tx, ty);
         };
 
         this.click                  =   function(btn) {
@@ -69,12 +69,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             width                   =   tWidth * 0.96;
             height                  =   tHeight * 0.96;
 
-            restartButton.x         =   (tWidth - restartButton.width) * 0.3;
-            restartButton.y         =   height * 0.8;
-            quitButton.x            =   (tWidth - quitButton.width) * 0.7;
-            quitButton.y            =   height * 0.8;
-            lBoardButton.x          =   (tWidth - quitButton.width) * 0.5;
-            lBoardButton.y          =   height * 0.92;
+            restartButton.resizeLayout(tWidth, tHeight);
+            quitButton.resizeLayout(tWidth, tHeight);
+            lBoardButton.resizeLayout(tWidth, tHeight);
         };
 
         this.update                 =   function(dt) {
