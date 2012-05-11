@@ -39,18 +39,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type NumberMaze.State */
         var state                   =   NumberMaze.State;
 
-        /** this holds the player's score in current level
-         *  @type int */
-        this.currentScore           =   0;
+        /** total score from level 1 to current level
+         *  @type int
+         *  @public */
+        this.totalScore             =   0;
 
         /** time remaining to reach the next target
-         *  @type double */
+         *  @type double
+         *  @public */
         this.chkPointRemain         =   0;
 
         /** reset the current game */
         this.reset                  =   function() {
             self.chkPointRemain     =   20.0;
-            self.currentScore       =   0;
+            self.totalScore         =   0;
         };
 
         /** this method is invoked if a target is touched */
@@ -58,6 +60,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             var timeAwarded         =   Math.random() * 2.0 + 1.0;
             self.chkPointRemain     +=  timeAwarded;
             return                      timeAwarded;
+        };
+
+        /** returns level completion bonus for the given level */
+        this.getLevelBonus          =   function(lvl) {
+            return                      5 + lvl * 2;
         };
 
         this.update                 =   function(dt) {

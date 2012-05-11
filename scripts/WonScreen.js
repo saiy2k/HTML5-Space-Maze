@@ -37,6 +37,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** game score */
         this.score                  =   0;
 
+        /** level score */
+        this.lvlScore               =   0;
+
+        /** bonus score */
+        this.bonus                  =   0;
+
         /** dimensions of the win screen */
         var x                       =   0;  
         var y                       =   0;
@@ -86,8 +92,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.font                =   'bold ' + width/20 + 'px Iceberg';
             ctx.fillText('Game Won', width * 0.5, height * 0.15);
 
-            ctx.fillText('Your score is ', width * 0.5, height * 0.3);
-            ctx.fillText(Math.round(self.score), width * 0.5, height * 0.4);
+            ctx.fillText('Level score is ', width * 0.3, height * 0.3);
+            ctx.fillText(Math.round(self.lvlScore), width * 0.8, height * 0.3);
+
+            ctx.fillText('Bonus score is ', width * 0.3, height * 0.4);
+            ctx.fillText(Math.round(self.bonus), width * 0.8, height * 0.4);
+
+            ctx.fillText('Your score is ', width * 0.3, height * 0.5);
+            ctx.fillText(Math.round(self.score + self.lvlScore + self.bonus), width * 0.8, height * 0.5);
 
             restartButton.draw(ctx);
             quitButton.draw(ctx);
