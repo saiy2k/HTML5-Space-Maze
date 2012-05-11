@@ -39,6 +39,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         self.scoreList = [];
 
+        /** reference to game state object
+         *  @type NumberMaze.State */
+        var state       =   NumberMaze.State;
+
+        /** either easy or hard
+         *  @type string
+         *  @private */
+        var mode        =   'easy';
+
         /** dimensions of the pause screen */
         var x                       =   0;  
         var y                       =   0;
@@ -47,24 +56,46 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         var backButton              =   new NumberMaze.MenuButton("back", 40, 40, 100, 30);
         backButton.delegate         =   self;
+        var easyButton              =   new NumberMaze.MenuButton("easy", 0, 0, 100, 30);
+        easyButton.delegate         =   self;
+        var hardButton              =   new NumberMaze.MenuButton("hard", 0, 0, 100, 30);
+        hardButton.delegate         =   self;
 
         this.mousedown              =   function(tx, ty) {
             backButton.mousedown(tx, ty);
+            easyButton.mousedown(tx, ty);
+            hardButton.mousedown(tx, ty);
         }
 
         this.click                  =   function(btn) {
             if(btn                  ==  backButton) {
                 self.delegate.LBoardBack();
+            } else if (btn          ==  easyButton) {
+                mode                =   'easy';
+                self.reset();
+            } else if (btn          ==  hardButton) {
+                mode                =   'hard';
+                self.reset();
             }
         };
 
         this.reset                  =   function() {
-            Playtomic.Leaderboards.List('hard', scoreListingComplete);
+            var                         boardName;
+            boardName               =   mode + '-' + (state.isMobile ? 'mobile' : 'normal');
+            console.log(boardName);
+            Playtomic.Leaderboards.List(boardName, scoreListingComplete);
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
             width                   =   tWidth;
             height                  =   tHeight;
+
+            backButton.x            =   (tWidth - backButton.width) * 0.1;
+            backButton.y            =   height * 0.1;
+            easyButton.x            =   (tWidth - easyButton.width) * 0.9;
+            easyButton.y            =   height * 0.1;
+            hardButton.x            =   (tWidth - hardButton.width) * 0.9;
+            hardButton.y            =   height * 0.2;
         };
 
         this.update                 =   function(dt) {
@@ -82,6 +113,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
 
             backButton.draw(ctx);
+            easyButton.draw(ctx);
+            hardButton.draw(ctx);
         };
 
         this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)

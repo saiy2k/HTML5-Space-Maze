@@ -35,6 +35,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         gameWidth               :   640,
         gameHeight              :   480,
 
+        /** determines if the game is being played in mobile
+         *  @type bool
+         *  @public */
+        isMobile                :   false,
+
         /** holds a unique ID that represents the screen that is 
          *  currently being rendered.
          *  Possible values: game, menu, lboard, credits, paused, gameover, gamewon
