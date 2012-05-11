@@ -77,14 +77,43 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var dy                      =   0;
 
+        /** actual x location to render at
+         *  @type int
+         *  @private */
+        var aX                      =   0;
+
+        /** actual y location to render at
+         *  @type int
+         *  @private */
+        var aY                      =   0;
+
+        /** actual width to render at
+         *  @type int
+         *  @private */
+        var aWidth                  =   0;
+
+        /** actual height to render at
+         *  @type int
+         *  @private */
+        var aHeight                 =   0;
+
         /** line Oscillation height
          *  @type int
          *  @private */
-        var lineOsc                 =   0;
+        var lineOsc                 =   height / 2;
         var dLineOsc                =   1.0;
         var over                    =   false;
 
         this.resizeLayout           =   function(tWidth, tHeight) {
+            aX                      =   tWidth * self.x;
+            aY                      =   tHeight * self.y;
+            aWidth                  =   tWidth * self.width;
+            aHeight                 =   tHeight * self.height;
+        };
+
+        this.print = function() {
+            console.log('x: ' + aX + ', y: ' + aY + ', width: ' + aWidth + ', height: ' + aHeight);
+
         };
 
         this.reset                  =   function() {
@@ -92,28 +121,28 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             dy                      =   self.height / 2;
             arcLength               =   Math.PI / 4.0;
             delAngle                =   Math.PI;
-            lineOsc                 =   self.height / 2;
+            lineOsc                 =   aHeight / 2;
         };
 
-        this.mousedown              =   function(tx, ty) {
-            if(tx > self.x && tx < self.x + self.width && ty > self.y && ty < self.y + self.height) {
+        this.mouseup                =   function(tx, ty) {
+            if(tx > aX - aWidth / 2 && tx < aX + aWidth / 2 && ty > aY - aHeight / 2&& ty < aY + aHeight / 2) {
                 self.delegate.click(self);
             }
         };
 
         this.mousemove              =   function(tx, ty) {
-            if(tx > self.x && tx < self.x + self.width && ty > self.y && ty < self.y + self.height) {
+            if(tx > aX - aWidth / 2 && tx < aX + aWidth / 2 && ty > aY - aHeight / 2&& ty < aY + aHeight / 2) {
                 over                =   true;
             } else {
                 over                =   false;
-                lineOsc             =   self.height / 2;
+                lineOsc             =   aHeight / 2;
             }
         };
 
         this.update                 =   function(dt) {
             if(over) {
                 lineOsc                 +=  dLineOsc;
-                if (lineOsc > self.height || lineOsc < 0)
+                if (lineOsc > aHeight || lineOsc < 0)
                     dLineOsc            *=  -1;
             }
         };
@@ -122,11 +151,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          * @public */
         this.draw                   =   function(ctx) {
             ctx.beginPath();
-            ctx.quadraticCurveTo(self.x, self.y + self.height / 2, self.x, self.y + self.height / 2);
-            ctx.quadraticCurveTo(self.x + self.width / 2, self.y + self.height / 2 + lineOsc, self.x + self.width, self.y + self.height / 2);
+            ctx.quadraticCurveTo(aX - aWidth / 2, aY, aX - aWidth / 2, aY);
+            ctx.quadraticCurveTo(aX, aY + lineOsc, aX + aWidth / 2, aY);
             ctx.stroke();
             ctx.closePath();
-            ctx.fillText(self.text, self.x + self.width / 2 + dx, self.y + dy);
+            ctx.fillText(self.text, aX + dx, aY + dy);
         };
 
         this.reset();

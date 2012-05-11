@@ -59,19 +59,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var newGameButton           =   new NumberMaze.MenuButton("new game", 0, 0, 120, 30);
+        var newGameButton           =   new NumberMaze.MenuButton("new game", 0.5, 0.3, 0.2, 0.1);
         newGameButton.delegate      =   self;
-        var practiceButton          =   new NumberMaze.MenuButton("practice", 0, 0, 100, 30);
+        var practiceButton          =   new NumberMaze.MenuButton("practice", 0.8, 0.3, 0.2, 0.1);
         practiceButton.delegate     =   self;
-        var easyButton              =   new NumberMaze.MenuButton("easy", 0, 0, 100, 30);
+        var easyButton              =   new NumberMaze.MenuButton("easy", 0.8, 0.4, 0.2, 0.1);
         easyButton.delegate         =   self;
-        var hardButton              =   new NumberMaze.MenuButton("hard", 0, 0, 100, 30);
+        var hardButton              =   new NumberMaze.MenuButton("hard", 0.8, 0.5, 0.2, 0.1);
         hardButton.delegate         =   self;
-        var lboardButton            =   new NumberMaze.MenuButton("score board", 0, 0, 120, 30);
+        var lboardButton            =   new NumberMaze.MenuButton("score board", 0.5, 0.45, 0.2, 0.1);
         lboardButton.delegate       =   self;
-        var musicButton             =   new NumberMaze.MenuButton("music", 0, 0, 120, 30);
+        var musicButton             =   new NumberMaze.MenuButton("music", 0.5, 0.6, 0.2, 0.1);
         musicButton.delegate        =   self;
-        var creditsButton           =   new NumberMaze.MenuButton("credits", 0, 0, 120, 30);
+        var creditsButton           =   new NumberMaze.MenuButton("credits", 0.5, 0.75, 0.2, 0.1);
         creditsButton.delegate      =   self;
 
         this.addPoint               =   function(tx, ty) {
@@ -86,16 +86,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
         };
 
-        this.mousedown              =   function(tx, ty) {
-            newGameButton.mousedown(tx, ty);
-            lboardButton.mousedown(tx, ty);
-            musicButton.mousedown(tx, ty);
-            creditsButton.mousedown(tx, ty);
+        this.mouseup                =   function(tx, ty) {
+            newGameButton.mouseup(tx, ty);
+            lboardButton.mouseup(tx, ty);
+            musicButton.mouseup(tx, ty);
+            creditsButton.mouseup(tx, ty);
 
             if(showDiff) {
-                easyButton.mousedown(tx, ty);
-                hardButton.mousedown(tx, ty);
-                practiceButton.mousedown(tx, ty);
+                easyButton.mouseup(tx, ty);
+                hardButton.mouseup(tx, ty);
+                practiceButton.mouseup(tx, ty);
             }
         };
 
@@ -146,21 +146,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             width                   =   tWidth;
             height                  =   tHeight;
 
-            newGameButton.x         =   (tWidth - newGameButton.width) / 2;
-            newGameButton.y         =   height * 0.3;
-            lboardButton.x          =   (tWidth - lboardButton.width) / 2;
-            lboardButton.y          =   height * 0.45;
-            musicButton.x           =   (tWidth - musicButton.width) / 2;
-            musicButton.y           =   height * 0.6;
-            creditsButton.x         =   (tWidth - creditsButton.width) / 2;
-            creditsButton.y         =   height * 0.75;
-
-            practiceButton.x        =   (newGameButton.x + newGameButton.width + tWidth * 0.02);
-            practiceButton.y        =   height * 0.2;
-            easyButton.x            =   (newGameButton.x + newGameButton.width + tWidth * 0.02);
-            easyButton.y            =   height * 0.3;
-            hardButton.x            =   (newGameButton.x + newGameButton.width + tWidth * 0.02);
-            hardButton.y            =   height * 0.4;
+            newGameButton.resizeLayout(tWidth, tHeight);
+            lboardButton.resizeLayout(tWidth, tHeight);
+            musicButton.resizeLayout(tWidth, tHeight);
+            creditsButton.resizeLayout(tWidth, tHeight);
+            practiceButton.resizeLayout(tWidth, tHeight);
+            easyButton.resizeLayout(tWidth, tHeight);
+            hardButton.resizeLayout(tWidth, tHeight);
         };
 
         this.update                 =   function(dt) {

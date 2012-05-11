@@ -39,11 +39,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var backButton              =   new NumberMaze.MenuButton("back", 40, 60, 100, 30);
+        var backButton              =   new NumberMaze.MenuButton("back", 0.1, 0.1, 0.2, 0.1);
         backButton.delegate         =   self;
 
-        this.mousedown              =   function(tx, ty) {
-            backButton.mousedown(tx, ty);
+        this.mouseup                =   function(tx, ty) {
+            backButton.mouseup(tx, ty);
         };
 
         this.click                  =   function(btn) {
@@ -56,18 +56,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
+            console.log('resizeLayou');
             width                   =   tWidth;
             height                  =   tHeight;
+            backButton.resizeLayout(tWidth, tHeight);
         };
 
         this.update                 =   function(dt) {
         };
 
         this.draw                   =   function(ctx) {
-            ctx.fillStyle           =   'rgba(55, 55, 55, 0.8)';
-            ctx.font                =   'bold ' + width/20 + 'px Iceberg';
-            ctx.fillText('credits', width * 0.1, height * 0.1);
+            ctx.fillText('credits', width * 0.5, height * 0.1);
 
+            ctx.font                =   width/30 + 'px Homemade Apple';
             backButton.draw(ctx);
         };
 
