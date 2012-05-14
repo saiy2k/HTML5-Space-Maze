@@ -109,8 +109,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var gOverScreen =   new NumberMaze.GameOver(this);
         gOverScreen.delegate =   self.uiManager;
 
-        //this.context.fillStyle = 'black';
-
         //handlers for the window events
         window.addEventListener('resize', self.uiManager.resize, false);
         window.addEventListener('orientationchange', self.uiManager.resize, false);
@@ -223,7 +221,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             window.requestAnimFrame(gameLoop);
         })();
  
-        if(!state.online)
+        if(state.online)
             Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
    };
 })(jQuery);
