@@ -151,7 +151,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             if (state.inGameState == 'ending') {
                 if (Math.dist({x:endSprite.x, y:endSprite.y}, pt) < endSprite.radius) {
-                    console.log('ending');
+                    for(var k = 0; k < tCount; k++) {
+                        self.letterArray[k].open();
+                    }
                     self.delegate.touchedAllPoints();
                 }
                 return;
