@@ -17,11 +17,36 @@ You should have received a copy of the GNU General Public License
 along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE html>
-<html>
-    <head>
+<html itemscope itemtype="http://schema.org/Product">
+    <head profile="http://www.w3.org/2005/10/profile">
+        <title>Number Maze</title>
+
         <meta charset="utf-8">
-        <title>Number Maze - GethuGames</title>
-        <link rel='stylesheet' href='style.css' />
+        <meta name="keywords" content="free, online, number, maze, life, html5, offline, game, board, player, share, facebook, google, plus, score, casual, fun, score, board, ranking, mobile"/> 
+        <meta name="description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game" />
+        <meta name="author" content="Saiyasodharan" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="meta-apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link rel="apple-touch-icon" href="http://www.gethugames.in/numbermaze/images/icon64.png"/>
+        <link rel="icon" type="image/png" href="http://www.gethugames.in/numbermaze/images/icon64.png" />
+        <link type="text/css" href="style.css" rel="Stylesheet" />
+
+        <!--tags for opengraph-->
+        <meta property="og:title" content="Number Maze" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="http://www.gethugames.in/numbermaze/" />
+        <meta property="og:image" content="http://www.gethugames.in/numbermaze/images/icon128.png" />
+        <meta property="og:site_name" content="Number Maze" />
+        <meta property="fb:admins" content="100000655597076" />
+        <meta property="og:description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game"/>
+              
+        <!--tags for Google+-->
+        <meta itemprop="name" content="Number Maze">
+        <meta itemprop="url" content="http://www.gethugames.in/numbermaze/">
+        <meta itemprop="image" content="http://www.gethugames.in/numbermaze/images/icon128.png">
+        <meta itemprop="description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game">
+     
         <link href='http://fonts.googleapis.com/css?family=Iceberg|Homemade+Apple' rel='stylesheet' type='text/css'>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
         <script type="text/javascript">
@@ -68,6 +93,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <script language='javascript' src='scripts/GameOver.js'></script>
         <script language='javascript' src='scripts/MenuButton.js'></script>
         <script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-24593968-1']);
+            _gaq.push(['_trackPageview']);
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
             $(document).ready(function() {
                 // init the main gameEngine
                 var game = new NumberMaze();
