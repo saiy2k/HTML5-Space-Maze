@@ -24,7 +24,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 (function(undefined) {
     NumberMaze.HUDLayer             =   function(g) {
         var self                    =   this;
-        var gConfig                 =   NumberMaze.GameConfig;
         var state                   =   NumberMaze.State;
         var x                       =   2;
         var y                       =   2;

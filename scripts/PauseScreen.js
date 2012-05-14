@@ -24,7 +24,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 (function(undefined) {
     NumberMaze.PauseScreen          =   function(g) {
         var self                    =   this; 
-        var gConfig                 =   NumberMaze.GameConfig;
 
         /** reference to the object which subscribes to the screen event
          *  the subsribed object should implement the following functions:

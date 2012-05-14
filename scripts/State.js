@@ -20,9 +20,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 /**
  * This JS Object holds all data that are relevant for current game state
  * like game width, game height, current screen, current level, etc.,
+ * Also it holds all game configuration data from play area, time settings,
+ * grid sizes, etc.,
 */
 (function(undefined) {
     NumberMaze.State                =   {
+        minCanvasWidth          :   320,
+        minCanvasHeight         :   240,
+        maxCanvasWidth          :   640,
+        maxCanvasHeight         :   480,
+        lineDelta               :   3,
+        rowCount                :   3,
+        colCount                :   4,
         gameWidth               :   640,
         gameHeight              :   480,
 
@@ -30,6 +39,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type bool
          *  @public */
         online                  :   true,
+
+        /** determines if the game is being played in mobile
+         *  @type bool
+         *  @public */
+        isMobile                :   false,
+
         /** holds a unique ID that represents the screen that is 
          *  currently being rendered.
          *  Possible values: game, menu, lboard, credits, paused, gameover, gamewon

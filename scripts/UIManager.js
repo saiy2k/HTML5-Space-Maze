@@ -102,19 +102,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  allowed range, maintaining the aspect ratio.
          *  Big thanks to tutorials in html5rocks.com for this logic */
         this.resize                 =   function() {
-            var gConfig             =   NumberMaze.GameConfig;
             var widthToHeight       =   4 / 3;
             var newWidth            =   window.innerWidth * .8;
             var newHeight           =   window.innerHeight * .8;
             var newWidthToHeight    =   newWidth / newHeight;
 
             if (newWidthToHeight > widthToHeight) {
-                newHeight           =   (newHeight < gConfig.minCanvasHeight) ? gConfig.minCanvasHeight : newHeight;
-                newHeight           =   (newHeight > gConfig.maxCanvasHeight) ? gConfig.maxCanvasHeight : newHeight;
+                newHeight           =   (newHeight < state.minCanvasHeight) ? state.minCanvasHeight : newHeight;
+                newHeight           =   (newHeight > state.maxCanvasHeight) ? state.maxCanvasHeight : newHeight;
                 newWidth            =   newHeight * widthToHeight;
             } else {
-                newWidth            =   (newWidth < gConfig.minCanvasWidth) ? gConfig.minCanvasWidth : newWidth;
-                newWidth            =   (newWidth > gConfig.maxCanvasWidth) ? gConfig.maxCanvasWidth : newWidth;
+                newWidth            =   (newWidth < state.minCanvasWidth) ? state.minCanvasWidth : newWidth;
+                newWidth            =   (newWidth > state.maxCanvasWidth) ? state.maxCanvasWidth : newWidth;
                 newHeight           =   newWidth / widthToHeight;
             }
 
@@ -149,6 +148,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             g.gameOver.score        =   g.engine.getScore();
             g.gameOver.lvlScore     =   g.engine.getLevelScore();
             $(g.menuCanvas).show();
+
+            // score submission to playtomic
+            var simple_score        =   {};
+            var boardName           =   '';
+            simple_score.Name       =   state.playerName;
+            simple_score.Points     =   Math.round(g.engine.getScore());
+            boardName               =   state.gameMode + '-' + (state.isMobile ? 'mobile' : 'normal');
+            console.log('mode is ' + state.gameMode);
+            console.log(boardName);
+            console.log(simple_score);
+            Playtomic.Leaderboards.Save(simple_score, boardName); 
         };
 
         this.gameWon                =   function() {

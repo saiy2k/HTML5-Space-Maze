@@ -41,9 +41,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          * @type NumberMaze.State */
         var state       =   NumberMaze.State;
         state.gridStatus=   [];
-        for (var i = 0; i < NumberMaze.GameConfig.rowCount; i++) {
+        for (var i = 0; i < NumberMaze.State.rowCount; i++) {
             state.gridStatus[i]       =   [];
-            for (var j = 0; j < NumberMaze.GameConfig.colCount; j++) {
+            for (var j = 0; j < NumberMaze.State.colCount; j++) {
                 state.gridStatus[i][j]=   0;
             }
         }

@@ -25,7 +25,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 (function(undefined) {
     NumberMaze.CoreEngine           =   function(g) {
         var self                    =   this; 
-        var gConfig                 =   NumberMaze.GameConfig;
 
         /** reference to the object which subscribes the game events
          *  the subsribed object should implement the following functions:
@@ -84,15 +83,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             timeAnimDelta           =   1.0;
         }
 
-        function submitScore() {
-            console.log('submitted user score');
-            var simple_score        =   {};
-            simple_score.Name       =   state.playerName;
-            simple_score.Points     =   Math.round(score.currentScore);
-            console.log(simple_score);
-            Playtomic.Leaderboards.Save(simple_score, "hard"); 
-        }
-
         this.getScore               =   function() {
             return score.totalScore;
         }
@@ -111,18 +101,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.gridStatus        =   []; 
 
             if(state.gameMode       ==  'hard')
-                gConfig.colCount    =   4;
+                state.colCount    =   4;
             else
-                gConfig.colCount    =   3;
+                state.colCount    =   3;
 
             if(state.gameMode       ==  'practise')
                 score.delegate      =   null;
             else
                 score.delegate      =   self;
 
-            for (var i = 0; i < gConfig.rowCount; i++) {
+            for (var i = 0; i < state.rowCount; i++) {
                 state.gridStatus[i] =   [];
-                for (var j = 0; j < gConfig.colCount; j++) {
+                for (var j = 0; j < state.colCount; j++) {
                     state.gridStatus[i][j]=   0;
                 }
             }
@@ -139,9 +129,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.nextLevel              =   function() {
             state.inGameState       =   'waiting';
             state.gridStatus        =   []; 
-            for (var i = 0; i < gConfig.rowCount; i++) {
+            for (var i = 0; i < state.rowCount; i++) {
                 state.gridStatus[i] =   [];
-                for (var j = 0; j < gConfig.colCount; j++) {
+                for (var j = 0; j < state.colCount; j++) {
                     state.gridStatus[i][j]=   0;
                 }
             }
@@ -205,7 +195,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.lineExploded           =   function() {
             state.inGameState       =   'lose';
             self.delegate.gameOver();
-            submitScore();
         };
 
         /** callback methods to handle the events of GridLayer object */
@@ -222,7 +211,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.wrongPointExploded     =   function() {
             state.inGameState       -   'lose';
             self.delegate.gameOver();
-            submitScore();
         };
 
         this.touchedAllPoints       =   function() {

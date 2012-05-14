@@ -24,7 +24,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 (function(undefined) {
     NumberMaze.GridLayer            =   function(g) {
         var self                    =   this;
-        var gConfig                 =   NumberMaze.GameConfig;
         var state                   =   NumberMaze.State;
 
         /** reference to the object which subscribes to events in the GridLayer
@@ -93,12 +92,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** resets the state for a fresh new game */
         this.reset                  =   function() {
-            tCount                  =   gConfig.rowCount * gConfig.colCount;
+            tCount                  =   state.rowCount * state.colCount;
             targetIndex             =   0;
         
             for(var k = 0; k < tCount; k++) {
-                i                       =   Math.floor(k / gConfig.colCount);
-                j                       =   Math.floor(k % gConfig.colCount);
+                i                       =   Math.floor(k / state.colCount);
+                j                       =   Math.floor(k % state.colCount);
                 var ltr                 =   new NumberMaze.LetterSprite(k, 0, 0, i, j);
                 this.letterArray.push(ltr);
             }
@@ -131,11 +130,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** updates the cellWidth and cellHeight as per new game area.
          *  also updates the position of the numbers  */
         this.resizeLayout           =   function(tWidth, tHeight){
-            cellWidth               =   (tWidth / gConfig.colCount);
-            cellHeight              =   (tHeight / (gConfig.rowCount + 1));
+            cellWidth               =   (tWidth / state.colCount);
+            cellHeight              =   (tHeight / (state.rowCount + 1));
             for(var k = 0; k < tCount; k++) {
-                var i                   =   Math.floor(k / gConfig.colCount);
-                var j                   =   k % gConfig.colCount;
+                var i                   =   Math.floor(k / state.colCount);
+                var j                   =   k % state.colCount;
                 self.letterArray[k].x   =   cellWidth * j + cellWidth / 2;
                 self.letterArray[k].y   =   cellHeight * i + cellHeight / 2 + tHeight * 0.2;
                 self.letterArray[k].resizeLayout(tWidth, tHeight);
@@ -163,13 +162,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             for(var k = 0; k < tCount; k++) {
                 var i, j;
-                i                   =   Math.floor(k / gConfig.colCount);
-                j                   =   Math.floor(k % gConfig.colCount);
+                i                   =   Math.floor(k / state.colCount);
+                j                   =   Math.floor(k % state.colCount);
                 if(Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
                     console.log('grid' + k);
-                    for (ii = 0; ii < gConfig.rowCount; ii++) {
+                    for (ii = 0; ii < state.rowCount; ii++) {
                         var str = '';
-                        for (jj = 0; jj < gConfig.colCount; jj++) {
+                        for (jj = 0; jj < state.colCount; jj++) {
                             str += state.gridStatus[ii][jj] + ', ';
                         }
                         console.log(str);
