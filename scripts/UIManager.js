@@ -150,15 +150,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             $(g.menuCanvas).show();
 
             // score submission to playtomic
-            var simple_score        =   {};
-            var boardName           =   '';
-            simple_score.Name       =   state.playerName;
-            simple_score.Points     =   Math.round(g.engine.getScore());
-            boardName               =   state.gameMode + '-' + (state.isMobile ? 'mobile' : 'normal');
-            console.log('mode is ' + state.gameMode);
-            console.log(boardName);
-            console.log(simple_score);
-            Playtomic.Leaderboards.Save(simple_score, boardName); 
+            if(state.online) {
+                var simple_score        =   {};
+                var boardName           =   '';
+                simple_score.Name       =   state.playerName;
+                simple_score.Points     =   Math.round(g.engine.getScore());
+                boardName               =   state.gameMode + '-' + (state.isMobile ? 'mobile' : 'normal');
+                console.log('mode is ' + state.gameMode);
+                console.log(boardName);
+                console.log(simple_score);
+                Playtomic.Leaderboards.Save(simple_score, boardName); 
+            }
         };
 
         this.gameWon                =   function() {
