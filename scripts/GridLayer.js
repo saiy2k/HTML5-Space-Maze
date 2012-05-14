@@ -138,6 +138,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.letterArray[k].y   =   cellHeight * i + cellHeight / 2 + tHeight * 0.2;
                 self.letterArray[k].resizeLayout(tWidth, tHeight);
             }
+            startSprite.x           =   state.gameWidth * 0.07;
+            startSprite.y           =   state.gameHeight * 0.2;
+            endSprite.x             =   state.gameWidth * 0.94;
+            endSprite.y             =   state.gameHeight * 0.94;
         };
 
         /** function to check if the given point collides with any of the
@@ -239,13 +243,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.stroke();
         };
 
-        this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
-
-        startSprite                 =   new NumberMaze.LetterSprite('.', 30, 80, 0, 0);
+        startSprite                 =   new NumberMaze.LetterSprite('.', state.gameWidth * 0.07, state.gameHeight * 0.2, 0, 0);
         startSprite.radius          =   8;
 
-        endSprite                   =   new NumberMaze.LetterSprite('.', 610, 440, 0, 0);
+        endSprite                   =   new NumberMaze.LetterSprite('.', state.gameWidth * 0.94, state.gameHeight * 0.94, 0, 0);
         endSprite.radius            =   8;
 
+        this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
     };
 })();

@@ -80,7 +80,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.fillStyle           =   'rgba(0, 0, 0, 0.25)';
             ctx.fillRect(x, y, width, height);
             ctx.fillRect(width * 0.91, y + 4, width * 0.08, height - y * 4);
-            ctx.fillText(Math.round(score), 120, 30);
         };
         
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);

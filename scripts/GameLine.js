@@ -54,7 +54,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             breakFactor             =   10;
             self.pointArray         =   new Array();
             lineSpeed               =   0.1;
-            var pt                  =   {x:30, y:80};
+            var pt                  =   {x:NumberMaze.State.gameWidth * 0.07, y:NumberMaze.State.gameHeight * 0.2};
             self.pointArray.push(pt);
         };
 

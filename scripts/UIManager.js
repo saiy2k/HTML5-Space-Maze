@@ -109,6 +109,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             g.menuCanvas.width      =   newWidth;
             g.menuCanvas.height     =   newHeight;
 
+            state.gameWidth         =   newWidth;
+            state.gameHeight        =   newHeight;
+
             self.left               =   $(gameArea).offset().left;
             self.top                =   $(gameArea).offset().top;
 

@@ -56,7 +56,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
-            console.log('resizeLayou');
             width                   =   tWidth;
             height                  =   tHeight;
             backButton.resizeLayout(tWidth, tHeight);
@@ -66,6 +65,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
+            ctx.textAlign           =   'center';
             ctx.fillText('credits', width * 0.5, height * 0.1);
 
             ctx.font                =   width/30 + 'px Homemade Apple';
