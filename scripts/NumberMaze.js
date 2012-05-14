@@ -121,12 +121,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     state.inGameState = 'playing';
                 }
                 self.engine.hud.mousedown(tx, ty);
-            } else if (state.currentScreen == 'menu') {
-                self.mainMenu.mousedown(tx, ty);
-            } else if (state.currentScreen == 'lboard') {
-                self.LBoard.mousedown(tx, ty);
-            } else if (state.currentScreen == 'credits') {
-                self.creditsScreen.mousedown(tx, ty);
             }
         };
 
@@ -144,10 +138,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 window.setTimeout(self.uiManager.gameOver());
             } else if (state.currentScreen == 'paused') {
                 self.pauseScreen.mouseup(tx, ty);
+            } else if (state.currentScreen == 'menu') {
+                self.mainMenu.mouseup(tx, ty);
             } else if (state.currentScreen == 'gameover') {
                 self.gameOver.mouseup(tx, ty);
             } else if (state.currentScreen == 'gamewon') {
                 self.gameWin.mouseup(tx, ty);
+            } else if (state.currentScreen == 'lboard') {
+                self.LBoard.mouseup(tx, ty);
+            } else if (state.currentScreen == 'credits') {
+                self.creditsScreen.mouseup(tx, ty);
             }
         };
 
@@ -157,6 +157,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.pauseScreen.resizeLayout(tWidth, tHeight);
             self.gameOver.resizeLayout(tWidth, tHeight);
             self.gameWin.resizeLayout(tWidth, tHeight);
+            self.creditsScreen.resizeLayout(tWidth, tHeight);
+            self.LBoard.resizeLayout(tWidth, tHeight);
         };
 
         //sets up the game loop

@@ -46,11 +46,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var backButton              =   new NumberMaze.MenuButton("back", 40, 40, 100, 30);
+        var backButton              =   new NumberMaze.MenuButton("back", 0.1, 0.1, 0.2, 0.1);
         backButton.delegate         =   self;
 
-        this.mousedown              =   function(tx, ty) {
-            backButton.mousedown(tx, ty);
+        this.mouseup                =   function(tx, ty) {
+            backButton.mouseup(tx, ty);
         }
 
         this.click                  =   function(btn) {
@@ -66,6 +66,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.resizeLayout           =   function(tWidth, tHeight) {
             width                   =   tWidth;
             height                  =   tHeight;
+            backButton.resizeLayout(tWidth, tHeight);
         };
 
         this.update                 =   function(dt) {
@@ -85,7 +86,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             backButton.draw(ctx);
         };
 
-        this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)
+        this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height);
 
         function scoreListingComplete(scores, numscores, response) {
             console.log('score listing complete');

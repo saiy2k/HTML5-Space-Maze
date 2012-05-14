@@ -94,7 +94,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         }
 
         this.getScore               =   function() {
-            return score.currentScore;
+            return score.totalScore;
+        }
+
+        this.getLevelScore          =   function() {
+            return score.chkPointRemain;
+        }
+
+        this.getBonusScore          =   function() {
+            return score.getLevelBonus(state.currentLevel);
         }
 
         /** reset the current game */
@@ -165,15 +173,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             gLine.update(dt);
             if((state.inGameState == 'playing') && state.gameMode != 'practise') {
                 score.update(dt);
-                self.hud.update(dt, score.chkPointRemain, score.currentScore);
+                self.hud.update(dt, score.chkPointRemain, 0);
             }
         };
 
         this.draw                   =   function(ctx) {
-            ctx.clearRect(0, 0, 640, 480);
+            ctx.clearRect(0, 0, state.gameWidth, state.gameHeight);
             gLine.draw(ctx);
             grid.draw(ctx);
-            ctx.font                =   'bold 20px Iceberg';
+            ctx.font                =   'bold ' + Math.round(state.gameWidth/32.0) + 'px Iceberg';
             self.hud.draw(ctx);
 
             if(showBonusPop) {
@@ -220,9 +228,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.touchedAllPoints       =   function() {
             state.currentLevel++;
             state.inGameState       =   'won';
-            score.currentScore      +=  score.chkPointRemain;
             window.setTimeout(self.delegate.gameWon, 2000);
-
+            window.setTimeout(self.updateScore, 2100);
         };
 
         /** callback to handle the events of score object */
@@ -235,6 +242,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** callback to handle the events of score object */
         this.gameTimeOut            =   function() {
+        };
+
+        this.updateScore            =   function() {
+            score.totalScore        +=  score.chkPointRemain + score.getLevelBonus(state.currentLevel);
         };
 
         this.reset();

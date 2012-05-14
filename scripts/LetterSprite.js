@@ -122,7 +122,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.gridStatus[self.gridX][self.gridY] = 0;
             self.arcLength               =   Math.PI / 4.0;
             delAngle                =   Math.PI;
-            self.radius             =   20;
+            self.radius             =   state.gameWidth / 32;
         };
 
         this.update                 =   function(dt) {
@@ -132,7 +132,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             } else if(st == 1) {
                 angle               +=  delAngle * dt * -2;
                 self.radius         +=  self.dRadius / 5.0;
-                if (self.radius > 20 || self.radius < 10)
+                if (self.radius > state.gameWidth / 32 || self.radius < state.gameWidth / 64)
                     self.dRadius    *=  -1;
             } else if(st == 2) {
                 if(self.arcLength < 3.14) {
@@ -142,7 +142,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     dy              =   Math.random() * delVibrate - delVibrate / 2;
                     angle           +=  delAngle * dt;
                 } else {
-                    self.radius     =   20;
+                    self.radius     =   state.gameWidth / 64;
                     state.gridStatus[self.gridX][self.gridY] = 3;
                     dx              =   0;
                     dy              =   0;
@@ -154,7 +154,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 dy                  =   Math.random() * delVibrate * 2 - delVibrate;
                 angle               +=  delAngle * dt;
                 self.radius         *=  1.01;
-                if (self.radius > 40) {
+                if (self.radius > state.gameWidth / 16) {
                     state.gridStatus[self.gridX][self.gridY] = 3;
                 }
             }

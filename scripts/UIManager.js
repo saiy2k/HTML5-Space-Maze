@@ -129,6 +129,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             g.menuCanvas.width      =   newWidth;
             g.menuCanvas.height     =   newHeight;
 
+            state.gameWidth         =   newWidth;
+            state.gameHeight        =   newHeight;
+
             self.left               =   $(gameArea).offset().left;
             self.top                =   $(gameArea).offset().top;
 
@@ -144,6 +147,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             console.log('gameover');
             state.currentScreen     =   'gameover';
             g.gameOver.score        =   g.engine.getScore();
+            g.gameOver.lvlScore     =   g.engine.getLevelScore();
             $(g.menuCanvas).show();
         };
 
@@ -151,6 +155,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             console.log('game won');
             state.currentScreen     =   'gamewon';
             g.gameWin.score         =   g.engine.getScore();
+            g.gameWin.lvlScore      =   g.engine.getLevelScore();
+            g.gameWin.bonus         =   g.engine.getBonusScore();
             $(g.menuCanvas).show();
         };
 
