@@ -223,6 +223,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             window.requestAnimFrame(gameLoop);
         })();
  
-        Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
+        if(!state.online)
+            Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
    };
 })(jQuery);

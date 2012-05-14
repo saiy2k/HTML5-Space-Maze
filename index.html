@@ -71,6 +71,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <script language='javascript' src='scripts/MenuButton.js'></script>
         <script>
             $(document).ready(function() {
+                NumberMaze.State.online    =   !navigator.onLine; 
+
+                if (navigator.onLine) {  
+                    console.log('online')  
+                } else {  
+                    console.log('offline');  
+                    $('#profileDiv').hide();
+                }  
+
                 // init the main gameEngine
                 var game = new NumberMaze();
             });
