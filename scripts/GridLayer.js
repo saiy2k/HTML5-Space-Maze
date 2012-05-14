@@ -116,9 +116,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.targetArray[rnd]=  tmp;
             }
 
+            /*
             for(var i = 0; i < tCount; i++) {
                 console.log(self.targetArray[i]);
             }
+            */
 
             self.letterArray[self.targetArray[targetIndex]].open();
 

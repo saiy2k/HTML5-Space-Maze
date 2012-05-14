@@ -26,6 +26,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         gameWidth               :   640,
         gameHeight              :   480,
 
+        /** boolean that tells if the game if net connection is available 
+         *  @type bool
+         *  @public */
+        online                  :   true,
         /** holds a unique ID that represents the screen that is 
          *  currently being rendered.
          *  Possible values: game, menu, lboard, credits, paused, gameover, gamewon
