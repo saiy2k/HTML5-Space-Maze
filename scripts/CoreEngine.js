@@ -125,6 +125,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
         };
 
+        this.mousemove              =   function(tx, ty) {
+            grid.mousemove(tx, ty);
+        };
+
         /** procecd to next level */
         this.nextLevel              =   function() {
             state.inGameState       =   'waiting';

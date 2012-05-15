@@ -123,18 +123,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         self.mousemove  =   function(tx, ty) {
-            if(state.currentScreen == 'menu')
-                self.mainMenu.mousemove(tx, ty);
-            if(state.inGameState == 'playing' || state.inGameState == 'ending') {
-                if(state.currentScreen == 'game')
+            if(state.currentScreen == 'game') {
+                if(state.inGameState == 'playing' || state.inGameState == 'ending')
                     self.engine.addPoint(tx, ty);
+                else if(state.inGameState == 'waiting')
+                    self.engine.mousemove(tx, ty);
             }
+            else if(state.currentScreen == 'menu')
+                self.mainMenu.mousemove(tx, ty);
         };
 
         self.mouseup    =   function(tx, ty) {
-            if(state.currentScreen == 'game' && self.engine.won == false) {
-                window.setTimeout(self.uiManager.gameOver());
-            } else if (state.currentScreen == 'paused') {
+            if (state.currentScreen == 'paused') {
                 self.pauseScreen.mouseup(tx, ty);
             } else if (state.currentScreen == 'menu') {
                 self.mainMenu.mouseup(tx, ty);

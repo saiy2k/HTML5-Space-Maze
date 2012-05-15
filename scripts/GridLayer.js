@@ -86,8 +86,23 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var tCount;
 
+        /** x mouse position
+         *  @type int
+         *  @private */
+        var mousex;
+
+        /** y mouse position
+         *  @type int
+         *  @private */
+        var mousey;
+
         this.getNextLetter          =   function() {
             return self.targetArray[targetIndex++];
+        };
+
+        this.mousemove              =   function(tx, ty) {
+            mousex                  =   tx;
+            mousey                  =   ty;
         };
 
         /** resets the state for a fresh new game */
@@ -95,6 +110,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             tCount                  =   state.rowCount * state.colCount;
             targetIndex             =   0;
         
+            self.letterArray        =   [];
             for(var k = 0; k < tCount; k++) {
                 i                       =   Math.floor(k / state.colCount);
                 j                       =   Math.floor(k % state.colCount);
@@ -130,13 +146,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** updates the cellWidth and cellHeight as per new game area.
          *  also updates the position of the numbers  */
         this.resizeLayout           =   function(tWidth, tHeight){
-            cellWidth               =   (tWidth / state.colCount);
-            cellHeight              =   (tHeight / (state.rowCount + 1));
+            cellWidth               =   (tWidth / (state.colCount + 1));
+            cellHeight              =   (tHeight / (state.rowCount + 2));
             for(var k = 0; k < tCount; k++) {
                 var i                   =   Math.floor(k / state.colCount);
                 var j                   =   k % state.colCount;
-                self.letterArray[k].x   =   cellWidth * j + cellWidth / 2;
-                self.letterArray[k].y   =   cellHeight * i + cellHeight / 2 + tHeight * 0.2;
+                self.letterArray[k].x   =   cellWidth * j + cellWidth;
+                self.letterArray[k].y   =   cellHeight * i + cellHeight + tHeight * 0.15;
                 self.letterArray[k].resizeLayout(tWidth, tHeight);
             }
             startSprite.x           =   state.gameWidth * 0.07;
@@ -165,6 +181,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 i                   =   Math.floor(k / state.colCount);
                 j                   =   Math.floor(k % state.colCount);
                 if(Math.dist({x:self.letterArray[k].x, y:self.letterArray[k].y}, pt) < self.letterArray[k].radius) {
+                    /*
                     console.log('grid' + k);
                     for (ii = 0; ii < state.rowCount; ii++) {
                         var str = '';
@@ -173,6 +190,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         }
                         console.log(str);
                     }
+                    */
                     if (state.gridStatus[i][j] == 1) {
                         self.letterArray[k].jingle();
                         if(self.delegate)
@@ -244,6 +262,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             startSprite.draw(ctx);
             endSprite.draw(ctx);
             ctx.stroke();
+
+            if(state.inGameState == 'waiting') {
+                var                     dx;
+                var                     dy;
+                var                     ang;
+                dx                  =   mousex - startSprite.x;
+                dy                  =   mousey - startSprite.y;
+                ang                 =   Math.atan2(dy, dx);
+                ctx.beginPath();
+                ctx.moveTo(startSprite.x, startSprite.y);
+                ctx.lineTo(startSprite.x + (state.gameWidth / 40) * Math.cos(ang), startSprite.y + (state.gameWidth / 40) * Math.sin(ang));
+                ctx.stroke();
+
+            }
         };
 
         startSprite                 =   new NumberMaze.LetterSprite('.', state.gameWidth * 0.07, state.gameHeight * 0.2, 0, 0);
