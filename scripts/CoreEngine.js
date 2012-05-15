@@ -172,7 +172,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
-            ctx.clearRect(0, 0, state.gameWidth, state.gameHeight);
+            //ctx.clearRect(0, 0, state.gameWidth, state.gameHeight);
             gLine.draw(ctx);
             grid.draw(ctx);
             ctx.font                =   'bold ' + Math.round(state.gameWidth/32.0) + 'px Iceberg';

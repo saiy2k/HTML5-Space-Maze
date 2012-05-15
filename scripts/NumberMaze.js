@@ -109,6 +109,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var gOverScreen =   new NumberMaze.GameOver(this);
         gOverScreen.delegate =   self.uiManager;
 
+        var starField       =   new NumberMaze.StarField(this);
+
         //handlers for the window events
         window.addEventListener('resize', self.uiManager.resize, false);
         window.addEventListener('orientationchange', self.uiManager.resize, false);
@@ -123,6 +125,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         self.mousemove  =   function(tx, ty) {
+            starField.mousemove(tx, ty);
             if(state.currentScreen == 'game') {
                 if(state.inGameState == 'playing' || state.inGameState == 'ending')
                     self.engine.addPoint(tx, ty);
@@ -181,6 +184,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             if(state.currentScreen == 'game') {
                 self.engine.update(dt);
+                starField.draw(self.context);
                 self.engine.draw(self.context);
             } else if (state.currentScreen == 'paused') {
                 self.engine.draw(self.context);
@@ -223,5 +227,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  
         if(state.online)
             Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
+        $('#profileDiv').hide();
    };
 })(jQuery);

@@ -43,6 +43,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         this.scoreRef;
 
+        /** spacecraft image */
+        var iReady = false;
+        this.spaceCraft;
+        this.spaceCraft = new Image();
+        this.spaceCraft.onload = function () { iReady = true; };
+        this.spaceCraft.src = 'images/spaceCraft.png';
+
         /** reference to game state object
          * @type NumberMaze.State */
         var state       =   NumberMaze.State;
@@ -126,7 +133,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     ctx.lineTo(self.pointArray[i].x + Math.random() * breakFactor / 4, self.pointArray[i].y + Math.random() * breakFactor / 4);
                 }
             } else {
-                ctx.strokeStyle     =   'rgba(100, 100, 140, 0.8)';
+                ctx.strokeStyle     =   'rgba(200, 200, 140, 0.8)';
                 for(var i = 0; i < self.pointArray.length; i++) {
                     ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);
                 }
@@ -137,6 +144,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 ctx.font                =   'bold 24px Iceberg';
                 ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
             }
+
+            ctx.drawImage(self.spaceCraft, self.pointArray[lastPoint].x, self.pointArray[lastPoint].y, 30, 30);
         };
 
         this.reset();
