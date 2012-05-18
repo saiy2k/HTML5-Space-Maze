@@ -90,7 +90,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             context.strokeStyle='rgb(100, 100, 100)';
             mouse_x=cursor_x-x;
             mouse_y=cursor_y-y;
-            context.fillRect(0,0,w,h);
+            context.clearRect(0,0,w,h);
             for(var i=0;i<n;i++)
             {
                 test=true;
