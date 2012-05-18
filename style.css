@@ -1,8 +1,8 @@
 #gameArea {
-position:absolute;
-left:50%;
-top:50%;
-border:1px solid;
+    position:absolute;
+    left:50%;
+    top:50%;
+    border:1px solid;
 }
 
 .gameScreen {
@@ -33,6 +33,12 @@ border:1px solid;
     height: 8%;
     padding: 1%;
     margin: 1%;
+}
+
+#socialDiv {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
 }
 
 .socialIcon {

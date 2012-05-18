@@ -144,6 +144,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         //handlers for in-game events
         this.gameOver               =   function() {
             console.log('gameover');
+            _gaq.push(['_setCustomVar',
+                    1,
+                    'level',
+                    '' + state.currentLevel
+                    ]);
             state.currentScreen     =   'gameover';
             g.gameOver.score        =   g.engine.getScore();
             g.gameOver.lvlScore     =   g.engine.getLevelScore();
@@ -204,28 +209,47 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.currentScreen     =   'menu';
             g.mainMenu.reset();
             $(g.menuCanvas).show();
+            $('#socialDiv').show();
         };
         this.pauseScreenHelp        =   function() {
         };
 
         /** callback methods to handle main menu events */
         this.mainMenuNewGameEasy    =   function() {
+            _gaq.push(['_setCustomVar',
+                    1,
+                    'difficulty',
+                    'easy'
+                    ]);
             state.currentScreen     =   'game';
             state.gameMode          =   'easy';
             g.engine.reset();
             $(g.menuCanvas).hide();
+            $('#socialDiv').hide();
         };
         this.mainMenuNewGameHard    =   function() {
+            _gaq.push(['_setCustomVar',
+                    1,
+                    'difficulty',
+                    'hard'
+                    ]);
             state.currentScreen     =   'game';
             state.gameMode          =   'hard';
             g.engine.reset();
             $(g.menuCanvas).hide();
+            $('#socialDiv').hide();
         };
         this.mainMenuNewGamePractice=   function() {
+            _gaq.push(['_setCustomVar',
+                    1,
+                    'difficulty',
+                    'practice'
+                    ]);
             state.currentScreen     =   'game';
             state.gameMode          =   'practise';
             g.engine.reset();
             $(g.menuCanvas).hide();
+            $('#socialDiv').hide();
         };
         this.mainMenuLeaderboard    =   function() {
             self.delegate.LBoard.reset();
