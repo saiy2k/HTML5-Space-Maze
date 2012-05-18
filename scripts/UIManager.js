@@ -164,7 +164,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 console.log('mode is ' + state.gameMode);
                 console.log(boardName);
                 console.log(simple_score);
-                Playtomic.Leaderboards.Save(simple_score, boardName); 
+                //Playtomic.Leaderboards.Save(simple_score, boardName); 
             }
         };
 

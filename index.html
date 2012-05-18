@@ -48,9 +48,55 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <meta itemprop="description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game">
      
         <link href='http://fonts.googleapis.com/css?family=Iceberg|Homemade+Apple' rel='stylesheet' type='text/css'>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
         <script type="text/javascript" src="http://api.playtomic.com/js/playtomic.v1.9.min.js"></script>
 	    <script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+    </head>
+    <body> 
+
+        <div id='gameArea'>
+            <canvas class='gameScreen' id='gameCanvas'></canvas>
+            <canvas class='otherScreen' id='menuCanvas'></canvas>
+            <div id="socialDiv">
+               <div style='bottom: 8px;' class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false" data-colorscheme="dark" data-font="segoe ui"></div>
+               <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a>
+               <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+               <g:plusone size="medium"></g:plusone>
+           </div>
+           <div id='profileDiv' style="position:absolute;">
+               <div id='notloggedin'>
+                   <img src='images/gplusIcon.png' alt='google plus icon' id='gPlusLogin' class='socialIcon'/>
+                   <img src='images/fbIcon.png' alt='facebook icon' id='fbLogin' class='socialIcon'/>
+               </div>
+               <div id='loggedin' style='font-size: 12px'>
+               </div>
+            </div>
+        </div>
+
+        <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                appId      : '353577954697060', // App ID
+                status     : true, // check login status
+                cookie     : true, // enable cookies to allow the server to access the session
+                xfbml      : true  // parse XFBML
+            });
+
+            // Additional initialization code here
+            };
+
+            // Load the SDK Asynchronously
+            (function(d){
+                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                ref.parentNode.insertBefore(js, ref);
+            }(document));
+        </script>
+	   
+  		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+
         <script type="text/javascript">
             if (typeof jQuery == 'undefined')
             {
@@ -109,49 +155,5 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 var game = new NumberMaze();
             });
         </script>
-    </head>
-    <body> 
-
-        <div id="fb-root"></div>
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                appId      : '353577954697060', // App ID
-                status     : true, // check login status
-                cookie     : true, // enable cookies to allow the server to access the session
-                xfbml      : true  // parse XFBML
-            });
-
-            // Additional initialization code here
-            };
-
-            // Load the SDK Asynchronously
-            (function(d){
-                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement('script'); js.id = id; js.async = true;
-                js.src = "//connect.facebook.net/en_US/all.js";
-                ref.parentNode.insertBefore(js, ref);
-            }(document));
-        </script>
-
-        <div id='gameArea'>
-            <canvas class='gameScreen' id='gameCanvas'></canvas>
-            <canvas class='otherScreen' id='menuCanvas'></canvas>
-            <div id="socialDiv">
-               <div style='bottom: 8px;' class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false" data-colorscheme="dark" data-font="segoe ui"></div>
-               <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a>
-               <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-               <g:plusone size="medium"></g:plusone>
-           </div>
-           <div id='profileDiv' style="position:absolute;">
-               <div id='notloggedin'>
-                   <img src='images/gplusIcon.png' alt='google plus icon' id='gPlusLogin' class='socialIcon'/>
-                   <img src='images/fbIcon.png' alt='facebook icon' id='fbLogin' class='socialIcon'/>
-               </div>
-               <div id='loggedin' style='font-size: 12px'>
-               </div>
-            </div>
-       </div>
     </body>
 </html>

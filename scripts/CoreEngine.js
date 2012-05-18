@@ -144,6 +144,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.hud.reset();
             score.chkPointRemain    =   20.0 - state.currentLevel * 2;
             state.active            =   true;
+            self.resizeLayout(state.gameWidth, state.gameHeight);
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
