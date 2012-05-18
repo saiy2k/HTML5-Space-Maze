@@ -64,7 +64,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var yy                      =   120;
 
         /** mousedown event, filters inside the game area */
-        $(gameArea).mousedown(function(e) {
+        $(g.gameArea).mousedown(function(e) {
             var x                   =   e.pageX - self.left;
             var y                   =   e.pageY - self.top;
             if(self.delegate)
@@ -72,7 +72,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         });
 
         /** mousemove event, filters inside the game area */
-        $(gameArea).mousemove(function(e) {
+        $(g.gameArea).mousemove(function(e) {
             var x                   =   e.pageX - self.left;
             var y                   =   e.pageY - self.top;
             if(self.delegate)
@@ -80,7 +80,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         });
 
         /** mouseup event, filters inside the game area */
-        $(gameArea).mouseup(function(e) {
+        $(g.gameArea).mouseup(function(e) {
             var x                   =   e.pageX - self.left;
             var y                   =   e.pageY - self.top;
             if(self.delegate)
@@ -131,8 +131,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.gameWidth         =   newWidth;
             state.gameHeight        =   newHeight;
 
-            self.left               =   $(gameArea).offset().left;
-            self.top                =   $(gameArea).offset().top;
+            self.left               =   $(g.gameArea).offset().left;
+            self.top                =   $(g.gameArea).offset().top;
 
             NumberMaze.MenuButton.prototype.screenWidth  =   newWidth;
             NumberMaze.MenuButton.prototype.screenHeight =   newHeight;
