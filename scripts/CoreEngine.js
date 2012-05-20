@@ -41,8 +41,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** Grid object that manages the numbers and their states
          *  @type NumberMaze.GridLayer
          *  @private */
-        var grid                    =   new NumberMaze.GridLayer(g);
-        grid.delegate               =   self;
+        this.grid                    =   new NumberMaze.GridLayer(g);
+        this.grid.delegate               =   self;
 
         /** line object that draws and manages the game line
          *  @type NumberMaze.GameLine
@@ -61,7 +61,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         var score                   =   new NumberMaze.Score(g);
         score.delegate              =   self;
-
+		
+        /** component that takes care of showing tips in practice mode
+         *  @type NumberMaze.PracticeGame
+         *  @public */
+		this.practice 				= 	new NumberMaze.PracticeGame(g);
+		this.practice.delegate		=	self;
+		
         /** boolean that determines whether the score pop up animation
          *  is being rendred
          *  @type bool
@@ -94,7 +100,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.getBonusScore          =   function() {
             return score.getLevelBonus(state.currentLevel);
         }
-
+		
         /** reset the current game */
         this.reset                  =   function() {
             state.inGameState       =   'waiting';
@@ -117,11 +123,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 }
             }
             gLine.reset();
-            grid.reset();
+            this.grid.reset();
             self.hud.reset();
             score.reset();
             state.active            =   true;
-
+						
+			self.firstWaitingProcc = false;
+			
             self.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
         };
 
@@ -136,14 +144,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 }
             }
             gLine.reset();
-            grid.reset();
+            this.grid.reset();
             self.hud.reset();
             score.chkPointRemain    =   20.0 - state.currentLevel * 2;
             state.active            =   true;
+					
+			self.firstWaitingProcc = false;
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
-            grid.resizeLayout(tWidth, tHeight);
+            this.grid.resizeLayout(tWidth, tHeight);
             gLine.resizeLayout(tWidth, tHeight);
             self.hud.resizeLayout(tWidth, tHeight);
         };
@@ -152,25 +162,32 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if(state.active) {
                 var pt                  =   {x:tx, y:ty};
                 if(gLine.addPoint(tx, ty))
-                    if(grid.collidesWith(pt))
+                    if(this.grid.collidesWith(pt))
                         console.log('collision detected');
                 self.hud.mousedown(tx, ty);
             }
         };
 
         this.update                 =   function(dt) {
-            grid.update(dt);
+            this.grid.update(dt);
             gLine.update(dt);
             if((state.inGameState == 'playing') && state.gameMode != 'practise') {
                 score.update(dt);
                 self.hud.update(dt, score.chkPointRemain, 0);
-            }
+            }else if (state.gameMode == 'practise'){
+				this.practice.update(dt);
+			}
+			
+			if(state.inGameState != 'waiting' && self.firstWaitingProcc != true){
+				self.practice.OnFirstClick(self.grid.letterArray[self.grid.getCurrentTarget()]);
+				self.firstWaitingProcc = true;
+			}
         };
 
         this.draw                   =   function(ctx) {
             ctx.clearRect(0, 0, state.gameWidth, state.gameHeight);
             gLine.draw(ctx);
-            grid.draw(ctx);
+            this.grid.draw(ctx);
             ctx.font                =   'bold ' + Math.round(state.gameWidth/32.0) + 'px Iceberg';
             self.hud.draw(ctx);
 
@@ -184,6 +201,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 if (timeAnimDelta <= 0)
                     showBonusPop    =   false;
             }
+			
+			if(state.gameMode == 'practise'){
+				this.practice.draw(ctx);
+			}
         };
 
         /** callback methods to handle the events of GameLine object */

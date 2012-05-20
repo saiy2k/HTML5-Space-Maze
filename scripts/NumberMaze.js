@@ -108,7 +108,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var gOverScreen =   new NumberMaze.GameOver(this);
         gOverScreen.delegate =   self.uiManager;
-
+		
+		/** Object that handles resources like music and image files and preloads them
+		 *  @type NumberMaze.AssetManager
+		 *  @private */
+		self.assetManager = 	new NumberMaze.AssetManager(this);
+		 
         //this.context.fillStyle = 'black';
 
         //handlers for the window events
@@ -174,14 +179,22 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         })();
 
         prevFTime                   =   new Date().getTime();
- 
+		
+		
+		self.assetManager.Add('tooltip', 'images/tooltip.png');
+		self.assetManager.DownloadAll();
+		
         //actual game loop
         (function gameLoop() {
             var time                =   new Date().getTime();
             var dt                  =   (time - prevFTime) / 1000.0;
             prevFTime               =   time;
-
-            if(state.currentScreen == 'game') {
+			
+			if(self.assetManager.Done() == false){
+				self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+				self.screenCtx.fillText(self.assetManager.Status().toString(), self.menuCanvas.width/2 + self.screenCtx.measureText(self.assetManager.Status().toString())/2, self.menuCanvas.height/2);
+				
+			} else if(state.currentScreen == 'game') {
                 self.engine.update(dt);
                 self.engine.draw(self.context);
             } else if (state.currentScreen == 'paused') {

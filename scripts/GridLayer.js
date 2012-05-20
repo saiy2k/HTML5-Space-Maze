@@ -89,7 +89,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.getNextLetter          =   function() {
             return self.targetArray[targetIndex++];
         };
-
+		
+		this.getCurrentTarget		=	function() {
+			return self.targetArray[targetIndex];
+		};
+		
         /** resets the state for a fresh new game */
         this.reset                  =   function() {
             tCount                  =   state.rowCount * state.colCount;
@@ -114,7 +118,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.targetArray[i] =   self.targetArray[rnd];
                 self.targetArray[rnd]=  tmp;
             }
-
+			
             /*
             for(var i = 0; i < tCount; i++) {
                 console.log(self.targetArray[i]);
@@ -125,6 +129,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             startSprite.arcLength   =   Math.PI;
             endSprite.arcLength     =   Math.PI;
+			
+			this.delegate.practice.OnGameStart(startSprite);
         };
 
         /** updates the cellWidth and cellHeight as per new game area.
@@ -181,9 +187,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                             console.log('changed to ending');
                             state.inGameState = 'ending';
                             endSprite.open();
+							this.delegate.practice.OnAllCrossed(endSprite);
                         } else {
                             prevTarget      =   currentTarget;
                             currentTarget   =   self.getNextLetter();
+							console.log(currentTarget);
+							this.delegate.practice.OnLineCrossed(self.letterArray[currentTarget]);
                             self.letterArray[currentTarget].open();
                         }
                     } else if (state.gridStatus[i][j] == 0) {
