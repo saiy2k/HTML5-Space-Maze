@@ -96,6 +96,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var mousey;
 
+        var spriteSheet             =   new Image();
+        spriteSheet.onload          =   function () { ready = true; };
+        spriteSheet.src             =   'images/asteroidSprite.png';
+        var ready                   =   false;
+
         this.getNextLetter          =   function() {
             return self.targetArray[targetIndex++];
         };
@@ -235,27 +240,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.fillStyle           =   'rgba(50, 50, 90, 0.2)';
             ctx.strokeStyle         =   'rgba(50, 50, 020, 0.8)';
             ctx.lineWidth           =   cellWidth / 70;
-            for(var i = 0; i < tCount; i++) {
-                ctx.beginPath();
-                ctx.arc(self.letterArray[i].x, self.letterArray[i].y, self.letterArray[i].radius, 0, Math.PI*2, false);
-                ctx.fill();
-            }
-
-            ctx.fillStyle           =   'rgba(250, 20, 0, 0.8)';
-            ctx.beginPath();
             var index               =   self.targetArray[targetIndex-1];
             if (index == undefined)
                 index               =   self.targetArray[targetIndex];
-            ctx.arc(self.letterArray[index].x, self.letterArray[index].y, self.letterArray[index].radius, 0, Math.PI*2, false);
-            ctx.fill();
 
-            ctx.beginPath();
-            ctx.fillStyle           =   '#444';
-            ctx.font                =   'bold ' + cellWidth/14 + 'px Iceberg';
-            for(var i = 0; i < tCount; i++) {
-                self.letterArray[i].draw(ctx);
+            for (var i = 0; i < tCount; i++) {
+                if(i != index) {
+                    ctx.drawImage(spriteSheet, self.letterArray[i].x - 25, self.letterArray[i].y- 25);
+                }
             }
-            ctx.stroke();
+
+            ctx.drawImage(spriteSheet, self.letterArray[index].x - 25, self.letterArray[index].y- 25, 30, 30);
 
             ctx.beginPath();
             ctx.lineStyle           =   'rgba(250, 20, 0, 0.8)';

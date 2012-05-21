@@ -28,7 +28,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         var flag=true;
         var test=true;
-        var n=500;
+        var n=200;
         var w=0;
         var h=0;
         var x=0;
@@ -37,7 +37,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var star_color_ratio=0;
         var star_x_save,star_y_save;
         var star_ratio=256;
-        var star_speed=4;
+        var star_speed=1;
         var star_speed_save=0;
         var star=new Array(n);
         var color;
@@ -59,6 +59,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         var timeout;
         var fps=0;
+
+        var bgSprite                =   new Image();
+        bgSprite.onload             =   function () { ready = true; };
+        bgSprite.src                =   'images/spaceBackground.jpg';
+        var ready                   =   false;
 
         var self                    =   this; 
 
@@ -88,9 +93,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             context.lineCap='round';
             context.fillStyle='rgb(0,0,0)';
             context.strokeStyle='rgb(100, 100, 100)';
-            mouse_x=cursor_x-x;
-            mouse_y=cursor_y-y;
+            mouse_x=(cursor_x-x)/8;
+            mouse_y=(cursor_y-y)/8;
             context.clearRect(0,0,w,h);
+            if (ready)
+                context.drawImage(bgSprite, 0, 0);
             for(var i=0;i<n;i++)
             {
                 test=true;
@@ -103,7 +110,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 star[i][4]=y+(star[i][1]/star[i][2])*star_ratio;
                 if(star_x_save>0&&star_x_save<w&&star_y_save>0&&star_y_save<h&&test)
                 {
-                    context.lineWidth=(1-star_color_ratio*star[i][2])*2;
+                    context.lineWidth=(2-star_color_ratio*star[i][2])*2;
                     context.beginPath();
                     context.moveTo(star_x_save,star_y_save);
                     context.lineTo(star[i][3],star[i][4]);

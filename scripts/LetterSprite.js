@@ -95,13 +95,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var state                   =   NumberMaze.State;
 
-        /*
-        var spriteSheet             =   new Image();
-        spriteSheet.onload          =   function () { ready = true; };
-        spriteSheet.src             =   'images/asteroidSprite.png';
-        var ready                   =   false;
-        */
-
         this.resizeLayout           =   function(tWidth, tHeight) {
             self.radius             =   tWidth / 32;
         };
@@ -170,12 +163,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** renders the character and the arc around it
          * @public */
         this.draw                   =   function(ctx) {
-            ctx.fillText(self.character, self.x + dx - self.radius/4, self.y + dy + self.radius/4);
             ctx.moveTo(self.x + dx + self.radius * Math.cos(angle), self.y + dy + self.radius * Math.sin(angle));
             ctx.arc(self.x + dx, self.y + dy, self.radius, angle, angle - self.arcLength, true);
             ctx.moveTo(self.x + dx + self.radius * Math.cos(angle + 3.14), self.y + dy + self.radius * Math.sin(angle + 3.14));
             ctx.arc(self.x + dx, self.y + dy, self.radius, angle + 3.14, angle - self.arcLength + 3.14, true);
-            //ctx.drawImage(spriteSheet, 0, 0, frame * 64, 128, self.x, self.y, 128, 128);
         };
         var frame = 0;
     };

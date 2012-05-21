@@ -7,7 +7,6 @@ Number Maze is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
-
 Number Maze is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,6 +28,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var breakFactor             =   0;
         var lineSpeed               =   0;
         this.pointArray;
+        this.pointArray2;
+        this.pointArray3;
+        this.pointArray4;
+        this.pointArray5;
 
         /** reference to the object which subscribes for game line events
          *  any object that implements the following functions:
@@ -42,6 +45,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type NumberMaze.Score
          *  @public */
         this.scoreRef;
+
+        /** angle of the space craft to draw with
+         *  @type float
+         *  @private */
+        var angle                   =   0;
 
         /** spacecraft image */
         var iReady = false;
@@ -63,9 +71,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             breakLines              =   false;
             breakFactor             =   10;
             self.pointArray         =   new Array();
+            self.pointArray2        =   new Array();
+            self.pointArray3        =   new Array();
+            self.pointArray4        =   new Array();
+            self.pointArray5        =   new Array();
             lineSpeed               =   0.1;
             var pt                  =   {x:NumberMaze.State.gameWidth * 0.07, y:NumberMaze.State.gameHeight * 0.2};
             self.pointArray.push(pt);
+            self.pointArray2.push({x: pt.x + Math.random() * 5, y: pt.y + Math.random() * 5});
+            self.pointArray3.push({x: pt.x + Math.random() * 5, y: pt.y + Math.random() * 5});
+            self.pointArray4.push({x: pt.x + Math.random() * 5, y: pt.y + Math.random() * 5});
+            self.pointArray5.push({x: pt.x + Math.random() * 5, y: pt.y + Math.random() * 5});
         };
 
         this.addPoint               =   function(tx, ty) {
@@ -102,6 +118,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     }
                 }
                 self.pointArray.push(pt);
+                self.pointArray2.push({x: pt.x + Math.random() * 5, y: pt.y + Math.random() * 5});
+                self.pointArray3.push({x: pt.x + Math.random() * 5, y: pt.y + Math.random() * 5});
+                self.pointArray4.push({x: pt.x + Math.random() * 5, y: pt.y + Math.random() * 5});
+                self.pointArray5.push({x: pt.x + Math.random() * 5, y: pt.y + Math.random() * 5});
                 lastPoint           =   pt;
 
                 return                  true;
@@ -120,32 +140,79 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     self.delegate.lineExploded();
                     self.reset();
                 }
+            } else {
+                var lastPoint       =   self.pointArray.length - 1;
+                if (lastPoint > 3) {
+                var dx              =   self.pointArray[lastPoint].x - self.pointArray[lastPoint - 1].x;
+                var dy              =   self.pointArray[lastPoint].y - self.pointArray[lastPoint - 1].y;
+                angle               +=  (Math.atan2(dy, dx) - angle) / 10.0;
+                }
             }
         };
 
         this.draw                   =   function(ctx) {
             var lastPoint           =   self.pointArray.length - 1;
+            ctx.globalCompositeOperation    =   'lighter';
+            ctx.lineWidth           =   6;
             ctx.lineCap             =   'round';
-            ctx.beginPath();
             if(breakLines) {
+                ctx.beginPath();
                 ctx.strokeStyle     =   'rgba(100, 100, 140, ' + (0.8 - breakFactor/100.0) + ')';
                 for(var i = 0; i < self.pointArray.length; i++) {
                     ctx.lineTo(self.pointArray[i].x + Math.random() * breakFactor / 4, self.pointArray[i].y + Math.random() * breakFactor / 4);
                 }
+                ctx.stroke();
             } else {
-                ctx.strokeStyle     =   'rgba(200, 200, 140, 0.8)';
+                ctx.beginPath();
+                ctx.strokeStyle     =   'rgba(200, 200, 100, 0.1)';
                 for(var i = 0; i < self.pointArray.length; i++) {
                     ctx.lineTo(self.pointArray[i].x, self.pointArray[i].y);
                 }
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.strokeStyle     =   'rgba(100, 200, 240, 0.1)';
+                for(var i = 0; i < self.pointArray.length; i++) {
+                    ctx.lineTo(self.pointArray2[i].x, self.pointArray2[i].y);
+                }
+                ctx.stroke();
+
+                ctx.lineWidth       =   5;
+                ctx.beginPath();
+                ctx.strokeStyle     =   'rgba(200, 80, 240, 0.2)';
+                for(var i = 0; i < self.pointArray.length; i++) {
+                    ctx.lineTo(self.pointArray3[i].x, self.pointArray3[i].y);
+                }
+                ctx.stroke();
+
+                ctx.lineWidth       =   5;
+                ctx.beginPath();
+                ctx.strokeStyle     =   'rgba(10, 20, 240, 0.2)';
+                for(var i = 0; i < self.pointArray.length; i++) {
+                    ctx.lineTo(self.pointArray4[i].x, self.pointArray4[i].y);
+                }
+                ctx.stroke();
+
+                ctx.lineWidth       =   3;
+                ctx.beginPath();
+                ctx.strokeStyle     =   'rgba(240, 20, 20, 0.3)';
+                for(var i = 0; i < self.pointArray.length; i++) {
+                    ctx.lineTo(self.pointArray5[i].x, self.pointArray5[i].y);
+                }
+                ctx.stroke();
             }
-            ctx.stroke();
 
             if (NumberMaze.State.inGameState == 'playing' && NumberMaze.State.gameMode != 'practise') {
                 ctx.font                =   'bold 24px Iceberg';
                 ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
             }
+            ctx.globalCompositeOperation    =   "source-over";
 
-            ctx.drawImage(self.spaceCraft, self.pointArray[lastPoint].x, self.pointArray[lastPoint].y, 30, 30);
+            ctx.save();
+            ctx.translate(self.pointArray[lastPoint].x, self.pointArray[lastPoint].y);
+            ctx.rotate(angle);
+            ctx.drawImage(self.spaceCraft, -20, -10, 40, 20);
+            ctx.restore();
         };
 
         this.reset();
