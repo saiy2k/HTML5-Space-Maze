@@ -26,8 +26,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var state                   =   NumberMaze.State;
 		
 		var currentInstruction		= 	"";
-		var currentTarget			=   undefined;
-		
+		var currentTarget		=   undefined;
+                var currentState                =   undefined;
         /** reference to the object which subscribes to events in this layer
          *  any object that implements the following functions:
          *      pauseButtonPrssed()
@@ -37,21 +37,27 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 		
 		this.OnGameStart			= 	function(target){
 			currentTarget = target;
+                        currentState  = "GameStart";
 			currentInstruction = "Click somewhere/naround here to/nstart the game.";
 		};
 		
 		this.OnFirstClick			=	function(target){
 			currentTarget = target;
+                        currentState  = "FirstClick";
 			currentInstruction = "Cross this point!/nDon't collide with/nyour own line!";
 		};
 		
 		this.OnLineCrossed			=	function(target){
+                    if(currentState != "LineCrossed"){
 			currentTarget = target;
-			currentInstruction = "Now cross this/npoint!";
+                        currentState  = "LineCrossed";
+			currentInstruction = "Now cross all/nthe points!";
+                    }
 		};
 		
 		this.OnAllCrossed			=	function(target){
 			currentTarget = target;
+                        currentState  = "AllCrossed";
 			currentInstruction = "Finish by going/nthrough this/npoint!";
 		};
 		
