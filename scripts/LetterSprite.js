@@ -53,7 +53,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** radius of the revolving arc
          *  @type int
          *  @public */
-        this.radius                 =   20;
+        this.radius                 =   30;
 
         /** delta radius of the revolving arc
          *  @type int
@@ -95,6 +95,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var state                   =   NumberMaze.State;
 
+        /** current frame of the asteroid sprite
+         *  @type int
+         *  @public */
+        this.frame                  =   Math.round(Math.random() * 29);
+        var frameS                  =   0;
+
         this.resizeLayout           =   function(tWidth, tHeight) {
             self.radius             =   tWidth / 32;
         };
@@ -116,6 +122,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.gridStatus[self.gridX][self.gridY] = 1;
         };
 
+        this.close                  =   function() {
+            state.gridStatus[self.gridX][self.gridY] = 3;
+        };
+
+        /** this method changes the state to 'explode', thus showing
+         *  the explosion animation */
+        this.explode                =   function() {
+            state.gridStatus[self.gridX][self.gridY] = 4;
+        };
+
         this.reset                  =   function() {
             dx                      =   0;
             dy                      =   0;
@@ -127,14 +143,25 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.update                 =   function(dt) {
             var st                  =   state.gridStatus[self.gridX][self.gridY];
-            if(st == 0) {
-                angle               +=  delAngle * dt;
-            } else if(st == 1) {
+            if(st == 0) { // open
+                frameS++;
+                if (frameS > 2) {
+                    self.frame          =   (self.frame + 1) % 29;
+                    frameS              =   0;
+                }
+            } else if(st == 1) { // target
                 angle               +=  delAngle * dt * -2;
                 self.radius         +=  self.dRadius / 5.0;
                 if (self.radius > state.gameWidth / 32 || self.radius < state.gameWidth / 64)
                     self.dRadius    *=  -1;
-            } else if(st == 2) {
+                frameS++;
+                if (frameS > 4) {
+                    self.frame--;
+                    if (self.frame < 0)
+                        self.frame  +=  29;
+                    frameS          =   0;
+                }
+            } else if(st == 2) { //hit
                 if(self.arcLength < 3.14) {
                     self.arcLength  *=  1.02;
                     delAngle        *=  1.005;
@@ -147,7 +174,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     dx              =   0;
                     dy              =   0;
                 }
-            } else if (st == 4) {
+            } else if (st == 4) { //closed
                 self.arcLength      *=  0.95;
                 delAngle            *=  1.01;
                 dx                  =   Math.random() * delVibrate * 2 - delVibrate;
@@ -168,6 +195,5 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.moveTo(self.x + dx + self.radius * Math.cos(angle + 3.14), self.y + dy + self.radius * Math.sin(angle + 3.14));
             ctx.arc(self.x + dx, self.y + dy, self.radius, angle + 3.14, angle - self.arcLength + 3.14, true);
         };
-        var frame = 0;
     };
 })();

@@ -55,6 +55,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.context    =   this.gameCanvas.getContext('2d');
         this.screenCtx  =   this.menuCanvas.getContext('2d');
 
+        /** Object that handles resources like music and image files and preloads them
+         *  *  @type NumberMaze.AssetManager
+         *  *  @private */
+        self.assetManager =     new NumberMaze.AssetManager(this);
+        self.assetManager.Add('tooltip', 'images/tooltip.png');
+        self.assetManager.Add('asteroidSprite', 'images/asteroidSprite.png');
+        self.assetManager.Add('homePlanet', 'images/homePlanet.png');
+        self.assetManager.Add('menuButton', 'images/menuButton.png');
+        self.assetManager.Add('spaceBackground', 'images/spaceBackground.jpg');
+        self.assetManager.Add('spaceCraft', 'images/spaceCraft.png');
+        self.assetManager.DownloadAll();
+
         /** self.uiManager handles the screen and the user interactions
          *  @type NumberMaze.UIManager
          *  @private */
@@ -117,7 +129,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         self.mousedown  =   function(tx, ty) {
             if (state.currentScreen == 'game') {
-                if (state.inGameState == 'waiting') {
+                console.log(Math.dist(self.engine.getStartLocation(), {x: tx, y: ty}) < 20);
+                if (state.inGameState == 'waiting' && Math.dist(self.engine.getStartLocation(), {x: tx, y: ty}) < 20) {
                     state.inGameState = 'playing';
                 }
                 self.engine.hud.mousedown(tx, ty);
@@ -181,8 +194,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             var time                =   new Date().getTime();
             var dt                  =   (time - prevFTime) / 1000.0;
             prevFTime               =   time;
-
-            if(state.currentScreen == 'game') {
+        
+            if(self.assetManager.Done() == false) {
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.screenCtx.fillText(self.assetManager.Status().toString(), self.menuCanvas.width/2 + self.screenCtx.measureText(self.assetManager.Status().toString())/2, self.menuCanvas.height/2);
+            } else if(state.currentScreen == 'game') {
                 self.engine.update(dt);
                 starField.draw(self.context);
                 self.engine.draw(self.context);

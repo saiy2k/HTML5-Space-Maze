@@ -60,10 +60,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var timeout;
         var fps=0;
 
-        var bgSprite                =   new Image();
-        bgSprite.onload             =   function () { ready = true; };
-        bgSprite.src                =   'images/spaceBackground.jpg';
-        var ready                   =   false;
+        var bgSprite                =   g.assetManager.Get('spaceBackground');
 
         var self                    =   this; 
 
@@ -96,8 +93,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             mouse_x=(cursor_x-x)/8;
             mouse_y=(cursor_y-y)/8;
             context.clearRect(0,0,w,h);
-            if (ready)
-                context.drawImage(bgSprite, 0, 0);
+            context.drawImage(bgSprite, 0, 0);
             for(var i=0;i<n;i++)
             {
                 test=true;

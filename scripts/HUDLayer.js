@@ -34,6 +34,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var fontSize                =   15;
         var delFontSize             =   0.5;
 
+        /** sprite for menu button
+         *  @type Image
+         *  @private */
+        var menuSprite              =   g.assetManager.Get('menuButton');
+
         /** reference to the object which subscribes to events in this layer
          *  any object that implements the following functions:
          *      pauseButtonPrssed()
@@ -47,7 +52,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** handler for mousedown event */
         this.mousedown              =   function(tx, ty) {
-            if (tx > width * 0.91 && tx < width * 0.99 && ty > y + 4 && ty < height - y)
+            if (Math.dist({x: tx, y: ty}, {x: width * 0.96, y: height * 0.5}) < menuSprite.width / 2)
                 self.delegate.pauseButtonPressed();
         };
 
@@ -78,7 +83,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.draw                   =   function(ctx) {
             ctx.fillStyle           =   'rgba(0, 0, 0, 0.25)';
             ctx.fillRect(x, y, width, height);
-            ctx.fillRect(width * 0.91, y + 4, width * 0.08, height - y * 4);
+            ctx.drawImage(menuSprite, width * 0.96 - menuSprite.width / 2, height * 0.5 - menuSprite.height / 2);
         };
         
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);

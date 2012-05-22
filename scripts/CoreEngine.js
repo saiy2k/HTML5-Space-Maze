@@ -78,6 +78,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var timeAnimDelta           =   1.0;
 
+        this.getStartLocation       =   function() {
+            return                      grid.getStartLocation();
+        };
+
         function animateScorePopup() {
             showBonusPop            =   true;
             timeAnimDelta           =   1.0;
@@ -172,9 +176,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
-            //ctx.clearRect(0, 0, state.gameWidth, state.gameHeight);
-            gLine.draw(ctx);
             grid.draw(ctx);
+            gLine.draw(ctx);
             ctx.font                =   'bold ' + Math.round(state.gameWidth/32.0) + 'px Iceberg';
             self.hud.draw(ctx);
 
