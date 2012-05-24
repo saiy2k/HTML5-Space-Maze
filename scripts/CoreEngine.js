@@ -23,7 +23,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  * game mechanics, etc.,
 */
 (function(undefined) {
-    NumberMaze.CoreEngine           =   function(g, jj) {
+    NumberMaze.CoreEngine           =   function(g) {
         var self                    =   this; 
 
         /** reference to the object which subscribes the game events
@@ -41,7 +41,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** Grid object that manages the numbers and their states
          *  @type NumberMaze.GridLayer
          *  @private */
-        var grid                    =   new NumberMaze.GridLayer(g, jj);
+        var grid                    =   new NumberMaze.GridLayer(g);
         grid.delegate               =   self;
 
         /** line object that draws and manages the game line

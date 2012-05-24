@@ -106,11 +106,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             })();
 
             $(document).ready(function() {
-
-            $.getJSON('images/asteroidSprite.json', function (j) {
-                var game = new NumberMaze(j);
-            });
                 // init the main gameEngine
+                var game = new NumberMaze();
             });
         </script>
     </head>

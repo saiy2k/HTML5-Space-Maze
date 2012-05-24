@@ -22,7 +22,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  * to detect collision between the grid and the given points/lines.
 */
 (function(undefined) {
-    NumberMaze.GridLayer            =   function(g, jj) {
+    NumberMaze.GridLayer            =   function(g) {
         var self                    =   this;
         var state                   =   NumberMaze.State;
 
@@ -104,8 +104,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** json that represents individual frames inside the asteroid sprite sheet
          *  @type json
          *  @private */
-        this.spriteData             =   jj;
-
+        this.spriteData             =   g.assetManager.Get('spriteData');;
         var homeSprite              =   g.assetManager.Get('asteroidSprite');
         var homeSpriteFrame         =   this.spriteData.frames[50].frame;
 

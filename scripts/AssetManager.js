@@ -40,8 +40,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 				pErrorCount = 0;
 			},
 			
-			Add : function(id, src){
-				pDownloadQueue.push({"id" : id, "src" : src});
+			Add : function(id, src, type){
+				pDownloadQueue.push({"id" : id, "src" : src, "type" : type});
 			},
 			
 			Get : function(id){
@@ -70,28 +70,53 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 				
 				for(var i = 0; i < pDownloadQueue.length; i++){
 					var asset = pDownloadQueue[i];
-					var img = new Image();
-					img.id = asset.id;
-					img.addEventListener('load', function(){
-						console.log('New image loaded: ' + this.src + " [" + this.id + "]", true);
-						pSuccessCount++;
-						if(pMe.Done()){
-							if(callback != undefined)
-								callback();
-						}
-					}, false);
-					
-					img.addEventListener('error', function(){
-						console.log('Error while loading this image: ' + asset.src, true);
-						pErrorCount++;
-						if(pMe.Done()){
-							if(callback != undefined)
-								callback();
-						}
-					}, false);
-					
-					img.src = asset.src;
-					pCache[asset.id] = img;
+
+                    if(asset.type == 'json') {
+                        $.getJSON(asset.src, function (j) {
+                            console.log('New json loaded: ');
+                            console.log(j);
+                            pSuccessCount++;
+                            pCache[asset.id] = j;
+                            if(pMe.Done()){
+                                if(callback != undefined)
+                                    callback();
+                            }
+                        })
+                        .success()
+                        .error(function() {
+                            console.log('Error while loading this json: ' + asset.src, true);
+                            pErrorCount++;
+                            pCache[asset.id] = null;
+                            if(pMe.Done()){
+                                if(callback != undefined)
+                                    callback();
+                            }
+                        })
+                        .complete();
+                    } else {
+                        var img = new Image();
+                        img.id = asset.id;
+                        img.addEventListener('load', function(){
+                            console.log('New image loaded: ' + this.src + " [" + this.id + "]", true);
+                            pSuccessCount++;
+                            if(pMe.Done()){
+                                if(callback != undefined)
+                                    callback();
+                            }
+                        }, false);
+                        
+                        img.addEventListener('error', function(){
+                            console.log('Error while loading this image: ' + asset.src, true);
+                            pErrorCount++;
+                            if(pMe.Done()){
+                                if(callback != undefined)
+                                    callback();
+                            }
+                        }, false);
+                        
+                        img.src = asset.src;
+                        pCache[asset.id] = img;
+                    }
 				}
 			}
 		}
