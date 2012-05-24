@@ -171,12 +171,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     dy              =   0;
                 }
             } else if (st == 4) { //explode
-                console.log('expl' + self.frame);
                 frameS++;
-                if (frameS > 4) {
+                if (frameS > 2) {
                     frameS          =   0;
                     self.frame++;
-                    if (self.frame == 54) {
+                    if (self.frame == 49) {
                         state.gridStatus[self.gridX][self.gridY] = 3;
                     }
                 }

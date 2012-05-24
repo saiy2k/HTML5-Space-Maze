@@ -108,6 +108,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var homeSprite              =   g.assetManager.Get('asteroidSprite');
         var homeSpriteFrame         =   this.spriteData.frames[50].frame;
 
+        /** delta value to give bubbling effect to home planet
+         *  @type float
+         *  @private */
+        var delBubble               =   0;
+        var delBubbleVar            =   1.5;
+
         this.getNextLetter          =   function() {
             targetIndex++;
             return self.targetArray[targetIndex];
@@ -125,6 +131,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             prevTarget              =   0;
             currentTarget           =   0;
             currentTarget           =   0;
+            delBubble               =   0;
         
             self.letterArray        =   [];
             for(var k = 0; k < tCount; k++) {
@@ -252,6 +259,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 for(var k = 0; k < tCount; k++) {
                     self.letterArray[k].update(dt);
                 }
+            if (state.inGameState == 'ending') {
+                delBubble           +=  delBubbleVar ;
+                if (Math.abs(delBubble) > 8) {
+                    delBubbleVar    *=  -1;
+                }
+            }
         };
 
         this.draw                   =   function(ctx) {
@@ -262,18 +275,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             for (var i = 0; i < tCount; i++) {
                 if(i != index) {
-                    if (self.spriteData != undefined) {
-                        var cFrame      =   self.spriteData.frames[self.letterArray[i].frame].frame;
-                        if (self.letterArray[i].frame < 33) {
-                            ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w * 0.5, cFrame.h * 0.5);
-                        } else {
-                            ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w, cFrame.h);
-                        }
+                    var cFrame      =   self.spriteData.frames[self.letterArray[i].frame].frame;
+                    if (self.letterArray[i].frame < 33) {
+                        ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                    } else {
+                        ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w, cFrame.h);
                     }
                 }
             }
 
-            if (self.spriteData != undefined && targetIndex != tCount) {
+            if (targetIndex != tCount) {
                 var cFrame              =   self.spriteData.frames[self.letterArray[index].frame].frame;
                 ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
                 ctx.globalCompositeOperation = 'lighter';
@@ -283,7 +294,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 ctx.globalCompositeOperation = 'source-over';
             }
 
-            ctx.drawImage(homeSprite, homeSpriteFrame.x, homeSpriteFrame.y, homeSpriteFrame.w, homeSpriteFrame.h, endSprite.x - homeSpriteFrame.w / 2, endSprite.y - homeSpriteFrame.h / 2, homeSpriteFrame.w, homeSpriteFrame.h);
+            ctx.drawImage(homeSprite, homeSpriteFrame.x, homeSpriteFrame.y, homeSpriteFrame.w, homeSpriteFrame.h, endSprite.x - homeSpriteFrame.w / 2, endSprite.y - homeSpriteFrame.h / 2, homeSpriteFrame.w + delBubble, homeSpriteFrame.h + delBubble);
         };
 
         this.getStartLocation       =   function() {

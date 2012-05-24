@@ -176,7 +176,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.shadowOffsetX       =   0;
             ctx.shadowOffsetY       =   0;
             ctx.shadowBlur          =   30;
-            ctx.fillText('Space Maze', width / 2, height * 0.15);
+            ctx.fillText('Astro  Space  Raid', width / 2, height * 0.15);
             ctx.shadowColor         =   shadowColor;
             ctx.strokeStyle     =   'rgba(55, 55, 155, 0.2)';
 

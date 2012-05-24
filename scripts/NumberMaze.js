@@ -54,6 +54,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.assetManager =     new NumberMaze.AssetManager(this);
         self.assetManager.Add('tooltip', 'images/tooltip.png', 'png');
         self.assetManager.Add('asteroidSprite', 'images/asteroidSprite.png', 'png');
+        self.assetManager.Add('craft', 'images/craft.png', 'png');
         self.assetManager.Add('spriteData', 'images/asteroidSprite.json', 'json');
         self.assetManager.DownloadAll(function() { 
                     loadComponents();

@@ -37,7 +37,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** sprite for menu button
          *  @type Image
          *  @private */
-        //var menuSprite              =   g.assetManager.Get('menuButton');
+        var menuSprite              =   g.assetManager.Get('asteroidSprite');
+        var menuSpriteFrame         =   g.assetManager.Get('spriteData').frames[51].frame;
+        console.log(g.assetManager.Get('spriteData').frames[50]);
 
         /** reference to the object which subscribes to events in this layer
          *  any object that implements the following functions:
@@ -52,8 +54,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** handler for mousedown event */
         this.mousedown              =   function(tx, ty) {
-            //if (Math.dist({x: tx, y: ty}, {x: width * 0.96, y: height * 0.5}) < menuSprite.width / 2)
-            //    self.delegate.pauseButtonPressed();
+            if (Math.dist({x: tx, y: ty}, {x: width * 0.96, y: height * 0.5}) < menuSpriteFrame.w / 2)
+                self.delegate.pauseButtonPressed();
         };
 
         /** updates the cellWidth and cellHeight as per new game area.
@@ -81,9 +83,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
-            ctx.fillStyle           =   'rgba(0, 0, 0, 0.25)';
-            ctx.fillRect(x, y, width, height);
-            //ctx.drawImage(menuSprite, width * 0.96 - menuSprite.width / 2, height * 0.5 - menuSprite.height / 2);
+            ctx.drawImage(menuSprite, menuSpriteFrame.x, menuSpriteFrame.y, menuSpriteFrame.w, menuSpriteFrame.h, width * 0.96 - menuSpriteFrame.w / 2, height * 0.5 - menuSpriteFrame.h/ 2, menuSpriteFrame.w, menuSpriteFrame.h);
         };
         
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);

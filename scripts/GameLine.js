@@ -46,11 +46,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         this.scoreRef;
 
-        /** angle of the space craft to draw with
-         *  @type float
-         *  @private */
-        var angle                   =   0;
-
         /** reference to game state object
          * @type NumberMaze.State */
         var state       =   NumberMaze.State;
@@ -132,13 +127,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 if(breakFactor > 100) {
                     self.delegate.lineExploded();
                     self.reset();
-                }
-            } else {
-                var lastPoint       =   self.pointArray.length - 1;
-                if (lastPoint > 3) {
-                var dx              =   self.pointArray[lastPoint].x - self.pointArray[lastPoint - 1].x;
-                var dy              =   self.pointArray[lastPoint].y - self.pointArray[lastPoint - 1].y;
-                angle               +=  (Math.atan2(dy, dx) - angle) / 10.0;
                 }
             }
         };
