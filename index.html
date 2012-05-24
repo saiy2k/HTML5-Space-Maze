@@ -47,7 +47,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <meta itemprop="image" content="http://www.gethugames.in/numbermaze/images/icon128.png">
         <meta itemprop="description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game">
      
-        <link href='http://fonts.googleapis.com/css?family=Iceberg|Homemade+Apple' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Iceberg|Homemade+Apple|Geostar+Fill|Geostar' rel='stylesheet' type='text/css'>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
         <script type="text/javascript" src="http://api.playtomic.com/js/playtomic.v1.9.min.js"></script>
         <script type="text/javascript">
@@ -106,8 +106,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             })();
 
             $(document).ready(function() {
+
+            $.getJSON('images/asteroidSprite.json', function (j) {
+                var game = new NumberMaze(j);
+            });
                 // init the main gameEngine
-                var game = new NumberMaze();
             });
         </script>
     </head>
@@ -137,7 +140,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         </script>
 
         <div id='gameArea'>
-            <img src='images/spaceBackground.jpg' style='position:absolute' />
             <canvas class='gameScreen' id='gameCanvas'></canvas>
             <canvas class='otherScreen' id='menuCanvas'></canvas>
             <div id='profileDiv' style="position:absolute;">

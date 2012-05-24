@@ -51,13 +51,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var angle                   =   0;
 
-        /** spacecraft image */
-        var iReady = false;
-        this.spaceCraft;
-        this.spaceCraft = new Image();
-        this.spaceCraft.onload = function () { iReady = true; };
-        this.spaceCraft.src = 'images/spaceCraft.png';
-
         /** reference to game state object
          * @type NumberMaze.State */
         var state       =   NumberMaze.State;
@@ -207,12 +200,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
             }
             ctx.globalCompositeOperation    =   "source-over";
-
-            ctx.save();
-            ctx.translate(self.pointArray[lastPoint].x, self.pointArray[lastPoint].y);
-            ctx.rotate(angle);
-            ctx.drawImage(self.spaceCraft, -20, -10, 40, 20);
-            ctx.restore();
         };
 
         this.reset();

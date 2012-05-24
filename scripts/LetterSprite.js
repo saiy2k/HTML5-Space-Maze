@@ -115,6 +115,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  the explosion animation */
         this.explode                =   function() {
             state.gridStatus[self.gridX][self.gridY] = 4;
+            self.frame              =   33;
         };
 
         this.open                   =   function() {
@@ -126,15 +127,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.gridStatus[self.gridX][self.gridY] = 3;
         };
 
-        /** this method changes the state to 'explode', thus showing
-         *  the explosion animation */
-        this.explode                =   function() {
-            state.gridStatus[self.gridX][self.gridY] = 4;
-        };
-
         this.reset                  =   function() {
             dx                      =   0;
             dy                      =   0;
+            self.frame              =   0;
             state.gridStatus[self.gridX][self.gridY] = 0;
             self.arcLength               =   Math.PI / 4.0;
             delAngle                =   Math.PI;
@@ -174,15 +170,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     dx              =   0;
                     dy              =   0;
                 }
-            } else if (st == 4) { //closed
-                self.arcLength      *=  0.95;
-                delAngle            *=  1.01;
-                dx                  =   Math.random() * delVibrate * 2 - delVibrate;
-                dy                  =   Math.random() * delVibrate * 2 - delVibrate;
-                angle               +=  delAngle * dt;
-                self.radius         *=  1.01;
-                if (self.radius > state.gameWidth / 16) {
-                    state.gridStatus[self.gridX][self.gridY] = 3;
+            } else if (st == 4) { //explode
+                console.log('expl' + self.frame);
+                frameS++;
+                if (frameS > 4) {
+                    frameS          =   0;
+                    self.frame++;
+                    if (self.frame == 54) {
+                        state.gridStatus[self.gridX][self.gridY] = 3;
+                    }
                 }
             }
         };

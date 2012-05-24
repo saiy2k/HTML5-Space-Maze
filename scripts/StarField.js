@@ -60,7 +60,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var timeout;
         var fps=0;
 
-        var bgSprite                =   g.assetManager.Get('spaceBackground');
+        var bgSprite                =   g.assetManager.Get('asteroidSprite');
+        var bgSpriteFrame           =   g.engine.getGrid().spriteData.frames[52].frame;
 
         var self                    =   this; 
 
@@ -92,8 +93,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             context.strokeStyle='rgb(100, 100, 100)';
             mouse_x=(cursor_x-x)/8;
             mouse_y=(cursor_y-y)/8;
-            context.clearRect(0,0,w,h);
-            context.drawImage(bgSprite, 0, 0);
+            context.drawImage(bgSprite, bgSpriteFrame.x, bgSpriteFrame.y, bgSpriteFrame.w, bgSpriteFrame.h, 0, 0, w, h);
             for(var i=0;i<n;i++)
             {
                 test=true;

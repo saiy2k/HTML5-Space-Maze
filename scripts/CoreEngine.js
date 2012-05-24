@@ -23,7 +23,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  * game mechanics, etc.,
 */
 (function(undefined) {
-    NumberMaze.CoreEngine           =   function(g) {
+    NumberMaze.CoreEngine           =   function(g, jj) {
         var self                    =   this; 
 
         /** reference to the object which subscribes the game events
@@ -41,7 +41,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** Grid object that manages the numbers and their states
          *  @type NumberMaze.GridLayer
          *  @private */
-        var grid                    =   new NumberMaze.GridLayer(g);
+        var grid                    =   new NumberMaze.GridLayer(g, jj);
         grid.delegate               =   self;
 
         /** line object that draws and manages the game line
@@ -133,6 +133,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             grid.mousemove(tx, ty);
         };
 
+        this.getGrid                =   function() {
+            return                      grid;
+        };
+
         /** procecd to next level */
         this.nextLevel              =   function() {
             state.inGameState       =   'waiting';
@@ -176,10 +180,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
+            var lastPoint           =   gLine.pointArray.length - 1;
             grid.draw(ctx);
             gLine.draw(ctx);
             ctx.font                =   'bold ' + Math.round(state.gameWidth/32.0) + 'px Iceberg';
             self.hud.draw(ctx);
+
+            ctx.save();
+            ctx.translate(gLine.pointArray[lastPoint].x, gLine.pointArray[lastPoint].y);
+            //ctx.rotate(angle);
+            if (state.inGameState == 'exploding') {
+                w -= 0.5;
+                h -= 0.5;
+            }
+            //ctx.drawImage(self.spaceCraft, -20, -10, w, h);
+            ctx.restore();
 
             if(showBonusPop) {
                 var                     lastIndex;

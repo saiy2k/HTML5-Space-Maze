@@ -22,7 +22,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  * to detect collision between the grid and the given points/lines.
 */
 (function(undefined) {
-    NumberMaze.GridLayer            =   function(g) {
+    NumberMaze.GridLayer            =   function(g, jj) {
         var self                    =   this;
         var state                   =   NumberMaze.State;
 
@@ -104,17 +104,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** json that represents individual frames inside the asteroid sprite sheet
          *  @type json
          *  @private */
-        var spriteData;
+        this.spriteData             =   jj;
 
-        var homePlanetSprite        =   g.assetManager.Get('homePlanet');
-
-        $.getJSON('images/asteroidSprite.json', function (j) {
-            spriteData              =   j;
-        });
+        var homeSprite              =   g.assetManager.Get('asteroidSprite');
+        var homeSpriteFrame         =   this.spriteData.frames[50].frame;
 
         this.getNextLetter          =   function() {
             targetIndex++;
-            console.log(targetIndex);
             return self.targetArray[targetIndex];
         };
 
@@ -267,15 +263,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             for (var i = 0; i < tCount; i++) {
                 if(i != index) {
-                    if (spriteData != undefined) {
-                    var cFrame      =   spriteData.frames[self.letterArray[i].frame].frame;
-                    ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                    if (self.spriteData != undefined) {
+                        var cFrame      =   self.spriteData.frames[self.letterArray[i].frame].frame;
+                        if (self.letterArray[i].frame < 33) {
+                            ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                        } else {
+                            ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w, cFrame.h);
+                        }
                     }
                 }
             }
 
-            if (spriteData != undefined && targetIndex != tCount) {
-                var cFrame              =   spriteData.frames[self.letterArray[index].frame].frame;
+            if (self.spriteData != undefined && targetIndex != tCount) {
+                var cFrame              =   self.spriteData.frames[self.letterArray[index].frame].frame;
                 ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
                 ctx.globalCompositeOperation = 'lighter';
                 ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
@@ -284,7 +284,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 ctx.globalCompositeOperation = 'source-over';
             }
 
-            ctx.drawImage(homePlanetSprite, endSprite.x - homePlanetSprite.width / 2, endSprite.y - homePlanetSprite.height / 2);
+            ctx.drawImage(homeSprite, homeSpriteFrame.x, homeSpriteFrame.y, homeSpriteFrame.w, homeSpriteFrame.h, endSprite.x - homeSpriteFrame.w / 2, endSprite.y - homeSpriteFrame.h / 2, homeSpriteFrame.w, homeSpriteFrame.h);
         };
 
         this.getStartLocation       =   function() {

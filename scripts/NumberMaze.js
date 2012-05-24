@@ -26,7 +26,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  *  4. running the game loop
 */
 (function($, undefined) {
-    NumberMaze          =   function() {
+    NumberMaze          =   function(jj) {
         var self        =   this;
 
         /** flag that determines if the mouse is touched down or not
@@ -61,10 +61,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.assetManager =     new NumberMaze.AssetManager(this);
         self.assetManager.Add('tooltip', 'images/tooltip.png');
         self.assetManager.Add('asteroidSprite', 'images/asteroidSprite.png');
-        self.assetManager.Add('homePlanet', 'images/homePlanet.png');
-        self.assetManager.Add('menuButton', 'images/menuButton.png');
-        self.assetManager.Add('spaceBackground', 'images/spaceBackground.jpg');
-        self.assetManager.Add('spaceCraft', 'images/spaceCraft.png');
         self.assetManager.DownloadAll();
 
         /** self.uiManager handles the screen and the user interactions
@@ -76,7 +72,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** Core game engine which handles all game mechanics 
          *  @type NumberMaze.CoreEngine
          *  @private */
-        self.engine      =   new NumberMaze.CoreEngine(this);
+        self.engine      =   new NumberMaze.CoreEngine(this, jj);
         self.engine.delegate =   self.uiManager;
 
         /** Object that handles the main menu screen
@@ -204,36 +200,36 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.engine.draw(self.context);
             } else if (state.currentScreen == 'paused') {
                 self.engine.draw(self.context);
-
+                starField.draw(self.context);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.pauseScreen.update(dt);
                 self.pauseScreen.draw(self.screenCtx);
             } else if (state.currentScreen == 'gameover') {
                 self.engine.update(dt);
                 self.engine.draw(self.context);
-
+                starField.draw(self.context);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.gameOver.update(dt);
                 self.gameOver.draw(self.screenCtx);
             } else if (state.currentScreen == 'gamewon') {
                 self.engine.update(dt);
                 self.engine.draw(self.context);
-
+                starField.draw(self.context);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.gameWin.update(dt);
                 self.gameWin.draw(self.screenCtx);
             } else if (state.currentScreen == 'menu') {
-                self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                starField.draw(self.context);
                 self.mainMenu.update(dt);
                 self.mainMenu.draw(self.screenCtx);
             } else if (state.currentScreen == 'lboard') {
-                self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                starField.draw(self.context);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.LBoard.update(dt);
                 self.LBoard.draw(self.screenCtx);
             } else if (state.currentScreen == 'credits') {
-                self.context.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                starField.draw(self.context);
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.creditsScreen.update(dt);
                 self.creditsScreen.draw(self.screenCtx);
