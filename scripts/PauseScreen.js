@@ -41,9 +41,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var resumeButton            =   new NumberMaze.MenuButton("resume", 0.3, 0.8, 0.2, 0.1);
+        var resumeButton            =   new NumberMaze.MenuButton("resume", 0.3, 0.75, 0.2, 0.1);
         resumeButton.delegate       =   self;
-        var restartButton           =   new NumberMaze.MenuButton("restart", 0.7, 0.8, 0.2, 0.1);
+        var restartButton           =   new NumberMaze.MenuButton("restart", 0.7, 0.75, 0.2, 0.1);
         restartButton.delegate      =   self;
         var helpButton              =   new NumberMaze.MenuButton("help", 0.3, 0.9, 0.2, 0.1);
         helpButton.delegate         =   self;
@@ -55,6 +55,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             restartButton.mouseup(tx, ty);
             helpButton.mouseup(tx, ty);
             quitButton.mouseup(tx, ty);
+        };
+
+        this.mousemove              =   function(tx, ty) {
+            resumeButton.mousemove(tx, ty);
+            restartButton.mousemove(tx, ty);
+            helpButton.mousemove(tx, ty);
+            quitButton.mousemove(tx, ty);
         };
 
         this.click                  =   function(btn) {
@@ -89,15 +96,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
+            ctx.fillStyle           =   'rgba(100, 100, 100, 0.3)';
+            ctx.fillRect(width * 0.02, height * 0.02, width, height * 0.65);
+            ctx.textBaseLine        =   'middle';
             ctx.textAlign           =   'center';
-            ctx.fillStyle           =   'rgba(0, 0, 0, 0.8)';
-            ctx.fillRect(x, y, width, height);
-            ctx.strokeRect(x, y, width, height);
+            ctx.fillStyle           =   'rgba(220, 220, 220, 0.8)';
+            ctx.font                =   'bold ' + width/20 + 'px Geostar Fill';
+            var shadowColor         =   ctx.shadowColor;
+            ctx.shadowColor         =   '#d88';
+            ctx.shadowOffsetX       =   0;
+            ctx.shadowOffsetY       =   0;
+            ctx.shadowBlur          =   30;
+            ctx.fillText('Game Paused', width / 2, height * 0.1);
+            ctx.shadowColor         =   shadowColor;
 
-            ctx.fillStyle           =   'rgba(255, 255, 255, 0.8)';
-            ctx.font                =   'bold ' + width/20 + 'px Iceberg';
-            ctx.fillText('Game Paused', width * 0.5, height * 0.15);
-
+            ctx.font                =   width/30 + 'px Iceberg';
             resumeButton.draw(ctx);
             restartButton.draw(ctx);
             helpButton.draw(ctx);

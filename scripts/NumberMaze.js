@@ -143,6 +143,16 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
             else if(state.currentScreen == 'menu')
                 self.mainMenu.mousemove(tx, ty);
+            else if(state.currentScreen == 'credits')
+                self.creditsScreen.mousemove(tx, ty);
+            else if(state.currentScreen == 'lboard')
+                self.LBoard.mousemove(tx, ty);
+            else if(state.currentScreen == 'paused')
+                self.pauseScreen.mousemove(tx, ty);
+            else if(state.currentScreen == 'gameover')
+                self.gameOver.mousemove(tx, ty);
+            else if(state.currentScreen == 'gamewon')
+                self.gameWin.mousemove(tx, ty);
         };
 
         self.mouseup    =   function(tx, ty) {
