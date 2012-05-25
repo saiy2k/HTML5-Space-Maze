@@ -96,8 +96,27 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var mousey;
 
+        /** sprite sheet image of the asteroid
+         *  @type Image
+         *  @private */
+        var spriteSheet             =   g.assetManager.Get('asteroidSprite');
+
+        /** json that represents individual frames inside the asteroid sprite sheet
+         *  @type json
+         *  @private */
+        this.spriteData             =   g.assetManager.Get('spriteData');;
+        var homeSprite              =   g.assetManager.Get('asteroidSprite');
+        var homeSpriteFrame         =   this.spriteData.frames[50].frame;
+
+        /** delta value to give bubbling effect to home planet
+         *  @type float
+         *  @private */
+        var delBubble               =   0;
+        var delBubbleVar            =   1.5;
+
         this.getNextLetter          =   function() {
-            return self.targetArray[targetIndex++];
+            targetIndex++;
+            return self.targetArray[targetIndex];
         };
 
         this.mousemove              =   function(tx, ty) {
@@ -109,6 +128,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.reset                  =   function() {
             tCount                  =   state.rowCount * state.colCount;
             targetIndex             =   0;
+            prevTarget              =   0;
+            currentTarget           =   0;
+            currentTarget           =   0;
+            delBubble               =   0;
         
             self.letterArray        =   [];
             for(var k = 0; k < tCount; k++) {
@@ -123,6 +146,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.letterArray[i].reset();
             }
 
+            /*
             for(var i = 0; i < tCount; i++) {
                 var rnd             =   Math.round(Math.random() * (tCount - 1));
                 var tmp;
@@ -130,12 +154,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.targetArray[i] =   self.targetArray[rnd];
                 self.targetArray[rnd]=  tmp;
             }
+            */
 
-            /*
             for(var i = 0; i < tCount; i++) {
                 console.log(self.targetArray[i]);
             }
-            */
 
             self.letterArray[self.targetArray[targetIndex]].open();
 
@@ -197,11 +220,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         self.letterArray[k].jingle();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
-                        if(targetIndex == tCount) {
+                        if(targetIndex == tCount - 1) {
+                            targetIndex++;
                             console.log('changed to ending');
                             state.inGameState = 'ending';
                             endSprite.open();
                         } else {
+                            console.log('gettin next letter');
                             prevTarget      =   currentTarget;
                             currentTarget   =   self.getNextLetter();
                             self.letterArray[currentTarget].open();
@@ -213,6 +238,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                             window.setTimeout(self.delegate.wrongPointExploded, 1400);
                         }
                     } else if (k != prevTarget) {
+                        console.log('outta');
+                        console.log(k);
+                        console.log(prevTarget);
                         self.letterArray[k].explode();
                         if(self.delegate) {
                             self.delegate.touchedWrongPoint();
@@ -224,6 +252,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
         };
 
+        var sl = 0;
+
         this.update                 =   function(dt) {
             if (state.inGameState == 'ending')
                 endSprite.update(dt*3);
@@ -231,53 +261,46 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 for(var k = 0; k < tCount; k++) {
                     self.letterArray[k].update(dt);
                 }
+            if (state.inGameState == 'ending') {
+                delBubble           +=  delBubbleVar ;
+                if (Math.abs(delBubble) > 8) {
+                    delBubbleVar    *=  -1;
+                }
+            }
         };
 
         this.draw                   =   function(ctx) {
             ctx.fillStyle           =   'rgba(50, 50, 90, 0.2)';
             ctx.strokeStyle         =   'rgba(50, 50, 020, 0.8)';
             ctx.lineWidth           =   cellWidth / 70;
-            for(var i = 0; i < tCount; i++) {
-                ctx.beginPath();
-                ctx.arc(self.letterArray[i].x, self.letterArray[i].y, self.letterArray[i].radius, 0, Math.PI*2, false);
-                ctx.fill();
+            index                   =   self.targetArray[targetIndex];
+
+            for (var i = 0; i < tCount; i++) {
+                if(i != index) {
+                    var cFrame      =   self.spriteData.frames[self.letterArray[i].frame].frame;
+                    if (self.letterArray[i].frame < 33) {
+                        ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                    } else {
+                        ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w, cFrame.h);
+                    }
+                }
             }
 
-            ctx.fillStyle           =   'rgba(250, 20, 0, 0.8)';
-            ctx.beginPath();
-            var index               =   self.targetArray[targetIndex-1];
-            if (index == undefined)
-                index               =   self.targetArray[targetIndex];
-            ctx.arc(self.letterArray[index].x, self.letterArray[index].y, self.letterArray[index].radius, 0, Math.PI*2, false);
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.fillStyle           =   '#444';
-            ctx.font                =   'bold ' + cellWidth/14 + 'px Iceberg';
-            for(var i = 0; i < tCount; i++) {
-                self.letterArray[i].draw(ctx);
+            if (targetIndex != tCount) {
+                var cFrame              =   self.spriteData.frames[self.letterArray[index].frame].frame;
+                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                ctx.globalCompositeOperation = 'lighter';
+                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                ctx.globalCompositeOperation = 'source-over';
             }
-            ctx.stroke();
 
-            ctx.beginPath();
-            ctx.lineStyle           =   'rgba(250, 20, 0, 0.8)';
-            startSprite.draw(ctx);
-            endSprite.draw(ctx);
-            ctx.stroke();
+            ctx.drawImage(homeSprite, homeSpriteFrame.x, homeSpriteFrame.y, homeSpriteFrame.w, homeSpriteFrame.h, endSprite.x - homeSpriteFrame.w / 2, endSprite.y - homeSpriteFrame.h / 2, homeSpriteFrame.w + delBubble, homeSpriteFrame.h + delBubble);
+        };
 
-            if(state.inGameState == 'waiting') {
-                var                     dx;
-                var                     dy;
-                var                     ang;
-                dx                  =   mousex - startSprite.x;
-                dy                  =   mousey - startSprite.y;
-                ang                 =   Math.atan2(dy, dx);
-                ctx.beginPath();
-                ctx.moveTo(startSprite.x, startSprite.y);
-                ctx.lineTo(startSprite.x + (state.gameWidth / 40) * Math.cos(ang), startSprite.y + (state.gameWidth / 40) * Math.sin(ang));
-                ctx.stroke();
-
-            }
+        this.getStartLocation       =   function() {
+            return                      { x: startSprite.x, y: startSprite.y };
         };
 
         startSprite                 =   new NumberMaze.LetterSprite('.', state.gameWidth * 0.07, state.gameHeight * 0.2, 0, 0);

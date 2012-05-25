@@ -78,6 +78,24 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var timeAnimDelta           =   1.0;
 
+        /** angle of the space craft to draw with
+         *  @type float
+         *  @private */
+        var angle                   =   0;
+
+        /** space craft sprite
+         *  @type Image
+         *  @private */
+        //this.craftSprite            =   g.assetManager.Get('asteroidSprite');
+        this.craftSprite            =   g.assetManager.Get('craft');
+        this.craftSpriteFrame       =   g.assetManager.Get('spriteData').frames[53].frame;
+        var w                       =   self.craftSprite.width;
+        var h                       =   self.craftSprite.height;
+
+        this.getStartLocation       =   function() {
+            return                      grid.getStartLocation();
+        };
+
         function animateScorePopup() {
             showBonusPop            =   true;
             timeAnimDelta           =   1.0;
@@ -99,6 +117,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.reset                  =   function() {
             state.inGameState       =   'waiting';
             state.gridStatus        =   []; 
+            w                       =   self.craftSprite.width;
+            h                       =   self.craftSprite.height;
 
             if(state.gameMode       ==  'hard')
                 state.colCount    =   4;
@@ -127,6 +147,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.mousemove              =   function(tx, ty) {
             grid.mousemove(tx, ty);
+        };
+
+        this.getGrid                =   function() {
+            return                      grid;
         };
 
         /** procecd to next level */
@@ -170,14 +194,31 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 score.update(dt);
                 self.hud.update(dt, score.chkPointRemain, 0);
             }
+            var lastPoint       =   gLine.pointArray.length - 1;
+            if (lastPoint > 3) {
+                var dx              =   gLine.pointArray[lastPoint].x - gLine.pointArray[lastPoint - 1].x;
+                var dy              =   gLine.pointArray[lastPoint].y - gLine.pointArray[lastPoint - 1].y;
+                angle               +=  (Math.atan2(dy, dx) - angle) / 10.0;
+            }
         };
 
         this.draw                   =   function(ctx) {
-            ctx.clearRect(0, 0, state.gameWidth, state.gameHeight);
-            gLine.draw(ctx);
+            var lastPoint           =   gLine.pointArray.length - 1;
             grid.draw(ctx);
+            gLine.draw(ctx);
             ctx.font                =   'bold ' + Math.round(state.gameWidth/32.0) + 'px Iceberg';
             self.hud.draw(ctx);
+
+            ctx.save();
+            ctx.translate(gLine.pointArray[lastPoint].x, gLine.pointArray[lastPoint].y);
+            ctx.rotate(angle + 3.14 / 2);
+            if (state.inGameState == 'exploding') {
+                w -= 1;
+                h -= 1;
+                angle               +=  Math.round(Math.random() / 6.0);
+            }
+            ctx.drawImage(self.craftSprite, -32 - 64 + w, -32 - 64 + h, w, h);
+            ctx.restore();
 
             if(showBonusPop) {
                 var                     lastIndex;

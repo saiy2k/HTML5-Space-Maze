@@ -38,11 +38,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var backButton              =   new NumberMaze.MenuButton("back", 0.1, 0.1, 0.2, 0.1);
+        var backButton              =   new NumberMaze.MenuButton("back", 0.1, 0.06, 0.2, 0.1);
         backButton.delegate         =   self;
 
         this.mouseup                =   function(tx, ty) {
             backButton.mouseup(tx, ty);
+        };
+
+        this.mousemove              =   function(tx, ty) {
+            backButton.mousemove(tx, ty);
         };
 
         this.click                  =   function(btn) {
@@ -61,13 +65,23 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.update                 =   function(dt) {
+            backButton.update(dt);
         };
 
         this.draw                   =   function(ctx) {
+            ctx.textBaseLine        =   'middle';
             ctx.textAlign           =   'center';
-            ctx.fillText('credits', width * 0.5, height * 0.1);
+            ctx.fillStyle           =   'rgba(220, 220, 220, 0.8)';
+            ctx.font                =   'bold ' + width/20 + 'px Geostar Fill';
+            var shadowColor         =   ctx.shadowColor;
+            ctx.shadowColor         =   '#d88';
+            ctx.shadowOffsetX       =   0;
+            ctx.shadowOffsetY       =   0;
+            ctx.shadowBlur          =   30;
+            ctx.fillText('Credits', width / 2, height * 0.1);
+            ctx.shadowColor         =   shadowColor;
 
-            ctx.font                =   width/30 + 'px Homemade Apple';
+            ctx.font                =   width/30 + 'px Iceberg';
             backButton.draw(ctx);
         };
 

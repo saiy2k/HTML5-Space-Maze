@@ -45,16 +45,23 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var restartButton           =   new NumberMaze.MenuButton("restart", 0.3, 0.8, 0.2, 0.1);
+        var restartButton           =   new NumberMaze.MenuButton("restart", 0.25, 0.9, 0.2, 0.1);
         restartButton.delegate      =   self;
-        var quitButton              =   new NumberMaze.MenuButton("quit", 0.7, 0.8, 0.2, 0.1);
+        var quitButton              =   new NumberMaze.MenuButton("quit", 0.75, 0.9, 0.2, 0.1);
         quitButton.delegate         =   self;
-        var lBoardButton            =   new NumberMaze.MenuButton("scoreboard", 0.5, 0.92, 0.2, 0.1);
+        var lBoardButton            =   new NumberMaze.MenuButton("scoreboard", 0.5, 0.9, 0.2, 0.1);
         lBoardButton.delegate       =   self;
 
         this.mouseup                =   function(tx, ty) {
             restartButton.mouseup(tx, ty);
             quitButton.mouseup(tx, ty);
+            lBoardButton.mouseup(tx, ty);
+        };
+
+        this.mousemove              =   function(tx, ty) {
+            restartButton.mousemove(tx, ty);
+            quitButton.mousemove(tx, ty);
+            lBoardButton.mousemove(tx, ty);
         };
 
         this.click                  =   function(btn) {
@@ -83,21 +90,28 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
+            ctx.fillStyle           =   'rgba(100, 100, 100, 0.3)';
+            ctx.fillRect(width * 0.02, height * 0.02, width, height * 0.8);
+            ctx.textBaseLine        =   'middle';
             ctx.textAlign           =   'center';
-            ctx.fillStyle           =   'rgba(0, 0, 0, 0.8)';
-            ctx.fillRect(x, y, width, height);
-            ctx.strokeRect(x, y, width, height);
+            ctx.fillStyle           =   'rgba(220, 220, 220, 0.8)';
+            ctx.font                =   'bold ' + width/20 + 'px Geostar Fill';
+            var shadowColor         =   ctx.shadowColor;
+            ctx.shadowColor         =   '#d88';
+            ctx.shadowOffsetX       =   0;
+            ctx.shadowOffsetY       =   0;
+            ctx.shadowBlur          =   30;
+            ctx.fillText('Game Over', width / 2, height * 0.1);
+            ctx.shadowColor         =   shadowColor;
 
-            ctx.fillStyle           =   'rgba(255, 255, 255, 0.8)';
-            ctx.font                =   'bold ' + width/20 + 'px Iceberg';
-            ctx.fillText('Game Over', width * 0.5, height * 0.15);
-
+            ctx.font                =   width/28 + 'px Geostar Fill';
             ctx.fillText('Level ' + (parseInt(NumberMaze.State.currentLevel) + 1) + ' highest score is ', width * 0.4, height * 0.3);
             ctx.fillText(Math.round(self.lvlScore), width * 0.8, height * 0.3);
 
             ctx.fillText('Your score is ', width * 0.3, height * 0.5);
             ctx.fillText(Math.round(self.score + self.lvlScore), width * 0.8, height * 0.5);
 
+            ctx.font                =   width/30 + 'px Iceberg';
             restartButton.draw(ctx);
             quitButton.draw(ctx);
             lBoardButton.draw(ctx);

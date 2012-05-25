@@ -135,27 +135,29 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 over                =   true;
             } else {
                 over                =   false;
-                lineOsc             =   aHeight / 2;
             }
         };
 
         this.update                 =   function(dt) {
-            if(over) {
-                lineOsc                 +=  dLineOsc;
-                if (lineOsc > aHeight || lineOsc < 0)
-                    dLineOsc            *=  -1;
-            }
         };
 
         /** renders the text and the arc around it
          * @public */
         this.draw                   =   function(ctx) {
             ctx.beginPath();
-            ctx.quadraticCurveTo(aX - aWidth / 2, aY, aX - aWidth / 2, aY);
-            ctx.quadraticCurveTo(aX, aY + lineOsc, aX + aWidth / 2, aY);
-            ctx.stroke();
+            if (over)
+                ctx.fillStyle       =   'rgba(110, 150, 250, 0.2)';
+            else
+                ctx.fillStyle       =   'rgba(110, 150, 250, 0.1)';
+            ctx.rect(aX - aWidth / 2, aY - aHeight / 2, aWidth, aHeight);
+            ctx.fill();
             ctx.closePath();
+            ctx.beginPath();
+            ctx.rect(aX - aWidth / 2, aY + aHeight * 0.3, aWidth, aHeight * 0.2);
+            ctx.fill();
+            ctx.fillStyle           =   'rgba(210, 150, 150, 0.8)';
             ctx.fillText(self.text, aX + dx, aY + dy);
+            ctx.closePath();
         };
 
         this.reset();

@@ -187,6 +187,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.gWonScreenNext         =   function() {
             state.currentScreen     =   'game';
             g.engine.nextLevel();
+            self.resize();
             $(g.menuCanvas).hide();
         };
         this.gWonScreenQuit         =   function() {

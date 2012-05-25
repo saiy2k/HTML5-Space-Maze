@@ -58,19 +58,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var newGameButton           =   new NumberMaze.MenuButton("new game", 0.5, 0.3, 0.2, 0.1);
+        var newGameButton           =   new NumberMaze.MenuButton("new game", 0.5, 0.3, 0.25, 0.1);
         newGameButton.delegate      =   self;
-        var practiceButton          =   new NumberMaze.MenuButton("practice", 0.8, 0.3, 0.2, 0.1);
+        var practiceButton          =   new NumberMaze.MenuButton("practice", 0.8, 0.3, 0.25, 0.1);
         practiceButton.delegate     =   self;
-        var easyButton              =   new NumberMaze.MenuButton("easy", 0.8, 0.4, 0.2, 0.1);
+        var easyButton              =   new NumberMaze.MenuButton("easy", 0.8, 0.4, 0.25, 0.1);
         easyButton.delegate         =   self;
-        var hardButton              =   new NumberMaze.MenuButton("hard", 0.8, 0.5, 0.2, 0.1);
+        var hardButton              =   new NumberMaze.MenuButton("hard", 0.8, 0.5, 0.25, 0.1);
         hardButton.delegate         =   self;
-        var lboardButton            =   new NumberMaze.MenuButton("score board", 0.5, 0.45, 0.2, 0.1);
+        var lboardButton            =   new NumberMaze.MenuButton("score board", 0.5, 0.45, 0.25, 0.1);
         lboardButton.delegate       =   self;
-        var musicButton             =   new NumberMaze.MenuButton("music", 0.5, 0.6, 0.2, 0.1);
+        var musicButton             =   new NumberMaze.MenuButton("music on", 0.5, 0.6, 0.25, 0.1);
         musicButton.delegate        =   self;
-        var creditsButton           =   new NumberMaze.MenuButton("credits", 0.5, 0.75, 0.2, 0.1);
+        var creditsButton           =   new NumberMaze.MenuButton("credits", 0.5, 0.75, 0.25, 0.1);
         creditsButton.delegate      =   self;
 
         this.addPoint               =   function(tx, ty) {
@@ -167,13 +167,22 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
+            ctx.textBaseLine        =   'middle';
             ctx.textAlign           =   'center';
-            ctx.fillStyle           =   'rgba(55, 55, 55, 0.8)';
-            ctx.font                =   'bold ' + width/20 + 'px Homemade Apple';
-            ctx.fillText('Number Maze', width / 2, height * 0.15);
+            ctx.fillStyle           =   'rgba(220, 220, 220, 0.8)';
+            ctx.font                =   'bold ' + width/16 + 'px Geostar Fill';
+            var shadowColor         =   ctx.shadowColor;
+            ctx.shadowColor         =   '#d88';
+            ctx.shadowOffsetX       =   0;
+            ctx.shadowOffsetY       =   0;
+            ctx.shadowBlur          =   30;
+            ctx.fillText('Astro  Space  Raid', width / 2, height * 0.15);
+            ctx.shadowColor         =   shadowColor;
             ctx.strokeStyle     =   'rgba(55, 55, 155, 0.2)';
+
             ctx.lineWidth       =   width / 200;
             ctx.lineCap         =   'round';
+            ctx.fillStyle           =   'rgba(210, 200, 200, 0.8)';
             ctx.beginPath();
 
             if(self.pointArray.length > 0) {
@@ -185,7 +194,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 ctx.closePath();
             }
 
-            ctx.font                =   width/30 + 'px Homemade Apple';
+            ctx.strokeStyle         =   'rgba(255, 255, 255, 0.2)';
+            ctx.font                =   width/26 + 'px Iceberg';
             newGameButton.draw(ctx);
             lboardButton.draw(ctx);
             musicButton.draw(ctx);

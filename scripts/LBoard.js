@@ -54,17 +54,23 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var backButton              =   new NumberMaze.MenuButton("back", 0.1, 0.1, 0.2, 0.1);
+        var backButton              =   new NumberMaze.MenuButton("back", 0.1, 0.06, 0.2, 0.1);
         backButton.delegate         =   self;
-        var easyButton              =   new NumberMaze.MenuButton("easy", 0, 0, 100, 30);
+        var easyButton              =   new NumberMaze.MenuButton("easy", 0.35, 0.9, 0.2, 0.1);
         easyButton.delegate         =   self;
-        var hardButton              =   new NumberMaze.MenuButton("hard", 0, 0, 100, 30);
+        var hardButton              =   new NumberMaze.MenuButton("hard", 0.65, 0.9, 0.2, 0.1);
         hardButton.delegate         =   self;
 
-        this.mousedown              =   function(tx, ty) {
-            backButton.mousedown(tx, ty);
-            easyButton.mousedown(tx, ty);
-            hardButton.mousedown(tx, ty);
+        this.mouseup              =   function(tx, ty) {
+            backButton.mouseup(tx, ty);
+            easyButton.mouseup(tx, ty);
+            hardButton.mouseup(tx, ty);
+        }
+
+        this.mousemove             =   function(tx, ty) {
+            backButton.mousemove(tx, ty);
+            easyButton.mousemove(tx, ty);
+            hardButton.mousemove(tx, ty);
         }
 
         this.click                  =   function(btn) {
@@ -89,29 +95,36 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.resizeLayout           =   function(tWidth, tHeight) {
             width                   =   tWidth;
             height                  =   tHeight;
-
-            backButton.x            =   (tWidth - backButton.width) * 0.1;
-            backButton.y            =   height * 0.1;
-            easyButton.x            =   (tWidth - easyButton.width) * 0.9;
-            easyButton.y            =   height * 0.1;
-            hardButton.x            =   (tWidth - hardButton.width) * 0.9;
-            hardButton.y            =   height * 0.2;
+            backButton.resizeLayout(tWidth, tHeight);
+            easyButton.resizeLayout(tWidth, tHeight);
+            hardButton.resizeLayout(tWidth, tHeight);
         };
 
         this.update                 =   function(dt) {
+            backButton.update(dt);
+            easyButton.update(dt);
+            hardButton.update(dt);
         };
 
         this.draw                   =   function(ctx) {
+            ctx.textBaseLine        =   'middle';
             ctx.textAlign           =   'center';
-            ctx.fillStyle           =   'rgba(55, 55, 55, 0.8)';
-            ctx.font                =   'bold ' + width/20 + 'px Iceberg';
-            ctx.fillText('leader boards', width * 0.5, height * 0.1);
+            ctx.fillStyle           =   'rgba(220, 220, 220, 0.8)';
+            ctx.font                =   'bold ' + width/20 + 'px Geostar Fill';
+            var shadowColor         =   ctx.shadowColor;
+            ctx.shadowColor         =   '#d88';
+            ctx.shadowOffsetX       =   0;
+            ctx.shadowOffsetY       =   0;
+            ctx.shadowBlur          =   30;
+            ctx.fillText('Leader Boards', width / 2, height * 0.1);
+            ctx.shadowColor         =   shadowColor;
 
             for (var i = 0; i < self.scoreList.length; i++) {
                 var score           =   self.scoreList[i];
                 ctx.fillText(" - " + score.Name + " got " + score.Points + " on " + score.SDate, 200, 100 + i * 30);
             }
 
+            ctx.font                =   width/30 + 'px Iceberg';
             backButton.draw(ctx);
             easyButton.draw(ctx);
             hardButton.draw(ctx);
