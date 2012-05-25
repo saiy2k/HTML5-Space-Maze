@@ -139,6 +139,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             self.letterArray[self.targetArray[targetIndex]].open();
 
+            prevTarget              =   self.targetArray[targetIndex];
+            currentTarget           =   self.targetArray[targetIndex];
             startSprite.arcLength   =   Math.PI;
             endSprite.arcLength     =   Math.PI;
         };
