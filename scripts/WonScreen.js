@@ -101,7 +101,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.fillText('Game Won', width / 2, height * 0.1);
             ctx.shadowColor         =   shadowColor;
 
-            ctx.font                =   width/28 + 'px Geostar Fill';
+            ctx.font                =   width/28 + 'px Iceberg';
             ctx.fillText('Level ' + (parseInt(NumberMaze.State.currentLevel) + 1) + ' highest score is ', width * 0.4, height * 0.3);
             ctx.fillText(Math.round(self.lvlScore), width * 0.8, height * 0.3);
 
@@ -110,6 +110,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             ctx.fillText('Your score is ', width * 0.3, height * 0.5);
             ctx.fillText(Math.round(self.score + self.lvlScore + self.bonus), width * 0.8, height * 0.5);
+
+            if (NumberMaze.State.authProvider == '') {
+                ctx.fillText('Please login to submit score to leaderboard', width * 0.5, height * 0.65);
+            }
 
             ctx.font                =   width/30 + 'px Iceberg';
             restartButton.draw(ctx);

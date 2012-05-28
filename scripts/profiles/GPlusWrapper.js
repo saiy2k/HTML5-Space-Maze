@@ -53,6 +53,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     $('#loggedin').show();
                     $('#loggedin').html('Welcome, <br/>' + resp.name);
                     NumberMaze.State.playerName = resp.name;
+                    Numbermaze.uiManager.submitScore();
                     console.log(resp);
                 },
                 dataType: "jsonp"

@@ -275,5 +275,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
  
         $('#profileDiv').hide();
+
+        //test code
+        //NumberMaze.State.playerName = 'test';
+        //NumberMaze.State.authProvider = 'google';
    };
 })(jQuery);

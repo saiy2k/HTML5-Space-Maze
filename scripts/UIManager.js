@@ -88,13 +88,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         });
 
         /** handler for googlePlus login button */
-        $('#gPlusLogin').click(function() {
+        $('#gPlusLoginButton').click(function() {
             NumberMaze.GPlusWrapper().login();
         });
 
         /** handler for facebook login button */
-        $('#fbLogin').click(function() {
-            NumberMaze.FBWrapper().login();
+        $('#fbLoginButton').click(function() {
+            NumberMaze.FBWrapper.share();
         });
 
         /** handler for window resize / orientation change events
@@ -152,20 +152,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.currentScreen     =   'gameover';
             g.gameOver.score        =   g.engine.getScore();
             g.gameOver.lvlScore     =   g.engine.getLevelScore();
+            $('#profileDiv').show();
             $(g.menuCanvas).show();
 
-            // score submission to playtomic
-            if(state.online) {
-                var simple_score        =   {};
-                var boardName           =   '';
-                simple_score.Name       =   state.playerName;
-                simple_score.Points     =   Math.round(g.engine.getScore());
-                boardName               =   state.gameMode + '-' + (state.isMobile ? 'mobile' : 'normal');
-                console.log('mode is ' + state.gameMode);
-                console.log(boardName);
-                console.log(simple_score);
-                //Playtomic.Leaderboards.Save(simple_score, boardName); 
-            }
+            self.submitScore();
         };
 
         this.gameWon                =   function() {
@@ -174,6 +164,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             g.gameWin.score         =   g.engine.getScore();
             g.gameWin.lvlScore      =   g.engine.getLevelScore();
             g.gameWin.bonus         =   g.engine.getBonusScore();
+            $('#profileDiv').show();
             $(g.menuCanvas).show();
         };
 
@@ -194,6 +185,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.currentScreen     =   'menu';
             g.mainMenu.reset();
             $(g.menuCanvas).show();
+            $('#profileDiv').hide();
         };
 
         /** callback methods to handle pause screen events */
@@ -211,6 +203,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             g.mainMenu.reset();
             $(g.menuCanvas).show();
             $('#socialDiv').show();
+            $('#profileDiv').hide();
         };
         this.pauseScreenHelp        =   function() {
         };
@@ -269,6 +262,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** callback methods to handle credits screen events */
         this.creditsBack            =   function() {
             state.currentScreen     =   'menu';
+        };
+
+        // score submission to playtomic
+        this.submitScore            =   function() {
+            if(state.online && state.authProvider != '') {
+                console.log('submitting to playtomic');
+                var simple_score        =   {};
+                var boardName           =   '';
+                simple_score.Name       =   state.playerName;
+                simple_score.Points     =   Math.round(g.engine.getScore());
+                boardName               =   state.gameMode + '-' + (state.isMobile ? 'mobile' : 'normal');
+                console.log(boardName);
+                console.log(simple_score);
+                Playtomic.Leaderboards.Save(simple_score, boardName); 
+            }
         };
 
         function touchHandler(event) {

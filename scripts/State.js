@@ -50,7 +50,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  Possible values: game, menu, lboard, credits, paused, gameover, gamewon
          *  @type String
          *  @public */
-        currentScreen           :   'menu',
+        currentScreen           :   'game',
 
         /** represents the current in-game state.
          *  Possible values being waiting, playing, ending, exploding, won, lose
@@ -79,17 +79,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** elapsed time since the start of the level */
         elapsedtime             :   0,
 
+        /** boolean that indicates whether our app is connected to FB */
+        fbLoggedin              :   false,
+
         /** Authentication provider. Can have values:
          *  google, facebook, twitter */
         authProvider            :   '',
 
         /** name of the user, which is retrieved through OAuth provider */
         playerName              :   '',
-
-        /** User object. Contains the details of user, once the
-         *  user is authorized through any oauth providers.
-         *  Structure of this object might differ between different
-         *  providers */
-        userInfo                :   {}
     };
 })();

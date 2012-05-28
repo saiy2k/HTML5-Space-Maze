@@ -57,18 +57,18 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <div id='gameArea'>
             <canvas class='gameScreen' id='gameCanvas'></canvas>
             <canvas class='otherScreen' id='menuCanvas'></canvas>
-            <div id="socialDiv">
+            <div id="socialDiv" style='display: none'>
                <div style='bottom: 8px;' class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false" data-colorscheme="dark" data-font="segoe ui"></div>
                <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a>
                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                <g:plusone size="medium"></g:plusone>
                <br />
-               Game under active development. You can follow / contribute @ <a href='https://github.com/saiy2k/Number-Maze' target='_blank'> https://github.com/saiy2k/Number-Maze </a>
+               <p style='color: #fff'> Game under active development. You can follow / contribute @ <a href='https://github.com/saiy2k/Number-Maze' target='_blank'> https://github.com/saiy2k/Number-Maze </a> </p>
            </div>
            <div id='profileDiv' style="position:absolute;">
                <div id='notloggedin'>
-                   <img src='images/gplusIcon.png' alt='google plus icon' id='gPlusLogin' class='socialIcon'/>
-                   <img src='images/fbIcon.png' alt='facebook icon' id='fbLogin' class='socialIcon'/>
+                   <!-- <img src='images/gplusIconDisabled.png' alt='google plus icon' id='gPlusLoginButton' class='socialIcon'/> -->
+                   <img src='images/fbIconDisabled.png' alt='facebook icon' id='fbLoginButton' class='socialIcon'/>
                </div>
                <div id='loggedin' style='font-size: 12px'>
                </div>
@@ -83,9 +83,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 status     : true, // check login status
                 cookie     : true, // enable cookies to allow the server to access the session
                 xfbml      : true  // parse XFBML
-            });
+                });
 
-            // Additional initialization code here
+                NumberMaze.FBWrapper.getStatus();
             };
 
             // Load the SDK Asynchronously
@@ -155,9 +155,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
             })();
 
+            var game;
+
             $(document).ready(function() {
                 // init the main gameEngine
-                var game = new NumberMaze();
+                game = new NumberMaze();
             });
         </script>
     </body>

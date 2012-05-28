@@ -1,6 +1,4 @@
-/*
-Copyright 2011 Saiyasodharan (http://saiy2k.blogspot.com/)
-
+/* Copyright 2011 Saiyasodharan (http://saiy2k.blogspot.com/) 
 This file is part of the open source game, Number Maze
 
 Number Maze is free software: you can redistribute it and/or modify
@@ -22,30 +20,50 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
  * and getting basic user information like user name, profile picture, etc.,
 */
 (function(undefined) {
-    NumberMaze.FBWrapper            =   function() {
-        return {
+    NumberMaze.FBWrapper            =   {
+        share                       :   function() {
+                                            FB.ui({
+                                                method: 'feed',
+                                                name: 'Astro Space Raid',
+                                                link: 'http://www.gethugames.in/numbermaze/',
+                                                picture: 'http://aux.iconpedia.net/uploads/251662856.png', 
+                                                caption: 'astro space raid',
+                                                description: 'addictive html5 space game'
+                                            },
+                                            function(response) {
+                                                NumberMaze.FBWrapper.getStatus();
+                                            });
+                                        },
 
-            login                       :   function() {
-                FB.login(function(response) {
-                    if (response.authResponse) {
-                        console.log('Welcome!  Fetching your information.... ');
-                        FB.api('/me', function(response) {
-                            NumberMaze.State.authProvider = 'facebook';
-                            NumberMaze.State.userInfo = response;
-                            $('#notloggedin').hide();
-                            $('#loggedin').show();
-                            $('#loggedin').html('Welcome, <br/>' + response.name);
-                            console.log(response);
-                            console.log('Good to see you, ' + response.name + '.');
-                            NumberMaze.State.playerName = response.name;
-                        });
-                    } else {
-                        console.log('User cancelled login or did not fully authorize.');
-                        console.log(response);
-                    }
-                });
-            }
+        getStatus                   :   function() {
+                                            FB.getLoginStatus(function(response) {
+                                                console.log(response);
+                                                if (response.status == 'connected') {
+                                                    NumberMaze.State.fbLoggedin = true;
+                                                    NumberMaze.FBWrapper.getUserData();
+                                                } else {
+                                                    FB.login(function(response) {
+                                                        if (response.authResponse) {
+                                                            NumberMaze.FBWrapper.getUserData();
+                                                        } else {
+                                                            console.log('User cancelled login or did not fully authorize.');
+                                                            console.log(response);
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        },
 
-        };
+        getUserData                 :   function() {
+                                            FB.api('/me', function(response) {
+                                                NumberMaze.State.authProvider = 'facebook';
+                                                NumberMaze.State.userInfo = response;
+                                                $('#fbLoginButton').attr('src', 'images/fbIcon.png');
+                                                console.log(response);
+                                                console.log('Good to see you, ' + response.name + '.');
+                                                NumberMaze.State.playerName = response.name;
+                                                //game.uiManager.submitScore();
+                                            });
+                                        }
     };
 })();
