@@ -146,7 +146,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.letterArray[i].reset();
             }
 
-            /*
             for(var i = 0; i < tCount; i++) {
                 var rnd             =   Math.round(Math.random() * (tCount - 1));
                 var tmp;
@@ -154,11 +153,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.targetArray[i] =   self.targetArray[rnd];
                 self.targetArray[rnd]=  tmp;
             }
-            */
 
+            /*
             for(var i = 0; i < tCount; i++) {
                 console.log(self.targetArray[i]);
             }
+            */
 
             self.letterArray[self.targetArray[targetIndex]].open();
 

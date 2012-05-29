@@ -180,6 +180,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             g.engine.nextLevel();
             self.resize();
             $(g.menuCanvas).hide();
+            $('#profileDiv').hide();
         };
         this.gWonScreenQuit         =   function() {
             state.currentScreen     =   'menu';
@@ -194,9 +195,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             $(g.menuCanvas).hide();
         };
         this.pauseScreenRestart     =   function() {
+            console.log('uimanager : restart');
             state.currentScreen     =   'game';
             g.engine.reset();
             $(g.menuCanvas).hide();
+            $('#profileDiv').hide();
         };
         this.pauseScreenQuit        =   function() {
             state.currentScreen     =   'menu';
@@ -266,7 +269,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         // score submission to playtomic
         this.submitScore            =   function() {
-            if(state.online && state.authProvider != '') {
+            console.log('UIManager : submit score');
+            if(state.online && state.authProvider != '' && g.engine.getScore() > 1) {
                 console.log('submitting to playtomic');
                 var simple_score        =   {};
                 var boardName           =   '';

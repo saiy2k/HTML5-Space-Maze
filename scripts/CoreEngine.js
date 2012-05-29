@@ -89,8 +89,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         //this.craftSprite            =   g.assetManager.Get('asteroidSprite');
         this.craftSprite            =   g.assetManager.Get('craft');
         this.craftSpriteFrame       =   g.assetManager.Get('spriteData').frames[53].frame;
-        var w                       =   self.craftSprite.width;
-        var h                       =   self.craftSprite.height;
+        var w                       =   self.craftSprite.width * 0.8;
+        var h                       =   self.craftSprite.height * 0.8;
 
         this.getStartLocation       =   function() {
             return                      grid.getStartLocation();
@@ -116,9 +116,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** reset the current game */
         this.reset                  =   function() {
             state.inGameState       =   'waiting';
+            state.currentLevel      =   0;
             state.gridStatus        =   []; 
-            w                       =   self.craftSprite.width;
-            h                       =   self.craftSprite.height;
+            w                       =   self.craftSprite.width * 0.6;
+            h                       =   self.craftSprite.height * 0.6;
 
             if(state.gameMode       ==  'hard')
                 state.colCount    =   4;
@@ -198,7 +199,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if (lastPoint > 3) {
                 var dx              =   gLine.pointArray[lastPoint].x - gLine.pointArray[lastPoint - 1].x;
                 var dy              =   gLine.pointArray[lastPoint].y - gLine.pointArray[lastPoint - 1].y;
-                angle               +=  (Math.atan2(dy, dx) - angle) / 10.0;
+                var angleTarget     =   Math.atan2(dy, dx);
+                if (angleTarget - angle > 22/7)
+                    angleTarget     -=  (22/7) * 2;
+                if (angleTarget - angle < -22/7)
+                    angleTarget     +=  (22/7) * 2;
+                angle               +=  (angleTarget - angle) / 2.0;
+                console.log(angleTarget * 180 / 3.14);
             }
         };
 
@@ -213,16 +220,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.translate(gLine.pointArray[lastPoint].x, gLine.pointArray[lastPoint].y);
             ctx.rotate(angle + 3.14 / 2);
             if (state.inGameState == 'exploding') {
-                w -= 1;
-                h -= 1;
+                w *= 0.9;
+                h *= 0.9;
                 angle               +=  Math.round(Math.random() / 6.0);
             }
-            ctx.drawImage(self.craftSprite, -32 - 64 + w, -32 - 64 + h, w, h);
+            ctx.drawImage(self.craftSprite, -w*0.5, -h*0.5, w, h);
             ctx.restore();
 
             if(showBonusPop) {
                 var                     lastIndex;
                 lastIndex           =   gLine.pointArray.length - 1;
+                ctx.fillStyle       =   'rgba(200, 150, 150, 0.8)';
                 ctx.fillText(timeBonus.toFixed(2), gLine.pointArray[lastIndex].x, gLine.pointArray[lastIndex].y - (80 * (1 - timeAnimDelta)));
 
                 timeAnimDelta       -=  0.02;

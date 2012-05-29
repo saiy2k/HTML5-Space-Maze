@@ -102,15 +102,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.shadowColor         =   shadowColor;
 
             ctx.font                =   width/28 + 'px Iceberg';
-            ctx.fillText('Level ' + (parseInt(NumberMaze.State.currentLevel) + 1) + ' highest score is ', width * 0.4, height * 0.3);
-            ctx.fillText(Math.round(self.lvlScore), width * 0.8, height * 0.3);
+            ctx.textAlign           =   'left';
+            ctx.fillText('Level ' + (parseInt(NumberMaze.State.currentLevel) + 1) + ' highest score is ', width * 0.25, height * 0.3);
+            ctx.fillText(Math.round(self.lvlScore), width * 0.7, height * 0.3);
 
-            ctx.fillText('Bonus score is ', width * 0.3, height * 0.4);
-            ctx.fillText(Math.round(self.bonus), width * 0.8, height * 0.4);
+            ctx.fillText('Bonus score is ', width * 0.25, height * 0.4);
+            ctx.fillText(Math.round(self.bonus), width * 0.7, height * 0.4);
 
-            ctx.fillText('Your score is ', width * 0.3, height * 0.5);
-            ctx.fillText(Math.round(self.score + self.lvlScore + self.bonus), width * 0.8, height * 0.5);
+            ctx.fillText('Your score is ', width * 0.25, height * 0.5);
+            ctx.fillText(Math.round(self.score + self.lvlScore + self.bonus), width * 0.7, height * 0.5);
 
+            ctx.textAlign           =   'center';
             if (NumberMaze.State.authProvider == '') {
                 ctx.fillText('Please login to submit score to leaderboard', width * 0.5, height * 0.65);
             }

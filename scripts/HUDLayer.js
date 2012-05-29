@@ -39,7 +39,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var menuSprite              =   g.assetManager.Get('asteroidSprite');
         var menuSpriteFrame         =   g.assetManager.Get('spriteData').frames[51].frame;
-        console.log(g.assetManager.Get('spriteData').frames[50]);
 
         /** reference to the object which subscribes to events in this layer
          *  any object that implements the following functions:

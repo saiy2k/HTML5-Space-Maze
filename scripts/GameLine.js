@@ -185,6 +185,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             if (NumberMaze.State.inGameState == 'playing' && NumberMaze.State.gameMode != 'practise') {
                 ctx.font                =   'bold 24px Iceberg';
+                ctx.fillStyle           =   'rgba(200, 150, 150, 0.8)';
                 ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
             }
             ctx.globalCompositeOperation    =   "source-over";

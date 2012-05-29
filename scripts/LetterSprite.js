@@ -130,7 +130,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.reset                  =   function() {
             dx                      =   0;
             dy                      =   0;
-            self.frame              =   0;
+            self.frame              =   Math.round(Math.random() * 29);;
             state.gridStatus[self.gridX][self.gridY] = 0;
             self.arcLength               =   Math.PI / 4.0;
             delAngle                =   Math.PI;

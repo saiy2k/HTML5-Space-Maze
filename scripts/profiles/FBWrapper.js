@@ -36,8 +36,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                                         },
 
         getStatus                   :   function() {
+                                            console.log('FBWrapper : getStatus');
                                             FB.getLoginStatus(function(response) {
-                                                console.log(response);
                                                 if (response.status == 'connected') {
                                                     NumberMaze.State.fbLoggedin = true;
                                                     NumberMaze.FBWrapper.getUserData();
@@ -59,10 +59,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                                                 NumberMaze.State.authProvider = 'facebook';
                                                 NumberMaze.State.userInfo = response;
                                                 $('#fbLoginButton').attr('src', 'images/fbIcon.png');
-                                                console.log(response);
                                                 console.log('Good to see you, ' + response.name + '.');
                                                 NumberMaze.State.playerName = response.name;
-                                                //game.uiManager.submitScore();
+                                                game.uiManager.submitScore();
                                             });
                                         }
     };

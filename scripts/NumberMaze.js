@@ -177,8 +177,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         })();
 
         var loadComponents              =   function() {
-            console.log('comp loaded');
-
             state.gridStatus            =   [];
             for (var i = 0; i < NumberMaze.State.rowCount; i++) {
                 state.gridStatus[i]     =   [];

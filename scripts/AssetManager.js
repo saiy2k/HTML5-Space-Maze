@@ -74,7 +74,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     if(asset.type == 'json') {
                         $.getJSON(asset.src, function (j) {
                             console.log('New json loaded: ');
-                            console.log(j);
                             pSuccessCount++;
                             pCache[asset.id] = j;
                             if(pMe.Done()){
