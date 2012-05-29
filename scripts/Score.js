@@ -70,7 +70,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.elapsedTime       +=  dt;
             self.chkPointRemain     -=  dt;
 
-            if (self.chkPointRemain <=  0 && delegate) {
+            if (self.chkPointRemain <=  0 && self.delegate) {
                 self.delegate.timeOut();
             }
         };

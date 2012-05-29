@@ -41,6 +41,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          * @type NumberMaze.State */
         var state       =   NumberMaze.State;
 
+        var loadComponents;
+
         //inits variables for all canvas and DOM Objects
         this.gameArea   =   document.getElementById('gameArea');
         this.gameCanvas =   document.getElementById('gameCanvas');
@@ -131,8 +133,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             prevFTime               =   time;
         
             if(self.assetManager.Done() == false) {
-                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.screenCtx.fillText(self.assetManager.Status().toString(), self.menuCanvas.width/2 + self.screenCtx.measureText(self.assetManager.Status().toString())/2, self.menuCanvas.height/2);
+                //self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                //self.screenCtx.fillText(self.assetManager.Status().toString(), self.menuCanvas.width/2 + self.screenCtx.measureText(self.assetManager.Status().toString())/2, self.menuCanvas.height/2);
             } else if(state.currentScreen == 'game') {
                 self.engine.update(dt);
                 starField.draw(self.context);
@@ -176,7 +178,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             window.requestAnimFrame(gameLoop);
         })();
 
-        var loadComponents              =   function() {
+        loadComponents                  =   function() {
             state.gridStatus            =   [];
             for (var i = 0; i < NumberMaze.State.rowCount; i++) {
                 state.gridStatus[i]     =   [];

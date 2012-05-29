@@ -96,7 +96,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var mousey;
 
-        /** sprite sheet image of the asteroid
+        /** sprite sheet image containing all the images
          *  @type Image
          *  @private */
         var spriteSheet             =   g.assetManager.Get('asteroidSprite');
@@ -105,7 +105,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type json
          *  @private */
         this.spriteData             =   g.assetManager.Get('spriteData');;
-        var homeSprite              =   g.assetManager.Get('asteroidSprite');
+
+        /** frame of the home Planet
+         *  @type {x, y, w, h}
+         *  @private */
         var homeSpriteFrame         =   this.spriteData.frames[50].frame;
 
         /** delta value to give bubbling effect to home planet
@@ -296,7 +299,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 ctx.globalCompositeOperation = 'source-over';
             }
 
-            ctx.drawImage(homeSprite, homeSpriteFrame.x, homeSpriteFrame.y, homeSpriteFrame.w, homeSpriteFrame.h, endSprite.x - homeSpriteFrame.w / 2, endSprite.y - homeSpriteFrame.h / 2, homeSpriteFrame.w + delBubble, homeSpriteFrame.h + delBubble);
+            ctx.drawImage(spriteSheet, homeSpriteFrame.x, homeSpriteFrame.y, homeSpriteFrame.w, homeSpriteFrame.h, endSprite.x - homeSpriteFrame.w / 2, endSprite.y - homeSpriteFrame.h / 2, homeSpriteFrame.w + delBubble, homeSpriteFrame.h + delBubble);
         };
 
         this.getStartLocation       =   function() {

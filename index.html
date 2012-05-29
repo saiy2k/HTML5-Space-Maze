@@ -22,29 +22,29 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <title>Number Maze</title>
 
         <meta charset="utf-8">
-        <meta name="keywords" content="free, online, number, maze, life, html5, offline, game, board, player, share, facebook, google, plus, score, casual, fun, score, board, ranking, mobile"/> 
+        <meta name="keywords" content="free, online, space, maze, life, html5, offline, game, board, player, share, facebook, google, plus, score, casual, fun, score, board, ranking, mobile, asteroid"/> 
         <meta name="description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game" />
         <meta name="author" content="Saiyasodharan" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="meta-apple-mobile-web-app-status-bar-style" content="black-translucent"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="apple-touch-icon" href="http://www.gethugames.in/numbermaze/images/icon64.png"/>
-        <link rel="icon" type="image/png" href="http://www.gethugames.in/numbermaze/images/icon64.png" />
+        <link rel="apple-touch-icon" href="http://www.gethugames.in/html5spacemaze/images/icon64.png"/>
+        <link rel="icon" type="image/png" href="http://www.gethugames.in/html5spacemaze/images/icon64.png" />
         <link type="text/css" href="style.css" rel="Stylesheet" />
 
         <!--tags for opengraph-->
         <meta property="og:title" content="Number Maze" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="http://www.gethugames.in/numbermaze/" />
-        <meta property="og:image" content="http://www.gethugames.in/numbermaze/images/icon128.png" />
+        <meta property="og:url" content="http://www.gethugames.in/html5spacemaze/" />
+        <meta property="og:image" content="http://www.gethugames.in/html5spacemaze/images/icon128.png" />
         <meta property="og:site_name" content="Number Maze" />
         <meta property="fb:admins" content="100000655597076" />
         <meta property="og:description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game"/>
               
         <!--tags for Google+-->
         <meta itemprop="name" content="Number Maze">
-        <meta itemprop="url" content="http://www.gethugames.in/numbermaze/">
-        <meta itemprop="image" content="http://www.gethugames.in/numbermaze/images/icon128.png">
+        <meta itemprop="url" content="http://www.gethugames.in/html5spacemaze/">
+        <meta itemprop="image" content="http://www.gethugames.in/html5spacemaze/images/icon128.png">
         <meta itemprop="description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game">
      
         <link href='http://fonts.googleapis.com/css?family=Iceberg|Homemade+Apple|Geostar+Fill|Geostar' rel='stylesheet' type='text/css'>
@@ -57,13 +57,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <div id='gameArea'>
             <canvas class='gameScreen' id='gameCanvas'></canvas>
             <canvas class='otherScreen' id='menuCanvas'></canvas>
-            <div id="socialDiv" style='display: none'>
+            <div id="socialDiv">
                <div style='bottom: 8px;' class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false" data-colorscheme="dark" data-font="segoe ui"></div>
                <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a>
                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                <g:plusone size="medium"></g:plusone>
                <br />
-               <p style='color: #fff'> Game under active development. You can follow / contribute @ <a href='https://github.com/saiy2k/Number-Maze' target='_blank'> https://github.com/saiy2k/Number-Maze </a> </p>
+               <p style='color: #fff; font-size:50%'> Game under active development. You can follow / contribute @ <a href='https://github.com/saiy2k/Number-Maze' target='_blank'> https://github.com/saiy2k/Number-Maze </a> </p>
            </div>
            <div id='profileDiv' style="position:absolute;">
                <div id='notloggedin'>
@@ -73,10 +73,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                <div id='loggedin' style='font-size: 12px'>
                </div>
             </div>
+            <img id='muteButton' class='gameButton' src='images/musicButtonOn.png' />
         </div>
 
         <div id="fb-root"></div>
         <script>
+            var game;
             window.fbAsyncInit = function() {
                 FB.init({
                 appId      : '353577954697060', // App ID
@@ -155,7 +157,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
             })();
 
-            var game;
 
             $(document).ready(function() {
                 // init the main gameEngine

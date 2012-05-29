@@ -104,7 +104,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                             }
                         }, false);
                         
-                        img.addEventListener('error', function(){
+                        img.addEventListener('error', function(e){
                             console.log('Error while loading this image: ' + asset.src, true);
                             pErrorCount++;
                             if(pMe.Done()){

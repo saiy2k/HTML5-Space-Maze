@@ -145,7 +145,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.gameOver               =   function() {
             console.log('gameover');
             _gaq.push(['_setCustomVar',
-                    1,
+                    2,
                     'level',
                     '' + state.currentLevel
                     ]);

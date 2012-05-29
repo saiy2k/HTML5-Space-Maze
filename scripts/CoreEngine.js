@@ -91,6 +91,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.craftSpriteFrame       =   g.assetManager.Get('spriteData').frames[53].frame;
         var w                       =   self.craftSprite.width * 0.8;
         var h                       =   self.craftSprite.height * 0.8;
+        var widthDel                =   1.02;
 
         this.getStartLocation       =   function() {
             return                      grid.getStartLocation();
@@ -205,7 +206,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 if (angleTarget - angle < -22/7)
                     angleTarget     +=  (22/7) * 2;
                 angle               +=  (angleTarget - angle) / 2.0;
-                console.log(angleTarget * 180 / 3.14);
+            }
+            if(state.inGameState == 'waiting') {
+                if (w > self.craftSprite.width * 0.9 || w < self.craftSprite.width * 0.6) {
+                    widthDel        =   1 / widthDel;
+                }
+                w                   =   w * widthDel;
+                h                   =   h * widthDel;
+                console.log(w);
             }
         };
 

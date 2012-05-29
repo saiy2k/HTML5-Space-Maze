@@ -146,9 +146,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.draw                   =   function(ctx) {
             ctx.beginPath();
             if (over)
-                ctx.fillStyle       =   'rgba(110, 150, 250, 0.2)';
+                ctx.fillStyle       =   'rgba(110, 150, 250, 0.3)';
             else
-                ctx.fillStyle       =   'rgba(110, 150, 250, 0.1)';
+                ctx.fillStyle       =   'rgba(110, 150, 250, 0.2)';
             ctx.rect(aX - aWidth / 2, aY - aHeight / 2, aWidth, aHeight);
             ctx.fill();
             ctx.closePath();
