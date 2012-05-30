@@ -82,7 +82,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.draw                   =   function(ctx) {
-            ctx.drawImage(menuSprite, menuSpriteFrame.x, menuSpriteFrame.y, menuSpriteFrame.w, menuSpriteFrame.h, width * 0.96 - menuSpriteFrame.w / 2, height * 0.5 - menuSpriteFrame.h/ 2, menuSpriteFrame.w, menuSpriteFrame.h);
+            //ctx.drawImage(menuSprite, menuSpriteFrame.x, menuSpriteFrame.y, menuSpriteFrame.w, menuSpriteFrame.h, width * 0.96 - menuSpriteFrame.w / 2, height * 0.5 - menuSpriteFrame.h/ 2, menuSpriteFrame.w, menuSpriteFrame.h);
         };
         
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);

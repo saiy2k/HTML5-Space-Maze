@@ -282,24 +282,24 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 if(i != index) {
                     var cFrame      =   self.spriteData.frames[self.letterArray[i].frame].frame;
                     if (self.letterArray[i].frame < 33) {
-                        ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                        ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25 * state.gameWidth / 640, self.letterArray[i].y - 25 * state.gameHeight / 480, cFrame.w * 0.5 * state.gameWidth / 640, cFrame.h * 0.5 * state.gameHeight / 480);
                     } else {
-                        ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25, self.letterArray[i].y - 25, cFrame.w, cFrame.h);
+                        ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[i].x - 25 * state.gameWidth / 640, self.letterArray[i].y - 25 * state.gameHeight / 480, cFrame.w * state.gameWidth / 640, cFrame.h * state.gameHeight / 480);
                     }
                 }
             }
 
             if (targetIndex != tCount) {
                 var cFrame              =   self.spriteData.frames[self.letterArray[index].frame].frame;
-                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25 * state.gameWidth / 640, self.letterArray[index].y- 25 * state.gameHeight / 480, cFrame.w * 0.5 * state.gameWidth / 640, cFrame.h * 0.5 * state.gameHeight / 480);
                 ctx.globalCompositeOperation = 'lighter';
-                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
-                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
-                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25, self.letterArray[index].y- 25, cFrame.w * 0.5, cFrame.h * 0.5);
+                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25 * state.gameWidth / 640, self.letterArray[index].y- 25 * state.gameHeight / 480, cFrame.w * 0.5 * state.gameWidth / 640, cFrame.h * 0.5 * state.gameHeight / 480);
+                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25 * state.gameWidth / 640, self.letterArray[index].y- 25 * state.gameHeight / 480, cFrame.w * 0.5 * state.gameWidth / 640, cFrame.h * 0.5 * state.gameHeight / 480);
+                ctx.drawImage(spriteSheet, cFrame.x, cFrame.y, cFrame.w, cFrame.h, self.letterArray[index].x - 25 * state.gameWidth / 640, self.letterArray[index].y- 25 * state.gameHeight / 480, cFrame.w * 0.5 * state.gameWidth / 640, cFrame.h * 0.5 * state.gameHeight / 480);
                 ctx.globalCompositeOperation = 'source-over';
             }
 
-            ctx.drawImage(spriteSheet, homeSpriteFrame.x, homeSpriteFrame.y, homeSpriteFrame.w, homeSpriteFrame.h, endSprite.x - homeSpriteFrame.w / 2, endSprite.y - homeSpriteFrame.h / 2, homeSpriteFrame.w + delBubble, homeSpriteFrame.h + delBubble);
+            ctx.drawImage(spriteSheet, homeSpriteFrame.x, homeSpriteFrame.y, homeSpriteFrame.w, homeSpriteFrame.h, endSprite.x - homeSpriteFrame.w / 2, endSprite.y - homeSpriteFrame.h / 2, (homeSpriteFrame.w + delBubble) * state.gameWidth / 640, (homeSpriteFrame.h + delBubble) * state.gameHeight / 480);
         };
 
         this.getStartLocation       =   function() {

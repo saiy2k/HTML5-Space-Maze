@@ -43,7 +43,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** determines if the game is being played in mobile
          *  @type bool
          *  @public */
-        isMobile                :   false,
+        isMobile                :   window.DeviceMotionEvent ? true : false,
 
         /** holds a unique ID that represents the screen that is 
          *  currently being rendered.

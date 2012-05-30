@@ -213,7 +213,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 }
                 w                   =   w * widthDel;
                 h                   =   h * widthDel;
-                console.log(w);
             }
         };
 
@@ -232,7 +231,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 h *= 0.9;
                 angle               +=  Math.round(Math.random() / 6.0);
             }
-            ctx.drawImage(self.craftSprite, -w*0.5, -h*0.5, w, h);
+            ctx.drawImage(self.craftSprite, -w*0.5 * state.gameWidth / 640, -h*0.5 * state.gameHeight / 480, w * state.gameWidth / 640, h * state.gameHeight / 480);
             ctx.restore();
 
             if(showBonusPop) {
