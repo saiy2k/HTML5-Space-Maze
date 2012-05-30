@@ -28,7 +28,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         var flag=true;
         var test=true;
-        var n=200;
+        var n=100;
         var w=0;
         var h=0;
         var x=0;

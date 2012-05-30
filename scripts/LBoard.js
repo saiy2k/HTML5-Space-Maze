@@ -119,13 +119,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.fillText('Leader Boards', width / 2, height * 0.1);
             ctx.shadowColor         =   shadowColor;
 
-            ctx.font                =   width/28 + 'px Icerberg';
-            for (var i = 0; i < self.scoreList.length; i++) {
+            ctx.font                =   width/32 + 'px Icerberg';
+            ctx.textAlign           =   'left';
+            for (var i = 0; i < Math.min(self.scoreList.length, 10); i++) {
                 var score           =   self.scoreList[i];
-                ctx.fillText(score.Name + " got " + score.Points + " on " + score.SDate, width * 0.5, 100 + i * 30);
+                ctx.fillText(i + 1, width * 0.1, 100 + i * 30);
+                ctx.fillText(score.Name, width * 0.2, 100 + i * 30);
+                ctx.fillText(score.Points, width * 0.8, 100 + i * 30);
             }
 
             ctx.font                =   width/30 + 'px Iceberg';
+            ctx.textAlign           =   'center';
             backButton.draw(ctx);
             easyButton.draw(ctx);
             hardButton.draw(ctx);

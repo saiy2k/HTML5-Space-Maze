@@ -74,9 +74,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         easyButton.delegate         =   self;
         var hardButton              =   new NumberMaze.MenuButton("hard", 0.8, 0.4, 0.25, 0.1);
         hardButton.delegate         =   self;
-        var lboardButton            =   new NumberMaze.MenuButton("score board", 0.5, 0.45, 0.25, 0.1);
+        var lboardButton            =   new NumberMaze.MenuButton("score board", 0.5, 0.6, 0.25, 0.1);
         lboardButton.delegate       =   self;
-        var practiceButton          =   new NumberMaze.MenuButton("TUTORIAL", 0.5, 0.6, 0.25, 0.1);
+        var practiceButton          =   new NumberMaze.MenuButton("[ tutorial ]", 0.5, 0.45, 0.25, 0.1);
         practiceButton.delegate     =   self;
         var creditsButton           =   new NumberMaze.MenuButton("credits", 0.5, 0.75, 0.25, 0.1);
         creditsButton.delegate      =   self;
