@@ -113,7 +113,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.fillText(Math.round(self.score + self.lvlScore), width * 0.7, height * 0.4);
 
             ctx.textAlign           =   'center';
-            if (NumberMaze.State.authProvider == '') {
+            if (!NumberMaze.State.fbLoggedIn) {
                 ctx.fillText('Please login to submit score to leaderboard', width * 0.5, height * 0.65);
             }
 

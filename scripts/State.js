@@ -87,6 +87,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** boolean that indicates whether our app is connected to FB */
         fbLoggedin              :   false,
 
+        /** if this varibale is set, score has to be shared after login proc is successfull */
+        fbSetForShare           :   false,
+
         /** Authentication provider. Can have values:
          *  google, facebook, twitter */
         authProvider            :   '',
