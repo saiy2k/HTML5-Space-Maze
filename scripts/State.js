@@ -45,6 +45,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         isMobile                :   window.DeviceMotionEvent ? true : false,
 
+        /** flag that determines whether to render processor intensive stuffs
+         *  @type bool
+         *  @public */
+        effectsOn               :   true,
+
         /** holds a unique ID that represents the screen that is 
          *  currently being rendered.
          *  Possible values: game, menu, lboard, credits, paused, gameover, gamewon
@@ -81,6 +86,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** boolean that indicates whether our app is connected to FB */
         fbLoggedin              :   false,
+
+        /** if this varibale is set, score has to be shared after login proc is successfull */
+        fbSetForShare           :   false,
 
         /** Authentication provider. Can have values:
          *  google, facebook, twitter */

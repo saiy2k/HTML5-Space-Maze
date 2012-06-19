@@ -134,6 +134,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             var time                =   new Date().getTime();
             var dt                  =   (time - prevFTime) / 1000.0;
             prevFTime               =   time;
+
+            state.effectsOn         =   dt > 1 / 60.0 ? true : false;
+            state.effectsOn         =   false;
+
+            /*
+            for(var i = 0; i < 100; i++) {
+                for(var j = 0; j < 100; j++) {
+                    var xx = Math.sin(Math.ceil(Math.cos(i * j)));
+                }
+            }
+            */
         
             if(self.assetManager.Done() == false) {
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
