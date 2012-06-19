@@ -102,6 +102,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  allowed range, maintaining the aspect ratio.
          *  Big thanks to tutorials in html5rocks.com for this logic */
         this.resize                 =   function() {
+            console.log("UIManager : resize");
             var widthToHeight       =   4 / 3;
             var newWidth            =   window.innerWidth * .8;
             var newHeight           =   window.innerHeight * .8;
@@ -237,6 +238,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             $('#socialDiv').hide();
         };
         this.mainMenuNewGamePractice=   function() {
+            console.log('New Game : Practise');
             _gaq.push(['_setCustomVar',
                     1,
                     'difficulty',
@@ -296,6 +298,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     }, false);
         } else {
         }
-        this.resize();
+        self.resize();
     };
 })();  

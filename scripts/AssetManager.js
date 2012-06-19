@@ -70,7 +70,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 				
 				for(var i = 0; i < pDownloadQueue.length; i++){
 					var asset = pDownloadQueue[i];
-
                     if(asset.type == 'json') {
                         $.getJSON(asset.src, function (j) {
                             console.log('New json loaded: ');

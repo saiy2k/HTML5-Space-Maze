@@ -59,6 +59,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.assetManager.Add('craft', 'images/craft.png', 'png');
         self.assetManager.Add('spriteData', 'images/asteroidSprite.json', 'json');
         self.assetManager.DownloadAll(function() { 
+                    console.log('downloaded');
                     loadComponents();
                 });
 
@@ -125,7 +126,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         })();
 
         prevFTime                   =   new Date().getTime();
- 
+		
+		
+		
         //actual game loop
         (function gameLoop() {
             var time                =   new Date().getTime();
@@ -133,8 +136,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             prevFTime               =   time;
         
             if(self.assetManager.Done() == false) {
-                //self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                //self.screenCtx.fillText(self.assetManager.Status().toString(), self.menuCanvas.width/2 + self.screenCtx.measureText(self.assetManager.Status().toString())/2, self.menuCanvas.height/2);
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.screenCtx.fillText(self.assetManager.Status().toString(), self.menuCanvas.width/2 + self.screenCtx.measureText(self.assetManager.Status().toString())/2, self.menuCanvas.height/2);
             } else if(state.currentScreen == 'game') {
                 self.engine.update(dt);
                 starField.draw(self.context);
@@ -179,6 +182,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         })();
 
         loadComponents                  =   function() {
+            console.log("NumberMaze : loadComponents");
             state.gridStatus            =   [];
             for (var i = 0; i < NumberMaze.State.rowCount; i++) {
                 state.gridStatus[i]     =   [];
