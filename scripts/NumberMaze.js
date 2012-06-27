@@ -108,6 +108,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @private */
         var gOverScreen;
 
+        /** Object that handles the pracise failing screen
+         *  @type NumberMaze.PractiseFail
+         *  @private */
+        self.practiseFail;
+
         /** Component that renders the star field animation
          *  @type NumberMaze.Starfield
          *  @private */
@@ -188,6 +193,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                 self.creditsScreen.update(dt);
                 self.creditsScreen.draw(self.screenCtx);
+            } else if (state.currentScreen == 'practisefail') {
+                starField.draw(self.context);
+                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                self.practiseFail.update(dt);
+                self.practiseFail.draw(self.screenCtx);
             }
             window.requestAnimFrame(gameLoop);
         })();
@@ -223,6 +233,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.gameWin.delegate =   self.uiManager;
             gOverScreen =   new NumberMaze.GameOver(self);
             gOverScreen.delegate =   self.uiManager;
+            self.practiseFail =   new NumberMaze.PractiseFail(self);
+            self.practiseFail.delegate =   self.uiManager;
             starField       =   new NumberMaze.StarField(self);
 
             //handlers for the window events
@@ -260,6 +272,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     self.gameOver.mousemove(tx, ty);
                 else if(state.currentScreen == 'gamewon')
                     self.gameWin.mousemove(tx, ty);
+                else if(state.currentScreen == 'practisefail')
+                    self.practiseFail.mousemove(tx, ty);
             };
 
             self.mouseup    =   function(tx, ty) {
@@ -275,6 +289,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     self.LBoard.mouseup(tx, ty);
                 } else if (state.currentScreen == 'credits') {
                     self.creditsScreen.mouseup(tx, ty);
+                } else if (state.currentScreen == 'practisefail') {
+                    self.practiseFail.mouseup(tx, ty);
                 }
             };
 
@@ -286,14 +302,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.gameWin.resizeLayout(tWidth, tHeight);
                 self.creditsScreen.resizeLayout(tWidth, tHeight);
                 self.LBoard.resizeLayout(tWidth, tHeight);
+                self.practiseFail.resizeLayout(tWidth, tHeight);
             };
 
         };
  
         $('#profileDiv').hide();
-
-        //test code
-        //NumberMaze.State.playerName = 'test';
-        //NumberMaze.State.authProvider = 'google';
    };
 })(jQuery);

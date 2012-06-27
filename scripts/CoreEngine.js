@@ -123,13 +123,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** reset the current game */
         this.reset                  =   function() {
             state.inGameState       =   'waiting';
-            state.currentLevel      =   0;
+            state.currentLevel      =   1;
             state.gridStatus        =   []; 
             w                       =   self.craftSprite.width * 0.6;
             h                       =   self.craftSprite.height * 0.6;
 
             if(state.gameMode       ==  'hard')
-                state.colCount    =   4;
+                state.colCount    =   3;
             else
                 state.colCount    =   3;
 
@@ -176,7 +176,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             gLine.reset();
             self.grid.reset();
             self.hud.reset();
-            score.chkPointRemain    =   20.0 - state.currentLevel * 2;
+            score.chkPointRemain    =   12.0 - (state.currentLevel * (state.gameMode == 'easy' ? 1 : 2));
             state.active            =   true;
             self.resizeLayout(state.gameWidth, state.gameHeight);
 			self.firstWaitingProcc = false;

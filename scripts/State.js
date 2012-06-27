@@ -52,7 +52,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** holds a unique ID that represents the screen that is 
          *  currently being rendered.
-         *  Possible values: game, menu, lboard, credits, paused, gameover, gamewon
+         *  Possible values: game, menu, lboard, credits, paused, gameover, gamewon, practisefail
          *  @type String
          *  @public */
         currentScreen           :   'menu',
@@ -68,7 +68,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @public */
         gameMode                :   'practise',
 
-        currentLevel            :   0,
+        currentLevel            :   1,
 
         /** represents if the gameplay is started or the scene is just being rendered */
         active                  :   true,

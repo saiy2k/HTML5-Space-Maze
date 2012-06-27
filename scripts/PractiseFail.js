@@ -18,26 +18,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
- * This class handles the game over menu with buttons to restart the game
- * quit to main menu.
+ * This class shows the failure state of practise session and show options
+ * to restart practise session and to quit to main menu
 */
 (function(undefined) {
-    NumberMaze.GameOver             =   function(g) {
+    NumberMaze.PractiseFail         =   function(g) {
         var self                    =   this; 
 
         /** reference to the object which subscribes to the screen event
          *  the subsribed object should implement the following functions:
-         *      gOverScreenRestart(),
+         *      pauseScreenRestart(),
          *      pauseScreenQuit(),
          *  @type object
          *  @public */
         self.delegate;
-
-        /** game score */
-        this.score                  =   0;
-
-        /** level score */
-        this.lvlScore               =   0;
 
         /** dimensions of the pause screen */
         var x                       =   0;  
@@ -49,19 +43,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         restartButton.delegate      =   self;
         var quitButton              =   new NumberMaze.MenuButton("quit", 0.75, 0.9, 0.2, 0.1);
         quitButton.delegate         =   self;
-        var lBoardButton            =   new NumberMaze.MenuButton("scoreboard", 0.5, 0.9, 0.2, 0.1);
-        lBoardButton.delegate       =   self;
 
         this.mouseup                =   function(tx, ty) {
             restartButton.mouseup(tx, ty);
             quitButton.mouseup(tx, ty);
-            lBoardButton.mouseup(tx, ty);
         };
 
         this.mousemove              =   function(tx, ty) {
             restartButton.mousemove(tx, ty);
             quitButton.mousemove(tx, ty);
-            lBoardButton.mousemove(tx, ty);
         };
 
         this.click                  =   function(btn) {
@@ -80,13 +70,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             restartButton.resizeLayout(tWidth, tHeight);
             quitButton.resizeLayout(tWidth, tHeight);
-            lBoardButton.resizeLayout(tWidth, tHeight);
         };
 
         this.update                 =   function(dt) {
             restartButton.update(dt);
             quitButton.update(dt);
-            lBoardButton.update(dt);
         };
 
         this.draw                   =   function(ctx) {
@@ -101,26 +89,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.shadowOffsetX       =   0;
             ctx.shadowOffsetY       =   0;
             ctx.shadowBlur          =   30;
-            ctx.fillText('Game Over', width / 2, height * 0.1);
+            ctx.fillText('PRACTISE FAILURE', width / 2, height * 0.1);
             ctx.shadowColor         =   shadowColor;
 
-            ctx.font                =   width/28 + 'px Iceberg';
-            ctx.textAlign           =   'left';
-            ctx.fillText('Level ' + (parseInt(NumberMaze.State.currentLevel)) + ' score is ', width * 0.25, height * 0.3);
-            ctx.fillText(Math.round(self.lvlScore), width * 0.7, height * 0.3);
-
-            ctx.fillText('Your score is ', width * 0.25, height * 0.4);
-            ctx.fillText(Math.round(self.score + self.lvlScore), width * 0.7, height * 0.4);
-
-            ctx.textAlign           =   'center';
-            if (!NumberMaze.State.fbLoggedin) {
-                ctx.fillText('Please login to submit score to leaderboard', width * 0.5, height * 0.65);
-            }
-
             ctx.font                =   width/30 + 'px Iceberg';
+            ctx.fillText('TIPS TEXT GOES HERE', width * 0.5, height * 0.3);
             restartButton.draw(ctx);
             quitButton.draw(ctx);
-            lBoardButton.draw(ctx);
         };
 
         this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)

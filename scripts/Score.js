@@ -50,20 +50,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** reset the current game */
         this.reset                  =   function() {
-            self.chkPointRemain     =   20.0;
+            self.chkPointRemain     =   10.0;
             self.totalScore         =   0;
         };
 
         /** this method is invoked if a target is touched */
         this.targetTouched          =   function() {
-            var timeAwarded         =   Math.random() * 2.0 + 1.0;
+            var timeAwarded         =   Math.random() * (1.0 - state.currentLevel / 4) + (2.0 - state.currentLevel / 4.0);
             self.chkPointRemain     +=  timeAwarded;
             return                      timeAwarded;
         };
 
         /** returns level completion bonus for the given level */
         this.getLevelBonus          =   function(lvl) {
-            return                      5 + lvl * 2;
+            return                      8 + lvl * 2;
         };
 
         this.update                 =   function(dt) {

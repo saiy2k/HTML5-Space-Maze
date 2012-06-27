@@ -97,6 +97,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             NumberMaze.FBWrapper.share();
         });
 
+        /** handler for mute button */
+        $('#muteButton').click(function() {
+        });
+
         /** handler for window resize / orientation change events
          *  resizes the gamearea and all the canvases within the
          *  allowed range, maintaining the aspect ratio.
@@ -150,23 +154,31 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     'level',
                     '' + state.currentLevel
                     ]);
-            state.currentScreen     =   'gameover';
-            g.gameOver.score        =   g.engine.getScore();
-            g.gameOver.lvlScore     =   g.engine.getLevelScore();
-            $('#profileDiv').show();
-            $(g.menuCanvas).show();
-
-            self.submitScore();
+            if(state.gameMode == 'practise') {
+                state.currentScreen     =   'practisefail';
+                $(g.menuCanvas).show();
+            } else {
+                state.currentScreen     =   'gameover';
+                g.gameOver.score        =   g.engine.getScore();
+                g.gameOver.lvlScore     =   g.engine.getLevelScore();
+                $('#profileDiv').show();
+                $(g.menuCanvas).show();
+                self.submitScore();
+            }
         };
 
         this.gameWon                =   function() {
             console.log('game won');
-            state.currentScreen     =   'gamewon';
-            g.gameWin.score         =   g.engine.getScore();
-            g.gameWin.lvlScore      =   g.engine.getLevelScore();
-            g.gameWin.bonus         =   g.engine.getBonusScore();
-            $('#profileDiv').show();
-            $(g.menuCanvas).show();
+            if(state.gameMode == 'practise') {
+                self.gWonScreenQuit();
+            } else {
+                state.currentScreen     =   'gamewon';
+                g.gameWin.score         =   g.engine.getScore();
+                g.gameWin.lvlScore      =   g.engine.getLevelScore();
+                g.gameWin.bonus         =   g.engine.getBonusScore();
+                $('#profileDiv').show();
+                $(g.menuCanvas).show();
+            }
         };
 
         /** callback methods to handle HUD events */

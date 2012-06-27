@@ -65,24 +65,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.update                 =   function(dt, time, tScore) {
-            //fontSize                +=  delFontSize;
-            //console.log(fontSize);
-            if (fontSize > 24 || fontSize < 12) {
-                if (fontSize > 24)
-                    fontSize        =   24;
-                else
-                    fontSize        =   12;
-                if (delFontSize < 0)
-                    delFontSize     =   4 - (time / 10.0);
-                else
-                    delFontSize     =   -4 + (time / 10.0);
-            }
             chkTime                 =   time;
             score                   =   tScore;
         };
 
         this.draw                   =   function(ctx) {
-            //ctx.drawImage(menuSprite, menuSpriteFrame.x, menuSpriteFrame.y, menuSpriteFrame.w, menuSpriteFrame.h, width * 0.96 - menuSpriteFrame.w / 2, height * 0.5 - menuSpriteFrame.h/ 2, menuSpriteFrame.w, menuSpriteFrame.h);
+            ctx.fillText('Level ' + NumberMaze.State.currentLevel, width * 0.1, height);
+
         };
         
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);
