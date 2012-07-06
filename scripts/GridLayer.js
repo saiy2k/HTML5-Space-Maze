@@ -104,7 +104,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** json that represents individual frames inside the asteroid sprite sheet
          *  @type json
          *  @private */
-        this.spriteData             =   g.assetManager.Get('spriteData');;
+        this.spriteData             =   g.assetManager.Get('spriteData');
         console.log(this.spriteData);
 
         /** frame of the home Planet

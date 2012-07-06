@@ -126,6 +126,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.mouseup                =   function(tx, ty) {
             if(tx > aX - aWidth / 2 && tx < aX + aWidth / 2 && ty > aY - aHeight / 2&& ty < aY + aHeight / 2) {
+                game.assetManager.Get('clickA').play();
                 self.delegate.click(self);
             }
         };

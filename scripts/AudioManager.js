@@ -39,6 +39,13 @@ NumberMaze.AudioManager = function(){
                         bgm.play();
                       },
 
+        explostion  :   function() {
+                            var clickEffect;
+                            clickEffect = new Audio('audio/clickEffect.ogg');
+                            clickEffect.volume = 0.3;
+                            clickEffect.play();
+                        },
+
         click       :   function() {
                             var clickEffect;
                             clickEffect = new Audio('audio/clickEffect.ogg');

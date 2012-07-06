@@ -64,7 +64,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.assetManager.Add('explosionA', self.loader.addSound('explosion', 'audio/explosion.wav'));
                 self.assetManager.Add('levelWinA', self.loader.addSound('levelWin', 'audio/levelWin.wav'));
                 self.assetManager.Add('targetTouchA', self.loader.addSound('targetTouchA', 'audio/targetTouch.wav'));
-                self.assetManager.Add('bgm', self.loader.addSound('bgm', '/audio/bgm.ogg'));
+                self.assetManager.Add('touchLineA', self.loader.addSound('touchLineA', 'audio/lineTouch.wav'));
+                self.assetManager.Add('clickA', self.loader.addSound('clickA', 'audio/click.wav'));
+                //self.assetManager.Add('bgm', self.loader.addSound('bgm', '/audio/bgm.ogg'));
                 self.assetManager.Add('spriteData', self.loader.addJson('images/asteroidSprite.json'));
                 self.loader.start();
             },
