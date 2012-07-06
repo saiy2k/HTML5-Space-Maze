@@ -43,6 +43,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         var loadComponents;
 
+        var preloading = true;
+
         //inits variables for all canvas and DOM Objects
         this.gameArea   =   document.getElementById('gameArea');
         this.gameCanvas =   document.getElementById('gameCanvas');
@@ -51,17 +53,30 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.screenCtx  =   this.menuCanvas.getContext('2d');
 
         /** Object that handles resources like music and image files and preloads them
-         *  *  @type NumberMaze.AssetManager
+         *  *  @type PxLoader
          *  *  @private */
-        self.assetManager =     new NumberMaze.AssetManager(this);
-        self.assetManager.Add('tooltip', 'images/tooltip.png', 'png');
-        self.assetManager.Add('asteroidSprite', 'images/asteroidSprite.png', 'png');
-        self.assetManager.Add('craft', 'images/craft.png', 'png');
-        self.assetManager.Add('spriteData', 'images/asteroidSprite.json', 'json');
-        self.assetManager.DownloadAll(function() { 
-                    console.log('downloaded');
-                    loadComponents();
-                });
+        soundManager.setup({
+            url: 'audio/soundmanager2.swf',
+            onready: function() {
+                self.assetManager.Add('tooltip', self.loader.addImage('images/toolTip.png'));
+                self.assetManager.Add('asteroidSprite', self.loader.addImage('images/asteroidSprite.png'));
+                self.assetManager.Add('craft', self.loader.addImage('images/craft.png'));
+                self.assetManager.Add('explosionA', self.loader.addSound('explosion', 'audio/explosion.wav'));
+                self.assetManager.Add('levelWinA', self.loader.addSound('levelWin', 'audio/levelWin.wav'));
+                self.assetManager.Add('targetTouchA', self.loader.addSound('targetTouchA', 'audio/targetTouch.wav'));
+                self.assetManager.Add('bgm', self.loader.addSound('bgm', '/audio/bgm.ogg'));
+                self.assetManager.Add('spriteData', self.loader.addJson('images/asteroidSprite.json'));
+                self.loader.start();
+            },
+            debugMode: false
+        });
+        self.loader = new PxLoader();
+        self.assetManager = new NumberMaze.AssetManager(this);
+        self.loader.addCompletionListener(function() {
+                preloading = false;
+                console.log('complete');
+                loadComponents();
+        });
 
         /** self.uiManager handles the screen and the user interactions
          *  @type NumberMaze.UIManager
@@ -129,79 +144,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     window.setTimeout(callback, 1000 / 60);
                 };
         })();
-
-        prevFTime                   =   new Date().getTime();
-		
-		
-		
-        //actual game loop
-        (function gameLoop() {
-            var time                =   new Date().getTime();
-            var dt                  =   (time - prevFTime) / 1000.0;
-            prevFTime               =   time;
-
-            state.effectsOn         =   dt > 1 / 60.0 ? true : false;
-            state.effectsOn         =   false;
-
-            /*
-            for(var i = 0; i < 100; i++) {
-                for(var j = 0; j < 100; j++) {
-                    var xx = Math.sin(Math.ceil(Math.cos(i * j)));
-                }
-            }
-            */
-        
-            if(self.assetManager.Done() == false) {
-                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.screenCtx.fillText(self.assetManager.Status().toString(), self.menuCanvas.width/2 + self.screenCtx.measureText(self.assetManager.Status().toString())/2, self.menuCanvas.height/2);
-            } else if(state.currentScreen == 'game') {
-                self.engine.update(dt);
-                starField.draw(self.context);
-                self.engine.draw(self.context);
-            } else if (state.currentScreen == 'paused') {
-                self.engine.draw(self.context);
-                starField.draw(self.context);
-                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.pauseScreen.update(dt);
-                self.pauseScreen.draw(self.screenCtx);
-            } else if (state.currentScreen == 'gameover') {
-                self.engine.update(dt);
-                self.engine.draw(self.context);
-                starField.draw(self.context);
-                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.gameOver.update(dt);
-                self.gameOver.draw(self.screenCtx);
-            } else if (state.currentScreen == 'gamewon') {
-                self.engine.update(dt);
-                self.engine.draw(self.context);
-                starField.draw(self.context);
-                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.gameWin.update(dt);
-                self.gameWin.draw(self.screenCtx);
-            } else if (state.currentScreen == 'menu') {
-                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                starField.draw(self.context);
-                self.mainMenu.update(dt);
-                self.mainMenu.draw(self.screenCtx);
-            } else if (state.currentScreen == 'lboard') {
-                starField.draw(self.context);
-                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.LBoard.update(dt);
-                self.LBoard.draw(self.screenCtx);
-            } else if (state.currentScreen == 'credits') {
-                starField.draw(self.context);
-                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.creditsScreen.update(dt);
-                self.creditsScreen.draw(self.screenCtx);
-            } else if (state.currentScreen == 'practisefail') {
-                starField.draw(self.context);
-                self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
-                self.practiseFail.update(dt);
-                self.practiseFail.draw(self.screenCtx);
-            }
-            window.requestAnimFrame(gameLoop);
-        })();
-
         loadComponents                  =   function() {
             console.log("NumberMaze : loadComponents");
             state.gridStatus            =   [];
@@ -212,8 +154,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 }
             }
 
+            /*
             if(state.online)
                 Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
+                */
 
             self.uiManager   =   new NumberMaze.UIManager(self);
             self.uiManager.delegate = self;
@@ -305,6 +249,58 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.practiseFail.resizeLayout(tWidth, tHeight);
             };
 
+            prevFTime                   =   new Date().getTime();
+            
+            //actual game loop
+            (function gameLoop() {
+                var time                =   new Date().getTime();
+                var dt                  =   (time - prevFTime) / 1000.0;
+                prevFTime               =   time;
+
+                state.effectsOn         =   dt > 1 / 60.0 ? true : false;
+                state.effectsOn         =   false;
+            
+                starField.draw(self.context);
+                if(preloading == true) {
+                } else if(state.currentScreen == 'game') {
+                    self.engine.update(dt);
+                    self.engine.draw(self.context);
+                } else if (state.currentScreen == 'paused') {
+                    self.engine.draw(self.context);
+                    self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                    self.pauseScreen.update(dt);
+                    self.pauseScreen.draw(self.screenCtx);
+                } else if (state.currentScreen == 'gameover') {
+                    self.engine.update(dt);
+                    self.engine.draw(self.context);
+                    self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                    self.gameOver.update(dt);
+                    self.gameOver.draw(self.screenCtx);
+                } else if (state.currentScreen == 'gamewon') {
+                    self.engine.update(dt);
+                    self.engine.draw(self.context);
+                    self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                    self.gameWin.update(dt);
+                    self.gameWin.draw(self.screenCtx);
+                } else if (state.currentScreen == 'menu') {
+                    self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                    self.mainMenu.update(dt);
+                    self.mainMenu.draw(self.screenCtx);
+                } else if (state.currentScreen == 'lboard') {
+                    self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                    self.LBoard.update(dt);
+                    self.LBoard.draw(self.screenCtx);
+                } else if (state.currentScreen == 'credits') {
+                    self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                    self.creditsScreen.update(dt);
+                    self.creditsScreen.draw(self.screenCtx);
+                } else if (state.currentScreen == 'practisefail') {
+                    self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
+                    self.practiseFail.update(dt);
+                    self.practiseFail.draw(self.screenCtx);
+                }
+                window.requestAnimFrame(gameLoop);
+            })();
         };
  
         $('#profileDiv').hide();

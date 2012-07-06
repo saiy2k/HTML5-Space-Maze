@@ -105,6 +105,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
          *  @type json
          *  @private */
         this.spriteData             =   g.assetManager.Get('spriteData');;
+        console.log(this.spriteData);
 
         /** frame of the home Planet
          *  @type {x, y, w, h}

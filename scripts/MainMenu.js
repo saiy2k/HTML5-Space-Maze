@@ -183,8 +183,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.shadowOffsetX       =   0;
             ctx.shadowOffsetY       =   0;
             ctx.shadowBlur          =   30;
-            ctx.fillText('HTML5 Space Maze', width / 2, height * 0.15);
-            ctx.fillText('(testing)', width / 2, height * 0.2);
+            ctx.fillText('HTML5 Space Maze', width / 2, height * 0.12);
+            ctx.fillText('(BETA)', width / 2, height * 0.2);
             ctx.shadowColor         =   shadowColor;
 
             ctx.lineWidth       =   width / 100;
