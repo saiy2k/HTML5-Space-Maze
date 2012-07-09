@@ -156,10 +156,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 }
             }
 
-            /*
             if(state.online)
-                Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
-                */
+                if (typeof(Playtomic) != 'undefined')
+                    Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
 
             self.uiManager   =   new NumberMaze.UIManager(self);
             self.uiManager.delegate = self;
@@ -289,6 +288,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     self.mainMenu.update(dt);
                     self.mainMenu.draw(self.screenCtx);
                 } else if (state.currentScreen == 'lboard') {
+                    console.log('sdfsd');
                     self.screenCtx.clearRect(0, 0, self.menuCanvas.width, self.menuCanvas.height);
                     self.LBoard.update(dt);
                     self.LBoard.draw(self.screenCtx);

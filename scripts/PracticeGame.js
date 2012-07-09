@@ -67,9 +67,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.draw                   =   function(ctx) {
 			if(currentTarget != undefined){
-				ctx.save();
-					if(true)
-						ctx.globalAlpha = 0.75;
 					
 				var targetX = currentTarget.x;
 				var targetY = currentTarget.y;
@@ -91,8 +88,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 				var strings = currentInstruction.split("/n");
 				
 				for(var i = 0; i < strings.length; i++)
-					ctx.fillText(strings[i], targetX + 10, targetY + (i+1)*20);
-				ctx.restore();
+					ctx.fillText(strings[i], targetX + 14, targetY + (i+1)*20 + 6);
 			}
         };
     };

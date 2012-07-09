@@ -99,6 +99,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** handler for mute button */
         $('#muteButton').click(function() {
+            state.soundOn           =   !state.soundOn;
+            if (state.soundOn)
+                $('#muteButton').attr('src', 'images/musicButtonOn.png');
+            else
+                $('#muteButton').attr('src', 'images/musicButtonOff.png');
         });
 
         /** handler for window resize / orientation change events
@@ -293,7 +298,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 boardName               =   state.gameMode + '-' + (state.isMobile ? 'mobile' : 'normal');
                 console.log(boardName);
                 console.log(simple_score);
-                Playtomic.Leaderboards.Save(simple_score, boardName); 
+                if(typeof(Playtomic) != 'undefined')
+                    Playtomic.Leaderboards.Save(simple_score, boardName); 
             }
         };
 

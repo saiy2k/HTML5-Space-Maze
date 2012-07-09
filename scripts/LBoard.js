@@ -89,7 +89,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             var                         boardName;
             boardName               =   mode + '-' + (state.isMobile ? 'mobile' : 'normal');
             console.log(boardName);
-            Playtomic.Leaderboards.List(boardName, scoreListingComplete);
+            if (typeof(Playtomic) != 'undefined')
+                Playtomic.Leaderboards.List(boardName, scoreListingComplete);
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {

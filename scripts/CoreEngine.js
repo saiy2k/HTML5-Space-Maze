@@ -270,7 +270,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** callback methods to handle the events of GameLine object */
         this.lineTouched            =   function() {
-            g.assetManager.Get('touchLineA').play();
+            if (state.soundOn)
+                g.assetManager.Get('touchLineA').play();
             state.inGameState       =   'exploding';
             state.active            =   false;
         };
@@ -282,13 +283,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** callback methods to handle the events of GridLayer object */
         this.touchedTargetPoint     =   function() {
-            g.assetManager.Get('targetTouchA').play();
+            if (state.soundOn)
+                g.assetManager.Get('targetTouchA').play();
             timeBonus               =   score.targetTouched();
             animateScorePopup();
         };
 
         this.touchedWrongPoint      =   function() {
-            g.assetManager.Get('explosionA').play();
+            if (state.soundOn)
+                g.assetManager.Get('explosionA').play();
             state.inGameState       =   'exploding';
             state.active            =   false; 
         };
@@ -299,7 +302,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.touchedAllPoints       =   function() {
-            g.assetManager.Get('levelWinA').play();
+            if (state.soundOn)
+                g.assetManager.Get('levelWinA').play();
             state.currentLevel++;
             state.inGameState       =   'won';
             window.setTimeout(self.delegate.gameWon, 2000);

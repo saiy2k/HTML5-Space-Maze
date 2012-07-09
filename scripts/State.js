@@ -96,5 +96,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         /** name of the user, which is retrieved through OAuth provider */
         playerName              :   '',
+
+        /** sound playing or muted */
+        soundOn                 :   true
     };
 })();
