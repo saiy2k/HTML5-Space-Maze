@@ -19,7 +19,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html itemscope itemtype="http://schema.org/Product">
     <head profile="http://www.w3.org/2005/10/profile" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# spacemaze: http://ogp.me/ns/fb/spacemaze#">
-        <title>Number Maze</title>
+        <title>HTML5 Space Maze</title>
 
         <meta charset="utf-8">
         <meta name="keywords" content="free, online, space, maze, life, html5, offline, game, board, player, share, facebook, google, plus, score, casual, fun, score, board, ranking, mobile, asteroid"/> 
@@ -49,12 +49,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <meta itemprop="description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game">
      
         <link href='http://fonts.googleapis.com/css?family=Iceberg|Homemade+Apple|Geostar+Fill|Geostar' rel='stylesheet' type='text/css'>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-        <script type="text/javascript" src="http://api.playtomic.com/js/playtomic.v1.9.min.js"></script>
-	    <script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
     </head>
     <body> 
-
+        <div id="preLoader" style="position:absolute; z-index:99999; width:100%; height: 100%; background-color:#111; color:#888; top:0px; left:0px;">
+            <div id="loadingDiv" style="position:absolute; width:160px; height:50px; top:50%; left:50%; margin:-25px 0px 0px -80px; font: 32px 'arial'; border:0px solid; font-variant:small-caps;">
+                Loading...
+            </div>
+            <div ID="browserDiv" style="display:none; position:absolute; width:800px; height:280px; top:50%; left:50%; margin:-140px 0px 0px -400px; font: 32px 'arial'; border:0px solid; font-variant:small-caps; text-align:left;">
+                This application will run on all Modern browsers except Internet Explorer. If you are seeing this message, then you are using some version of IE. Please download and instal any of the following modern browsers to run this application:<br>
+                1. <a href="http://www.google.com/chrome" target="_blank">Google Chrome</a> <br>
+                2. <a href="http://www.mozilla.com" target="_blank">Mozilla Firefox</a> <br>
+                3. <a href="http://www.opera.com/" target="_blank">Opera</a> <br>
+            </div>
+        </div>
         <div id='gameArea'>
             <canvas class='gameScreen' id='gameCanvas'></canvas>
             <canvas class='otherScreen' id='menuCanvas'></canvas>
@@ -64,7 +71,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                <g:plusone size="medium"></g:plusone>
                <br />
-               <p style='color: #fff; font-size:50%'> Game under active development. You can follow / contribute @ <a href='https://github.com/saiy2k/Number-Maze' target='_blank'> https://github.com/saiy2k/Number-Maze </a> </p>
+               <p style='color: #fff; font-size:50%'> Alpha release WARNING: There will be many bugs. Feel free to <a href='https://github.com/saiy2k/Number-Maze/issues' target='_blank'> report </a> </p>
            </div>
            <div id='profileDiv' style="position:absolute;">
                <div id='notloggedin'>
@@ -74,61 +81,32 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                <div id='loggedin' style='font-size: 12px'>
                </div>
             </div>
+            <div id='creditsBox' style='display:none'>
+                This software is released under GNU GPL v3. <a href='License.txt' target='_blank' >Click here</a> to know your rights. All works are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">Creative Commons Attribution 3.0 Unported License.</a> <br /> <br/><b>Programmers:</b> <br/> <a href="http://saiy2k.blogspot.com" target="_blank">Saiyasodharan</a>, <a href="http://www.facebook.com/sankarganesh86" target="_blank">Sankar Ganeshi</a>, <a href="http://www.facebook.com/kevin.skyba" target="_blank">Kevin</a>. <br/><br/><b>Links</b><br/><a href="http://gethugames.in/blog" target="_blank">Official Blog</a> <br/> <a href="https://github.com/saiy2k/Number-Maze" target="_blank"> Source Code </a> <br /> <br />
+                <b>Graphics </b>
+                <a href="http://29a.ch/" target='_blank'>Jonas Wagner</a>, 
+                <a href='http://opengameart.org/content/asteroid-rotating' target='_blank'>dczanik</a>, 
+                <a href='http://www.chiptune.com/starfield/starfield.html' target='_blank'>rez</a>,
+                <a href='http://opengameart.org/content/brown-themed-website-icon-set' target='_blank'>Chris Oelmueller</a>,
+                <a href='http://commons.wikimedia.org/wiki/File:Crystal_Clear_app_katomic.png' target='_blank'>Everaldo Coelho and YellowIcon</a>,
+                <a href='http://opengameart.org/content/shmup-ships' target='_blank'>surt</a><br/>
+                <b>Music </b>
+                <a href='http://opengameart.org/content/bombexplosion8bit' target='_blank'>Luke.RUSTLTD</a>,
+                <a href='http://woolyss.com/chipmusic-samples.php?s=Free' target='_blank'>Jerry Coox</a><br/>
+                <b>Others </b>
+                <a href='http://www.codeandweb.com/texturepacker' target='_blank'>Texture Packer</a>
+            </div>
             <img id='muteButton' class='gameButton' src='images/musicButtonOn.png' />
         </div>
-
         <div id="fb-root"></div>
-        <script>
-            var game;
-            window.fbAsyncInit = function() {
-                FB.init({
-                appId      : '353577954697060', // App ID
-                status     : true, // check login status
-                cookie     : true, // enable cookies to allow the server to access the session
-                xfbml      : true  // parse XFBML
-                });
 
-                NumberMaze.FBWrapper.getStatus();
-            };
-
-            // Load the SDK Asynchronously
-            (function(d){
-                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement('script'); js.id = id; js.async = true;
-                js.src = "//connect.facebook.net/en_US/all.js";
-                ref.parentNode.insertBefore(js, ref);
-            }(document));
-        </script>
-	   
   		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script type="text/javascript" src="http://api.playtomic.com/js/playtomic.v1.9.min.js"></script>
+	    <script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
 
         <script type="text/javascript">
-            if (typeof jQuery == 'undefined')
-            {
-                document.write(unescape("%3Cscript src='libs/jquery.js' type='text/javascript'%3E%3C/script%3E"));
-            }
-
-            Math.dist = function (p1, p2) {
-                return Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
-            };
-
-            Math.PI = (22/7.0);
-
-            //refer: http://paulbourke.net/geometry/lineline2d/
-            Math.twoLineIntersects = function(x1, y1, x2, y2, x3, y3, x4, y4) {
-                var aNm         =   (x4 - x3)*(y1 - y3) - (y4 - y3)*(x1 - x3);
-                var bNm         =   (x2 - x1)*(y1 - y3) - (y2 - y1)*(x1 - x3);
-                var Dm          =   (y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1);
-                var a           =   aNm / Dm;
-                var b           =   bNm / Dm;
-                if (a > 0 && a < 1 && b > 0 && b < 1)
-                    return true;
-                else
-                    return false;
-            };
+            if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='libs/jquery.js' type='text/javascript'%3E%3C/script%3E")); }
         </script>
-		
 
 		<script language='javascript' src='scripts/soundmanager2.js'></script>
         <script language='javascript' src='scripts/NumberMaze.js'></script>
@@ -158,8 +136,26 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <script language='javascript' src='scripts/MenuButton.js'></script>
 		<script language='javascript' src='scripts/PracticeGame.js'></script>
 		<script language='javascript' src='scripts/PractiseFail.js'></script>
+        <!--
+		<script language='javascript' src='scripts/min.js'></script>
+        -->
 		
         <script>
+            Math.dist = function (p1, p2) { return Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y)); };
+
+            Math.PI = (22/7.0);
+
+            //refer: http://paulbourke.net/geometry/lineline2d/
+            Math.twoLineIntersects = function(x1, y1, x2, y2, x3, y3, x4, y4) {
+                var aNm         =   (x4 - x3)*(y1 - y3) - (y4 - y3)*(x1 - x3);
+                var bNm         =   (x2 - x1)*(y1 - y3) - (y2 - y1)*(x1 - x3);
+                var Dm          =   (y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1);
+                var a           =   aNm / Dm;
+                var b           =   bNm / Dm;
+                return (a > 0 && a < 1 && b > 0 && b < 1)
+            };
+
+            //Google Analytics
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-24593968-1']);
             _gaq.push(['_trackPageview']);
@@ -169,7 +165,28 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
             })();
 
+            //FB init
+            window.fbAsyncInit = function() {
+                FB.init({
+                appId      : '353577954697060', // App ID
+                status     : true, // check login status
+                cookie     : true, // enable cookies to allow the server to access the session
+                xfbml      : true  // parse XFBML
+                });
 
+                NumberMaze.FBWrapper.getStatus();
+            };
+
+            // Load the SDK Asynchronously
+            (function(d){
+                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                ref.parentNode.insertBefore(js, ref);
+            }(document));
+
+            var game;
             $(document).ready(function() {
                 // init the main gameEngine
                 game = new NumberMaze();

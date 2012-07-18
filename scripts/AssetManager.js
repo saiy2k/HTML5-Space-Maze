@@ -25,6 +25,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
 		/* Private */
 		var pCache = {};
+
+        var dummy = {};
+        dummy.play = function() {};
 		
 		/* Public */
 		return{
@@ -33,7 +36,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 			},
 			
 			Get : function(id){
-		        return pCache[id];
+                if (typeof (pCache[id]) == 'undefined')
+		            return dummy;
+                else
+		            return pCache[id];
 			}
 		}
     };

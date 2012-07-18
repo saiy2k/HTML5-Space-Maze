@@ -101,9 +101,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         $('#muteButton').click(function() {
             state.soundOn           =   !state.soundOn;
             if (state.soundOn)
+            {
+                g.assetManager.Get('bgm').resume();
                 $('#muteButton').attr('src', 'images/musicButtonOn.png');
-            else
+            } else {
+                g.assetManager.Get('bgm').pause();
                 $('#muteButton').attr('src', 'images/musicButtonOff.png');
+            }
         });
 
         /** handler for window resize / orientation change events
@@ -274,6 +278,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
         this.mainMenuCredits        =   function() {
             state.currentScreen     =   'credits';
+            $('#socialDiv').hide();
+            $('#creditsBox').show();
         };
 
         /** callback methods to handle leader board events */
@@ -284,6 +290,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** callback methods to handle credits screen events */
         this.creditsBack            =   function() {
             state.currentScreen     =   'menu';
+            $('#creditsBox').hide();
+            $('#socialDiv').hide();
         };
 
         // score submission to playtomic
@@ -303,19 +311,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
         };
 
-        if (state.isMobile) {
-            window.addEventListener('devicemotion', function(e) {
-                    //$('#dbg').val('x ' + e.accelerationIncludingGravity.x + '; y ' + e.accelerationIncludingGravity.y + ';z ' + e.accelerationIncludingGravity.z);
-                    console.log(Math.round(xx) + ', ' + Math.round(yy)); 
-                                    
-                    xx              +=  e.accelerationIncludingGravity.y/4.0;
-                    yy              +=  e.accelerationIncludingGravity.x/4.0;
-                    self.delegate.mousedown(xx, yy);
-                    self.delegate.mousemove(xx, yy);
-                                    
-                    }, false);
-        } else {
-        }
         self.resize();
     };
 })();  

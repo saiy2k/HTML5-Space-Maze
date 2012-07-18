@@ -58,6 +58,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         soundManager.setup({
             url: 'audio/soundmanager2.swf',
             onready: function() {
+                console.log('sm2 ready');
                 self.assetManager.Add('tooltip', self.loader.addImage('images/toolTip.png'));
                 self.assetManager.Add('asteroidSprite', self.loader.addImage('images/asteroidSprite.png'));
                 self.assetManager.Add('craft', self.loader.addImage('images/craft.png'));
@@ -66,17 +67,42 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.assetManager.Add('targetTouchA', self.loader.addSound('targetTouchA', 'audio/targetTouch.wav'));
                 self.assetManager.Add('touchLineA', self.loader.addSound('touchLineA', 'audio/lineTouch.wav'));
                 self.assetManager.Add('clickA', self.loader.addSound('clickA', 'audio/click.wav'));
-                //self.assetManager.Add('bgm', self.loader.addSound('bgm', '/audio/bgm.ogg'));
                 self.assetManager.Add('spriteData', self.loader.addJson('images/asteroidSprite.json'));
                 self.loader.start();
             },
+            ontimeout: function(e) {
+                console.log('timed out');
+                console.log(e);
+                self.assetManager.Add('tooltip', self.loader.addImage('images/toolTip.png'));
+                self.assetManager.Add('asteroidSprite', self.loader.addImage('images/asteroidSprite.png'));
+                self.assetManager.Add('craft', self.loader.addImage('images/craft.png'));
+                self.assetManager.Add('spriteData', self.loader.addJson('images/asteroidSprite.json'));
+                self.loader.start();
+            },
+            useHTML5Audio: true,
+            preferFlash: false,
             debugMode: false
         });
+        console.log('sm2 setup');
         self.loader = new PxLoader();
         self.assetManager = new NumberMaze.AssetManager(this);
         self.loader.addCompletionListener(function() {
+                console.log('sprites loaded');
+                var bgloader = new PxLoader();
+                self.assetManager.Add('bgm', bgloader.addSound('bgm', 'audio/bgm.ogg'));
+                bgloader.addCompletionListener(function() {
+                    console.log('bgm loaded');
+                    (function loopBG(s) {
+                        s.play({
+                            volume: 10,
+                            onfinish: function() {
+                                loopBG(s);
+                            }
+                        })
+                    })(self.assetManager.Get('bgm'));
+                });
                 preloading = false;
-                console.log('complete');
+                $('#preLoader').hide();
                 loadComponents();
         });
 
@@ -143,7 +169,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 window.oRequestAnimationFrame      || 
                 window.msRequestAnimationFrame     || 
                 function( callback ){
-                    window.setTimeout(callback, 1000 / 60);
+                    window.setTimeout(callback, 1000 / 30);
                 };
         })();
         loadComponents                  =   function() {

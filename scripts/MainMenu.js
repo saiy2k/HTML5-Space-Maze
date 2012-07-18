@@ -76,7 +76,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         hardButton.delegate         =   self;
         var lboardButton            =   new NumberMaze.MenuButton("score board", 0.5, 0.6, 0.25, 0.1);
         lboardButton.delegate       =   self;
-        var practiceButton          =   new NumberMaze.MenuButton("[ tutorial ]", 0.5, 0.45, 0.25, 0.1);
+        var practiceButton          =   new NumberMaze.MenuButton("tutorial", 0.5, 0.45, 0.25, 0.1);
         practiceButton.delegate     =   self;
         var creditsButton           =   new NumberMaze.MenuButton("credits", 0.5, 0.75, 0.25, 0.1);
         creditsButton.delegate      =   self;
@@ -184,7 +184,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.shadowOffsetY       =   0;
             ctx.shadowBlur          =   30;
             ctx.fillText('HTML5 Space Maze', width / 2, height * 0.12);
-            ctx.fillText('(BETA)', width / 2, height * 0.2);
+            ctx.fillText('(ALPHA)', width / 2, height * 0.2);
             ctx.shadowColor         =   shadowColor;
 
             ctx.lineWidth       =   width / 100;

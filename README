@@ -17,3 +17,17 @@ Technical Specs:
     * The game dynamically resizes itself from a minimum resolution of 320x240 to 640x480 based on the window size.
     * Definitely need to add some sort of leaderboard to save player's score. (mostly will try to integrate some 3rd party frameworks for this. if none is good, then server backend need to be written to do the same).
     * All the game elements should be dynamic as possible showing some fluid movements all the time.
+
+Credits:
+Graphics
+Includes graphics from <a href="http://29a.ch/" target='_blank'>JS WARS</a> by <a href="http://29a.ch/" target='_blank'>Jonas Wagner</a>
+<a href='http://opengameart.org/content/asteroid-rotating' target='_blank'>dczanik</a>
+<a href='http://www.chiptune.com/starfield/starfield.html' target='_blank'>rez</a>
+<a href='http://opengameart.org/content/brown-themed-website-icon-set' target='_blank'>Chris Oelmueller</a>
+<a href='http://commons.wikimedia.org/wiki/File:Crystal_Clear_app_katomic.png' target='_blank'>Everaldo Coelho and YellowIcon</a>
+<a href='http://opengameart.org/content/shmup-ships' target='_blank'>surt</a>
+Music
+<a href='http://opengameart.org/content/bombexplosion8bit' target='_blank'>Luke.RUSTLTD</a>
+<a href='http://woolyss.com/chipmusic-samples.php?s=Free' target='_blank'>Jerry Coox</a>
+Others
+<a href='http://www.codeandweb.com/texturepacker' target='_blank'>Texture Packer</a>

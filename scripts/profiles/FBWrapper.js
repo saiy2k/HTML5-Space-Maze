@@ -28,7 +28,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                                                 console.log('logged in');
                                                 NumberMaze.State.fbSetForShare = false;
                                                 ///*
-                                                FB.api('/me/spacemaze:fly_through?level=http://www.gethugames.in/html5spacemaze&lid=5&access_token=AAAFBk8hj32QBAOSuVTbrhJD724HMBy3kz6sbV6II17UEBRROOlJU8X8H7ATHiWJZAIOiuu53DZCXogvpO34x51qbRZCf2l52gYrQNOnZBsRtrkF6phSo',
+                                                FB.api('/me/spacemaze:fly_through?level=http://www.gethugames.in/html5spacemaze&lid=5&access_token=AAAFBk8hj32QBAFavns59b4hAtRJWCCW6KiMFEz7JAFNzq3oFllWXdZALvdRoeW6Y7TMht2DZATZBTtsrURFxXgomancUvcfVhZBqx9ov9d0JteiTQ44V',
                                                     'post',
                                                     function(resp) {
                                                         if(!resp || resp.error) {

@@ -253,6 +253,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 var                     lastIndex;
                 lastIndex           =   gLine.pointArray.length - 1;
                 ctx.fillStyle       =   'rgba(200, 150, 150, 0.8)';
+                ctx.font            =   'bold ' + Math.round(timeAnimDelta * 40 + state.gameWidth/32.0) + 'px Iceberg';
                 ctx.fillText(timeBonus.toFixed(2), gLine.pointArray[lastIndex].x, gLine.pointArray[lastIndex].y - (80 * (1 - timeAnimDelta)));
 
                 timeAnimDelta       -=  0.02;
@@ -297,7 +298,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         };
 
         this.wrongPointExploded     =   function() {
-            state.inGameState       -   'lose';
+            state.inGameState       =   'lose';
             self.delegate.gameOver();
         };
 

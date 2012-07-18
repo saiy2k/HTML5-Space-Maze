@@ -34,6 +34,16 @@
     bottom: 0px;
 }
 
+#creditsBox {
+    position: absolute;
+    left: 2%;
+    left: 2%;
+    top: 15%;
+    color: #ddd;
+    font-size: 75%;
+    font-family: 'Iceberg'
+}
+
 .socialIcon {
     width: 80%;
     height: 98%;
@@ -46,4 +56,13 @@
     bottom:0%;
     width: 10%;
     height: 13%;
+}
+
+a {
+    color: #d55;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #d55;
 }
