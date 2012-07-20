@@ -274,6 +274,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.creditsScreen.resizeLayout(tWidth, tHeight);
                 self.LBoard.resizeLayout(tWidth, tHeight);
                 self.practiseFail.resizeLayout(tWidth, tHeight);
+                starField.resizeLayout(tWidth, tHeight);
             };
 
             prevFTime                   =   new Date().getTime();

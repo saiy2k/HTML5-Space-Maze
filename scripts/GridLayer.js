@@ -211,6 +211,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 return;
             }
 
+            state.checkLine         =   true;
             for(var k = 0; k < tCount; k++) {
                 var i, j;
                 i                   =   Math.floor(k / state.colCount);
@@ -226,7 +227,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         console.log(str);
                     }
                     */
-                    if (state.gridStatus[i][j] == 1) {
+                    if (state.gridStatus[i][j] == 1) { // target
                         self.letterArray[k].jingle();
                         if(self.delegate)
                             self.delegate.touchedTargetPoint();
@@ -244,13 +245,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 							this.delegate.practice.OnLineCrossed(self.letterArray[currentTarget]);
                             self.letterArray[currentTarget].open();
                         }
-                    } else if (state.gridStatus[i][j] == 0) {
+                    } else if (state.gridStatus[i][j] == 0) { // open
                         self.letterArray[k].explode();
                         if(self.delegate) {
                             self.delegate.touchedWrongPoint();
                             window.setTimeout(self.delegate.wrongPointExploded, 1400);
                         }
-                    } else if (k != prevTarget) {
+                    } else if (k != prevTarget) { // wrong point
                         console.log('outta');
                         console.log(k);
                         console.log(prevTarget);
@@ -259,6 +260,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                             self.delegate.touchedWrongPoint();
                             window.setTimeout(self.delegate.wrongPointExploded, 1400);
                         }
+                    } else if (k == prevTarget) {
+                        state.checkLine = false;
                     }
                     break;
                 }

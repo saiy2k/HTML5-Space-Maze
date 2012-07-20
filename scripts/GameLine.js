@@ -93,7 +93,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     var y1              =   ty;
                     var x2              =   self.pointArray[self.pointArray.length - 1].x;
                     var y2              =   self.pointArray[self.pointArray.length - 1].y;
-                    for(var i = 0; i < self.pointArray.length - 2; i++) {
+                    for(var i = 0; i < self.pointArray.length - 2 && state.checkLine == true; i++) {
                         var x3          =   self.pointArray[i].x;
                         var y3          =   self.pointArray[i].y;
                         var x4          =   self.pointArray[i+1].x;

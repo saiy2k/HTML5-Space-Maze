@@ -117,8 +117,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.resize                 =   function() {
             console.log("UIManager : resize");
             var widthToHeight       =   4 / 3;
-            var newWidth            =   window.innerWidth * .8;
-            var newHeight           =   window.innerHeight * .8;
+            var newWidth            =   window.innerWidth;
+            var newHeight           =   window.innerHeight;
             var newWidthToHeight    =   newWidth / newHeight;
 
             if (newWidthToHeight > widthToHeight) {
@@ -150,6 +150,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             NumberMaze.MenuButton.prototype.screenWidth  =   newWidth;
             NumberMaze.MenuButton.prototype.screenHeight =   newHeight;
+            console.log(newWidth);
 
             if(self.delegate)
                 self.delegate.resizeLayout(newWidth, newHeight);
@@ -291,7 +292,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.creditsBack            =   function() {
             state.currentScreen     =   'menu';
             $('#creditsBox').hide();
-            $('#socialDiv').hide();
+            $('#socialDiv').show();
         };
 
         // score submission to playtomic

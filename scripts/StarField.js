@@ -79,9 +79,25 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.resizeLayout           =   function(tWidth, tHeight) {
             var                         size;
 
-            width                   =   tWidth;
-            height                  =   tHeight;
+            w=   tWidth;
+            h=   tHeight;
 
+            var a=0;
+            x=Math.round(w/2);
+            y=Math.round(h/2);
+            z=(w+h)/2;
+            star_color_ratio=1/z;
+            cursor_x=x;
+            cursor_y=y;
+            for(var i=0;i<n;i++)
+            {
+                star[i]=new Array(5);
+                star[i][0]=Math.random()*w*2-x*2;
+                star[i][1]=Math.random()*h*2-y*2;
+                star[i][2]=Math.round(Math.random()*z);
+                star[i][3]=0;
+                star[i][4]=0;
+            }
         };
 
         this.update                 =   function(dt) {
@@ -118,23 +134,5 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         self.reset();
         this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)
-        var a=0;
-        w = 640;
-        h = 480;
-        x=Math.round(w/2);
-        y=Math.round(h/2);
-        z=(w+h)/2;
-        star_color_ratio=1/z;
-        cursor_x=x;
-        cursor_y=y;
-        for(var i=0;i<n;i++)
-        {
-            star[i]=new Array(5);
-            star[i][0]=Math.random()*w*2-x*2;
-            star[i][1]=Math.random()*h*2-y*2;
-            star[i][2]=Math.round(Math.random()*z);
-            star[i][3]=0;
-            star[i][4]=0;
-        }
     };
 })();

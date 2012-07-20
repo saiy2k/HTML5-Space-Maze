@@ -24,10 +24,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
     NumberMaze.PracticeGame         =   function(g) {
         var self                    =   this;
         var state                   =   NumberMaze.State;
-		
+        var width                   =   0;
+        var height                  =   0;
 		var currentInstruction		= 	"";
 		var currentTarget		=   undefined;
-                var currentState                =   undefined;
+        var currentState                =   undefined;
+
         /** reference to the object which subscribes to events in this layer
          *  any object that implements the following functions:
          *      pauseButtonPrssed()
@@ -38,20 +40,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 		this.OnGameStart			= 	function(target){
 			currentTarget = target;
                         currentState  = "GameStart";
-			currentInstruction = "Click somewhere/naround the ship to/nstart the game.";
+			currentInstruction = "Click on the ship/n to start the game.";
 		};
 		
 		this.OnFirstClick			=	function(target){
 			currentTarget = target;
                         currentState  = "FirstClick";
-			currentInstruction = "Cross this point!/nDon't collide with/nyour own line!";
+			currentInstruction = "Touch this asteroid/nDon't collide with/nyour own line!";
 		};
 		
 		this.OnLineCrossed			=	function(target){
                     if(currentState != "LineCrossed"){
 			currentTarget = target;
                         currentState  = "LineCrossed";
-			currentInstruction = "Now cross all/nthe points!";
+			currentInstruction = "Now cross all /nasteroids one by one";
                     }
 		};
 		
@@ -60,6 +62,11 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         currentState  = "AllCrossed";
 			currentInstruction = "Finish by reaching/nyour planet!";
 		};
+
+        this.resizeLayout           =   function(tWidth, tHeight) {
+            width                   =   tWidth;
+            height                  =   tHeight;
+        };
 		
         this.update                 =   function(dt) {
 
@@ -67,10 +74,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.draw                   =   function(ctx) {
 			if(currentTarget != undefined){
-					
 				var targetX = currentTarget.x;
 				var targetY = currentTarget.y;
-				
+
 				//Make sure that the tooltip is always visible
 				if(g.assetManager.Get('tooltip').width + currentTarget.x > g.gameCanvas.width)
 					targetX = g.gameCanvas.width - g.assetManager.Get('tooltip').width;
@@ -81,14 +87,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 				if(currentTarget.y < 0)
 					targetY = 0;
 					
-				ctx.drawImage(g.assetManager.Get('tooltip'), targetX, targetY);
-				
-				//ctx.font = "italic 14pt Calibri";
+				ctx.drawImage(g.assetManager.Get('tooltip'), targetX, targetY, 164 * width / 640, 82 * height / 480);
 				
 				var strings = currentInstruction.split("/n");
 				
 				for(var i = 0; i < strings.length; i++)
-					ctx.fillText(strings[i], targetX + 14, targetY + (i+1)*20 + 6);
+					ctx.fillText(strings[i], targetX + width/28, targetY + (i+1)*height/24 + 6);
 			}
         };
     };

@@ -27,13 +27,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
     NumberMaze.State                =   {
         minCanvasWidth          :   320,
         minCanvasHeight         :   240,
-        maxCanvasWidth          :   640,
-        maxCanvasHeight         :   480,
+        maxCanvasWidth          :   960,
+        maxCanvasHeight         :   720,
         lineDelta               :   3,
         rowCount                :   3,
         colCount                :   4,
-        gameWidth               :   640,
-        gameHeight              :   480,
+        gameWidth               :   960,
+        gameHeight              :   720,
 
         /** boolean that tells if the game if net connection is available 
          *  @type bool
@@ -98,6 +98,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         playerName              :   '',
 
         /** sound playing or muted */
-        soundOn                 :   true
+        soundOn                 :   true,
+
+        /** check for line collusion */
+        checkLine               :   true
     };
 })();

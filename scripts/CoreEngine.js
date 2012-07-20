@@ -128,10 +128,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             w                       =   self.craftSprite.width * 0.6;
             h                       =   self.craftSprite.height * 0.6;
 
-            if(state.gameMode       ==  'hard')
+            if(state.gameMode       ==  'practise') {
+                state.rowCount    =   2;
                 state.colCount    =   3;
-            else
+            } else {
+                state.rowCount    =   3;
                 state.colCount    =   3;
+            }
 
             if(state.gameMode       ==  'practise')
                 score.delegate      =   null;
@@ -186,6 +189,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             self.grid.resizeLayout(tWidth, tHeight);
             gLine.resizeLayout(tWidth, tHeight);
             self.hud.resizeLayout(tWidth, tHeight);
+            this.practice.resizeLayout(tWidth, tHeight);
         };
 
         this.addPoint               =   function(tx, ty) {
@@ -263,7 +267,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
 			
 			if(state.gameMode == 'practise'){
-                ctx.font            =   'bold ' + Math.round(state.gameWidth/42.0) + 'px Iceberg';
+                ctx.font            =   'bold ' + Math.round(state.gameWidth/48.0) + 'px Iceberg';
                 ctx.fillStyle       =   'rgba(20, 20, 20, 0.9)';
 				this.practice.draw(ctx);
 			}
