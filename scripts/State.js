@@ -90,6 +90,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** if this varibale is set, score has to be shared after login proc is successfull */
         fbSetForShare           :   false,
 
+        /** facebook access token */
+        fbAccessToken           :   '',
+
+        /** facebook sharing status */
+        fbShareStatus           :   '',
+
         /** Authentication provider. Can have values:
          *  google, facebook, twitter */
         authProvider            :   '',
@@ -101,6 +107,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         soundOn                 :   true,
 
         /** check for line collusion */
-        checkLine               :   true
+        checkLine               :   true,
+
+        /** is Playtomic initialized */
+        playtomicInit           :   false
     };
 })();

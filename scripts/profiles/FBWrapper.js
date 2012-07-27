@@ -22,40 +22,53 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 (function(undefined) {
     NumberMaze.FBWrapper            =   {
         share                       :   function() {
+                                            var state = NumberMaze.State;
                                             console.log('FBWraper : share');
                                             console.log(NumberMaze.State.fbLoggedin);
                                             if( NumberMaze.State.fbLoggedin == true ) {
                                                 console.log('logged in');
                                                 NumberMaze.State.fbSetForShare = false;
-                                                ///*
-                                                FB.api('/me/spacemaze:fly_through?level=http://www.gethugames.in/html5spacemaze&lid=5&access_token=AAAFBk8hj32QBAFavns59b4hAtRJWCCW6KiMFEz7JAFNzq3oFllWXdZALvdRoeW6Y7TMht2DZATZBTtsrURFxXgomancUvcfVhZBqx9ov9d0JteiTQ44V',
+                                                state.fbShareStatus = 'posting action...';
+                                                var url = '/me/spacemaze:fly_through?maze=http://www.gethugames.in/html5spacemaze' + 
+                                                    '&lid=' + state.currentLevel + 
+                                                    '&score=' + game.engine.getScore() + 
+                                                    '&access_token=' + NumberMaze.State.fbAccessToken;
+                                                    console.log(url);
+                                                    console.log('aa');
+                                                    console.log(url);
+                                                    /*
+                                                FB.api(url,//'/me/spacemaze:fly_through',
                                                     'post',
+                                                    //{maze: 'http://www.gethugames.in/html5spacemaze/', lid: state.currentLevel, score: 1001},
                                                     function(resp) {
                                                         if(!resp || resp.error) {
                                                             console.log('err occured');
                                                             console.log(resp.error);
+                                                            state.fbShareStatus = 'error in posting action...';
                                                         } else {
                                                             console.log('successfull action');
                                                             console.log(resp);
+                                                            state.fbShareStatus = 'successfully posted the action';
                                                         }
                                                     });
-                                                //*/
-                                                /*
+                                                    */
+
                                                 FB.ui({
                                                     method: 'feed',
-                                                    name: 'Astro Space Raid',
-                                                    link: 'http://www.gethugames.in/numbermaze/',
-                                                    picture: 'http://aux.iconpedia.net/uploads/251662856.png', 
-                                                    caption: 'astro space raid',
-                                                    description: 'addictive html5 space game'
+                                                    name: 'HTML5 Space Maze',
+                                                    link: 'http://www.gethugames.in/html5spazemaze/',
+                                                    picture: 'http://www.gethugames.in/html5spacemaze/images/icon256.png', 
+                                                    caption: 'Cleared ' + (state.currentLevel-1) + ' mazes',
+                                                    description: 'successfully cleared ' + (state.currentLevel-1) + ' mazes and won the game, scoring ' + Math.round(game.engine.getScore()) + ' points'
                                                 },
                                                 function(response) {
-                                                    NumberMaze.FBWrapper.getStatus();
+                                                    //NumberMaze.FBWrapper.getStatus();
                                                 });
-                                                */
+
                                             } else {
                                                 console.log('yet to log in');
                                                 NumberMaze.State.fbSetForShare  =   true;
+                                                state.fbShareStatus = 'logging in...';
                                                 FB.login(function(response) {
                                                     if (response.authResponse) {
                                                         NumberMaze.FBWrapper.getUserData();
@@ -63,21 +76,29 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                                                         console.log('User cancelled login or did not fully authorize.');
                                                         console.log(response);
                                                     }
-                                                });
+                                                }, {scope: 'publish_actions,publish_stream,read_stream'});
                                             }
                                                                                     },
 
         getStatus                   :   function() {
+                                            var state = NumberMaze.State;
                                             console.log('FBWrapper : getStatus');
+                                            state.fbShareStatus = 'getting user data...';
                                             FB.getLoginStatus(function(response) {
                                                 if (response.status == 'connected') {
+                                                    console.log('fb connected');
+                                                    NumberMaze.State.fbAccessToken = response.authResponse.accessToken;
                                                     NumberMaze.FBWrapper.getUserData();
+                                                } else {
+                                                    console.log('fb not connected');
+                                                    console.log(response);
                                                 }
                                             });
                                         },
 
         getUserData                 :   function() {
                                             console.log('FBWraper : get user data');
+                                            var state = NumberMaze.State;
                                             FB.api('/me', function(response) {
                                                 NumberMaze.State.fbLoggedin = true;
                                                 console.log(NumberMaze.State.fbLoggedin);

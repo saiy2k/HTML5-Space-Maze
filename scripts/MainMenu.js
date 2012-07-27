@@ -68,18 +68,20 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         var width                   =   0;
         var height                  =   0;
 
-        var newGameButton           =   new NumberMaze.MenuButton("new game", 0.5, 0.3, 0.25, 0.1);
+        var newGameButton           =   new NumberMaze.MenuButton("new game", 0.5, 0.4, 0.25, 0.1);
         newGameButton.delegate      =   self;
-        var easyButton              =   new NumberMaze.MenuButton("easy", 0.8, 0.3, 0.25, 0.1);
+        var easyButton              =   new NumberMaze.MenuButton("easy", 0.8, 0.4, 0.25, 0.1);
         easyButton.delegate         =   self;
-        var hardButton              =   new NumberMaze.MenuButton("hard", 0.8, 0.4, 0.25, 0.1);
+        var hardButton              =   new NumberMaze.MenuButton("hard", 0.8, 0.5, 0.25, 0.1);
         hardButton.delegate         =   self;
-        var lboardButton            =   new NumberMaze.MenuButton("score board", 0.5, 0.6, 0.25, 0.1);
+        var lboardButton            =   new NumberMaze.MenuButton("score board", 0.6, 0.6, 0.25, 0.1);
         lboardButton.delegate       =   self;
-        var practiceButton          =   new NumberMaze.MenuButton("tutorial", 0.5, 0.45, 0.25, 0.1);
+        var practiceButton          =   new NumberMaze.MenuButton("tutorial", 0.5, 0.55, 0.25, 0.1);
         practiceButton.delegate     =   self;
-        var creditsButton           =   new NumberMaze.MenuButton("credits", 0.5, 0.75, 0.25, 0.1);
+        var creditsButton           =   new NumberMaze.MenuButton("credits", 0.5, 0.7, 0.25, 0.1);
         creditsButton.delegate      =   self;
+        var feedBackButton          =   new NumberMaze.MenuButton("feedback", 0.2, 0.96, 0.2, 0.08);
+        feedBackButton.delegate     =   self;
 
         this.addPoint               =   function(tx, ty) {
             var pt                  =   {x:tx, y:ty};   
@@ -99,9 +101,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.mouseup                =   function(tx, ty) {
             newGameButton.mouseup(tx, ty);
-            lboardButton.mouseup(tx, ty);
+            //lboardButton.mouseup(tx, ty);
             creditsButton.mouseup(tx, ty);
             practiceButton.mouseup(tx, ty);
+            feedBackButton.mouseup(tx, ty);
 
             if(showDiff) {
                 easyButton.mouseup(tx, ty);
@@ -112,9 +115,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         this.mousemove              =   function(tx, ty) {
             self.addPoint(tx, ty);
             newGameButton.mousemove(tx, ty);
-            lboardButton.mousemove(tx, ty);
+            //lboardButton.mousemove(tx, ty);
             creditsButton.mousemove(tx, ty);
             practiceButton.mousemove(tx, ty);
+            feedBackButton.mousemove(tx, ty);
 
             if(showDiff) {
                 easyButton.mousemove(tx, ty);
@@ -131,10 +135,14 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.delegate.mainMenuNewGameHard();
             } else if (btn          ==  practiceButton) {
                 self.delegate.mainMenuNewGamePractice();
+                /*
             } else if (btn          ==  lboardButton) {
                 self.delegate.mainMenuLeaderboard();
+                */
             } else if (btn          ==  creditsButton) {
                 self.delegate.mainMenuCredits();
+            } else if (btn          ==  feedBackButton) {
+                window.open('https://docs.google.com/spreadsheet/viewform?formkey=dG8yUVdiNngyOGZRMkZrZHd1Skx1VlE6MQ', '_blank');
             }
         };
 
@@ -153,11 +161,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             height                  =   tHeight;
 
             newGameButton.resizeLayout(tWidth, tHeight);
-            lboardButton.resizeLayout(tWidth, tHeight);
+            //lboardButton.resizeLayout(tWidth, tHeight);
             creditsButton.resizeLayout(tWidth, tHeight);
             practiceButton.resizeLayout(tWidth, tHeight);
             easyButton.resizeLayout(tWidth, tHeight);
             hardButton.resizeLayout(tWidth, tHeight);
+            feedBackButton.resizeLayout(tWidth, tHeight);
         };
 
         this.update                 =   function(dt) {
@@ -169,8 +178,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 elapsed             =   0;
             }
             newGameButton.update(dt);
-            lboardButton.update(dt);
+            //lboardButton.update(dt);
             creditsButton.update(dt);
+            feedBackButton.update(dt);
         };
 
         this.draw                   =   function(ctx) {
@@ -184,7 +194,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.shadowOffsetY       =   0;
             ctx.shadowBlur          =   30;
             ctx.fillText('HTML5 Space Maze', width / 2, height * 0.12);
-            ctx.fillText('(ALPHA)', width / 2, height * 0.2);
+            ctx.fillText('(BETA)', width / 2, height * 0.2);
             ctx.shadowColor         =   shadowColor;
 
             ctx.lineWidth       =   width / 100;
@@ -226,9 +236,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.strokeStyle         =   'rgba(255, 255, 255, 0.2)';
             ctx.font                =   width/26 + 'px Iceberg';
             newGameButton.draw(ctx);
-            lboardButton.draw(ctx);
+            //lboardButton.draw(ctx);
             creditsButton.draw(ctx);
             practiceButton.draw(ctx);
+            feedBackButton.draw(ctx);
 
             if(showDiff) {
                 easyButton.draw(ctx);

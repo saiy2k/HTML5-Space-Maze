@@ -103,7 +103,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             ctx.font                =   width/28 + 'px Iceberg';
             ctx.textAlign           =   'left';
-            ctx.fillText('Level ' + (parseInt(NumberMaze.State.currentLevel)) + ' highest score is ', width * 0.25, height * 0.3);
+            ctx.fillText('Level ' + (parseInt(NumberMaze.State.currentLevel - 1)) + ' highest score is ', width * 0.25, height * 0.3);
             ctx.fillText(Math.round(self.lvlScore), width * 0.7, height * 0.3);
 
             ctx.fillText('Bonus score is ', width * 0.25, height * 0.4);

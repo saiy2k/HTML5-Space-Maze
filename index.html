@@ -17,13 +17,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<html itemscope itemtype="http://schema.org/Product">
+<html manifest="offline.appcache" itemscope itemtype="http://schema.org/Product">
     <head profile="http://www.w3.org/2005/10/profile" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# spacemaze: http://ogp.me/ns/fb/spacemaze#">
         <title>HTML5 Space Maze</title>
 
         <meta charset="utf-8">
         <meta name="keywords" content="free, online, space, maze, life, html5, offline, game, board, player, share, facebook, google, plus, score, casual, fun, score, board, ranking, mobile, asteroid"/> 
-        <meta name="description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game" />
+        <meta name="description" content="Guide your space craft through myriad of asteroids and reach the home planet as fast as you can before it runs out of gas. As you fly through, your half broken craft emits hazardous gases. Make sure you dont pass through those and fly wisely. Game play progress through various levels with more tighter play time." />
         <meta name="author" content="Saiyasodharan" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="meta-apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -33,17 +33,17 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <link type="text/css" href="style.css" rel="Stylesheet" />
 
         <!--tags for opengraph-->
-        <meta property="og:site_name" content="Number Maze" />
+        <meta property="og:site_name" content="HTML5 Space Maze" />
         <meta property="fb:admins" content="100000655597076" />
         <meta property="fb:app_id"      content="353577954697060" /> 
-        <meta property="og:type"        content="spacemaze:level" /> 
+        <meta property="og:type"        content="Games" /> 
         <meta property="og:url"         content="http://www.gethugames.in/html5spacemaze/" /> 
-        <meta property="og:title"       content="Level" /> 
+        <meta property="og:title"       content="HTML5 Space Maze" /> 
         <meta property="og:image"       content="http://www.gethugames.in/html5spacemaze/images/icon128.png" /> 
-        <meta property="og:description" content="cleared a level" />
+        <meta property="og:description" content="Guide your space craft through myriad of asteroids and reach the home planet as fast as you can before it runs out of gas. As you fly through, your half broken craft emits hazardous gases. Make sure you dont pass through those and fly wisely. Game play progress through various levels with more tighter play time." />
 
         <!--tags for Google+-->
-        <meta itemprop="name" content="Number Maze">
+        <meta itemprop="name" content="HTML5 Space Maze">
         <meta itemprop="url" content="http://www.gethugames.in/html5spacemaze/">
         <meta itemprop="image" content="http://www.gethugames.in/html5spacemaze/images/icon128.png">
         <meta itemprop="description" content="Connect the target numbers as fast as you can to get the best score. Fun addictive, competive HTML5 mobile web game">
@@ -71,7 +71,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                <g:plusone size="medium"></g:plusone>
                <br />
-               <p style='color: #fff; font-size:50%'> Alpha release WARNING: There will be many bugs. Feel free to <a href='https://github.com/saiy2k/Number-Maze/issues' target='_blank'> report </a> </p>
            </div>
            <div id='profileDiv' style="position:absolute;">
                <div id='notloggedin'>
@@ -101,8 +100,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         <div id="fb-root"></div>
 
   		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-        <script type="text/javascript" src="http://api.playtomic.com/js/playtomic.v1.9.min.js"></script>
-	    <script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
 
         <script type="text/javascript">
             if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='libs/jquery.js' type='text/javascript'%3E%3C/script%3E")); }
@@ -191,6 +188,21 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             $(document).ready(function() {
                 // init the main gameEngine
                 game = new NumberMaze();
+
+                //plus one
+                (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                })();
+ 
+                //playtomic
+                (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'http://api.playtomic.com/js/playtomic.v1.9.min.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                })();
+                
             });
         </script>
     </body>

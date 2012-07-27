@@ -115,6 +115,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.textAlign           =   'center';
             if (!NumberMaze.State.fbLoggedin) {
                 ctx.fillText('Please login to submit score to leaderboard', width * 0.5, height * 0.65);
+            } else {
+                ctx.fillText('Status : ' + NumberMaze.State.fbShareStatus, width * 0.5, height * 0.75);
             }
 
             ctx.font                =   width/30 + 'px Iceberg';

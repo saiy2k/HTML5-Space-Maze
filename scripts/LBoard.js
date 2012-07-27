@@ -89,8 +89,15 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             var                         boardName;
             boardName               =   mode + '-' + (state.isMobile ? 'mobile' : 'normal');
             console.log(boardName);
-            if (typeof(Playtomic) != 'undefined')
-                Playtomic.Leaderboards.List(boardName, scoreListingComplete);
+            if(state.online) {
+                if(typeof(Playtomic) != 'undefined') {
+                    if (state.playtomicInit == false) {
+                        Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
+                        state.playtomicInit = true;
+                    }
+                    Playtomic.Leaderboards.List(boardName, scoreListingComplete);
+                }
+            }
         };
 
         this.resizeLayout           =   function(tWidth, tHeight) {
@@ -142,6 +149,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             console.log('score listing complete');
             if (response.Success) {
                 self.scoreList      =   scores;
+                console.log(scores);
             } else {
                 console.log(response);
             }

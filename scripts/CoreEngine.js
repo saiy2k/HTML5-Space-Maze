@@ -109,7 +109,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         }
 
         this.getScore               =   function() {
-            return score.totalScore;
+            return score.totalScore + score.chkPointRemain;
         }
 
         this.getLevelScore          =   function() {
@@ -320,7 +320,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             state.inGameState       =   'lose';
             state.active            =   false;
             window.setTimeout(self.delegate.gameOver, 1000);
-            submitScore();
         };
 
         /** callback to handle the events of score object */

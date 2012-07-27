@@ -298,6 +298,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         // score submission to playtomic
         this.submitScore            =   function() {
             console.log('UIManager : submit score');
+            console.log(state.online);
+            console.log(state.authProvider);
+            console.log(g.engine.getScore());
             if(state.online && state.authProvider != '' && g.engine.getScore() > 1) {
                 console.log('submitting to playtomic');
                 var simple_score        =   {};
@@ -307,8 +310,19 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 boardName               =   state.gameMode + '-' + (state.isMobile ? 'mobile' : 'normal');
                 console.log(boardName);
                 console.log(simple_score);
-                if(typeof(Playtomic) != 'undefined')
-                    Playtomic.Leaderboards.Save(simple_score, boardName); 
+                if(state.online) {
+                    if(typeof(Playtomic) != 'undefined') {
+                        if (state.playtomicInit == false) {
+                            console.log('playtomic initing');
+                            Playtomic.Log.View('7158', "b34119c5c7074dd4", "883aa0c303e544fe9900683df59b0f", document.location);
+                            state.playtomicInit = true;
+                            console.log('playtomic init done');
+                        }
+                        console.log('playtomic saving');
+                        Playtomic.Leaderboards.Save(simple_score, boardName); 
+                        console.log('playtomic save done');
+                    }
+                }
             }
         };
 

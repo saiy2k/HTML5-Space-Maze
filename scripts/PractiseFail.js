@@ -93,7 +93,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.shadowColor         =   shadowColor;
 
             ctx.font                =   width/30 + 'px Iceberg';
-            ctx.fillText('TIPS TEXT GOES HERE', width * 0.5, height * 0.3);
             restartButton.draw(ctx);
             quitButton.draw(ctx);
         };
