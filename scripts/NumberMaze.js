@@ -210,9 +210,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
             self.mousedown  =   function(tx, ty) {
                 if (state.currentScreen == 'game') {
-                    console.log(Math.dist(self.engine.getStartLocation(), {x: tx, y: ty}) < 20);
-                    //if (state.inGameState == 'waiting' && Math.dist(self.engine.getStartLocation(), {x: tx, y: ty}) < 20) {
-                    if (state.inGameState == 'waiting') {
+                    if (state.inGameState == 'waiting' && Math.dist(self.engine.getStartLocation(), {x: tx, y: ty}) < (20 * state.gameWidth / state.maxCanvasWidth)) {
+                    //if (state.inGameState == 'waiting') {
                         state.inGameState = 'playing';
                     }
                     self.engine.hud.mousedown(tx, ty);

@@ -107,9 +107,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         soundOn                 :   true,
 
         /** check for line collusion */
-        checkLine               :   true,
+        checkLine               :   true
 
         /** is Playtomic initialized */
-        playtomicInit           :   false
+        //playtomicInit           :   false
     };
 })();

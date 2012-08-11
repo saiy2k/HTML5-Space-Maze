@@ -49,7 +49,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         restartButton.delegate      =   self;
         var quitButton              =   new NumberMaze.MenuButton("quit", 0.75, 0.9, 0.2, 0.1);
         quitButton.delegate         =   self;
-        var lBoardButton            =   new NumberMaze.MenuButton("scoreboard", 0.5, 0.9, 0.2, 0.1);
+        var lBoardButton            =   new NumberMaze.MenuButton("tutorial", 0.5, 0.9, 0.2, 0.1);
         lBoardButton.delegate       =   self;
 
         this.mouseup                =   function(tx, ty) {
@@ -69,6 +69,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.delegate.pauseScreenRestart();
             } else if (btn          ==  quitButton) {
                 self.delegate.pauseScreenQuit();
+            } else if (btn          ==  lBoardButton) {
+                if (NumberMaze.State.currentLevel == 1)
+                    self.delegate.mainMenuNewGamePractice();
             }
         };
 
@@ -122,7 +125,8 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             ctx.font                =   width/30 + 'px Iceberg';
             restartButton.draw(ctx);
             quitButton.draw(ctx);
-            lBoardButton.draw(ctx);
+            if (NumberMaze.State.currentLevel == 1)
+                lBoardButton.draw(ctx);
         };
 
         this.resizeLayout(g.menuCanvas.width, g.menuCanvas.height)

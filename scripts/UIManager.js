@@ -297,6 +297,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         // score submission to playtomic
         this.submitScore            =   function() {
+            /*
             console.log('UIManager : submit score');
             console.log(state.online);
             console.log(state.authProvider);
@@ -324,6 +325,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     }
                 }
             }
+            */
         };
 
         self.resize();
