@@ -87,7 +87,10 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.loader = new PxLoader();
         self.assetManager = new NumberMaze.AssetManager(this);
         self.loader.addCompletionListener(function() {
-                console.log('sprites loaded');
+                console.log('all sprites loaded');
+                self.assetManager.Get('touchLineA').setVolume(20);
+                self.assetManager.Get('levelWinA').setVolume(10);
+                console.log(self.assetManager.Get('touchLineA'));
                 var bgloader = new PxLoader();
                 self.assetManager.Add('bgm', bgloader.addSound('bgm', 'audio/bgm.ogg'));
                 bgloader.addCompletionListener(function() {

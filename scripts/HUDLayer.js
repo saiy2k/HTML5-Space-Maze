@@ -71,7 +71,6 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 
         this.draw                   =   function(ctx) {
             ctx.fillText('Level ' + NumberMaze.State.currentLevel, width * 0.1, height);
-
         };
         
         this.resizeLayout(g.gameCanvas.width, g.gameCanvas.height);

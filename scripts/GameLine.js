@@ -93,7 +93,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     var y1              =   ty;
                     var x2              =   self.pointArray[self.pointArray.length - 1].x;
                     var y2              =   self.pointArray[self.pointArray.length - 1].y;
-                    for(var i = 0; i < self.pointArray.length - 2 && state.checkLine == true; i++) {
+                    for(var i = 0; i < self.pointArray.length - 10 && state.checkLine == true; i++) {
                         var x3          =   self.pointArray[i].x;
                         var y3          =   self.pointArray[i].y;
                         var x4          =   self.pointArray[i+1].x;
@@ -184,8 +184,9 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             }
 
             if (NumberMaze.State.inGameState == 'playing' && NumberMaze.State.gameMode != 'practise') {
-                ctx.font                =   'bold 24px Iceberg';
-                ctx.fillStyle           =   'rgba(200, 150, 150, 0.8)';
+                var fntSize             =   ((15-(self.scoreRef.chkPointRemain > 12 ? 12 : self.scoreRef.chkPointRemain)) * state.gameWidth)/128 ;
+                ctx.font                =   'bold ' + fntSize + 'px Iceberg';
+                ctx.fillStyle           =   'rgba(' + (255 - self.scoreRef.chkPointRemain*10).toFixed(0) + ', 100, 100, 0.8)';
                 ctx.fillText(self.scoreRef.chkPointRemain.toFixed(2), self.pointArray[lastPoint].x + 20, self.pointArray[lastPoint].y + 30);
             }
             ctx.globalCompositeOperation    =   "source-over";

@@ -53,7 +53,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                     if(currentState != "LineCrossed"){
 			currentTarget = target;
                         currentState  = "LineCrossed";
-			currentInstruction = "Now cross all /nasteroids one by one";
+			currentInstruction = "Now cross all asteroids/none by one reaching/nyour planet in the end";
                     }
 		};
 		

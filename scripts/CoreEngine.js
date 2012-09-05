@@ -256,11 +256,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
             if(showBonusPop) {
                 var                     lastIndex;
                 lastIndex           =   gLine.pointArray.length - 1;
-                ctx.fillStyle       =   'rgba(200, 150, 150, 0.8)';
-                ctx.font            =   'bold ' + Math.round(timeAnimDelta * 40 + state.gameWidth/32.0) + 'px Iceberg';
-                ctx.fillText(timeBonus.toFixed(2), gLine.pointArray[lastIndex].x, gLine.pointArray[lastIndex].y - (80 * (1 - timeAnimDelta)));
+                ctx.fillStyle       =   'rgba(200, 150, 150, ' + (timeAnimDelta) + ')';
+                var fntSize             =   ((15-score.chkPointRemain) * state.gameWidth)/128;
+                ctx.font                =   'bold ' + fntSize + 'px Iceberg';
+                ctx.fillText(timeBonus.toFixed(2), gLine.pointArray[lastIndex].x + 20, gLine.pointArray[lastIndex].y - (50 * (1 - timeAnimDelta)));
 
-                timeAnimDelta       -=  0.02;
+                timeAnimDelta       -=  0.04;
 
                 if (timeAnimDelta <= 0)
                     showBonusPop    =   false;
