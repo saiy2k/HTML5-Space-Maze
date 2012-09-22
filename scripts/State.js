@@ -43,7 +43,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         /** determines if the game is being played in mobile
          *  @type bool
          *  @public */
-        isMobile                :   window.DeviceMotionEvent ? true : false,
+        isMobile                :   (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)),
 
         /** flag that determines whether to render processor intensive stuffs
          *  @type bool

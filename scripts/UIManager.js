@@ -87,6 +87,37 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.delegate.mouseup(x, y);
         });
 
+        /** getting touch start even in mobile*/
+        document.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            var t = e.touches[0];
+            var x                   =   t.pageX - self.left;
+            var y                   =   t.pageY - self.top;
+            if(self.delegate)
+                self.delegate.mousedown(x, y);
+        }, false);
+
+        /** getting touch move even in mobile*/
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            var t = e.touches[0];
+            var x                   =   t.pageX - self.left;
+            var y                   =   t.pageY - self.top;
+            if(self.delegate)
+                self.delegate.mousemove(x, y);
+        }, false);
+
+        /** getting touch end even in mobile*/
+        document.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            var t = e.changedTouches[0];
+            var x                   =   t.pageX - self.left;
+            var y                   =   t.pageY - self.top;
+            if(self.delegate)
+                self.delegate.mouseup(x, y);
+        }, false);
+
+
         /** handler for googlePlus login button */
         $('#gPlusLoginButton').click(function() {
             NumberMaze.GPlusWrapper().login();

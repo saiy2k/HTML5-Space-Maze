@@ -27,6 +27,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function($, undefined) {
     NumberMaze          =   function() {
+
         var self        =   this;
 
         /** flag that determines if the mouse is touched down or not
@@ -62,11 +63,13 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                 self.assetManager.Add('tooltip', self.loader.addImage('images/toolTip.png'));
                 self.assetManager.Add('asteroidSprite', self.loader.addImage('images/asteroidSprite.png'));
                 self.assetManager.Add('craft', self.loader.addImage('images/craft.png'));
-                self.assetManager.Add('explosionA', self.loader.addSound('explosion', 'audio/explosion.wav'));
-                self.assetManager.Add('levelWinA', self.loader.addSound('levelWin', 'audio/levelWin.wav'));
-                self.assetManager.Add('targetTouchA', self.loader.addSound('targetTouchA', 'audio/targetTouch.wav'));
-                self.assetManager.Add('touchLineA', self.loader.addSound('touchLineA', 'audio/lineTouch.wav'));
-                self.assetManager.Add('clickA', self.loader.addSound('clickA', 'audio/click.wav'));
+                if (!state.isMobile) {
+                    self.assetManager.Add('explosionA', self.loader.addSound('explosion', 'audio/explosion.wav'));
+                    self.assetManager.Add('levelWinA', self.loader.addSound('levelWin', 'audio/levelWin.wav'));
+                    self.assetManager.Add('targetTouchA', self.loader.addSound('targetTouchA', 'audio/targetTouch.wav'));
+                    self.assetManager.Add('touchLineA', self.loader.addSound('touchLineA', 'audio/lineTouch.wav'));
+                    self.assetManager.Add('clickA', self.loader.addSound('clickA', 'audio/click.wav'));
+                }
                 self.assetManager.Add('spriteData', self.loader.addJson('images/asteroidSprite.json'));
                 self.loader.start();
             },
@@ -88,10 +91,12 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         self.assetManager = new NumberMaze.AssetManager(this);
         self.loader.addCompletionListener(function() {
                 console.log('all sprites loaded');
-                self.assetManager.Get('touchLineA').setVolume(20);
-                self.assetManager.Get('levelWinA').setVolume(10);
-                console.log(self.assetManager.Get('touchLineA'));
+                if (!state.isMobile) {
+                    self.assetManager.Get('touchLineA').setVolume(20);
+                    self.assetManager.Get('levelWinA').setVolume(10);
+                }
                 var bgloader = new PxLoader();
+                /*
                 self.assetManager.Add('bgm', bgloader.addSound('bgm', 'audio/bgm.ogg'));
                 bgloader.addCompletionListener(function() {
                     console.log('bgm loaded');
@@ -104,6 +109,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
                         })
                     })(self.assetManager.Get('bgm'));
                 });
+                */
                 preloading = false;
                 $('#preLoader').hide();
                 loadComponents();
@@ -177,6 +183,7 @@ along with Number Maze.  If not, see <http://www.gnu.org/licenses/>.
         })();
         loadComponents                  =   function() {
             console.log("NumberMaze : loadComponents");
+            window.setTimeout(function() {window.scrollTo(0, 1); }, 5000);
             state.gridStatus            =   [];
             for (var i = 0; i < NumberMaze.State.rowCount; i++) {
                 state.gridStatus[i]     =   [];
